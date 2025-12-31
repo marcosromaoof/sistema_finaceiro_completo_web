@@ -1002,3 +1002,9 @@
 - [x] Sistema de Banimentos (/admin/bans)
 - [x] Backend procedures para admin (getAllUsers, updateUserRole, getAllBans, banUser, unbanUser)
 - [x] Tabela bans no banco de dados
+
+## Correção de Layout (31/12/2025)
+- [ ] Corrigir sobreposição do botão toggle quando menu está expandido
+
+## Correção de Layout (31/12/2025)
+- [x] Corrigir sobreposição do botão toggle quando menu está expandido
