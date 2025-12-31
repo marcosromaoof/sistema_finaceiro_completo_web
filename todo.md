@@ -477,3 +477,42 @@
 - [x] Mostrar próxima data esperada de cobrança
 - [x] Adicionar sugestões de economia para gastos > R$1000/ano
 - [x] Exibir cards de resumo (total, impacto anual, impacto mensal)
+
+
+## Comparação com Benchmarks (✅ Concluído)
+
+### API de Benchmarks
+- [x] Pesquisar APIs públicas para CDI, Ibovespa, S&P500 (Yahoo Finance API)
+- [x] Criar helper benchmarks.ts para buscar dados históricos
+- [x] Implementar funções getBenchmarkHistory e getMultipleBenchmarks
+- [x] Criar procedure tRPC getHistory
+- [x] Criar procedure tRPC getMultiple
+- [x] Criar procedure tRPC comparePortfolio
+
+### Cálculos de Métricas Financeiras
+- [x] Implementar cálculo de retorno do portfólio
+- [x] Implementar cálculo de Alpha (retorno acima do benchmark)
+- [x] Implementar cálculo de Beta (volatilidade relativa)
+- [x] Implementar cálculo de Sharpe Ratio
+- [x] Implementar cálculo de retornos diários
+- [x] Integrar cálculos com procedure comparePortfolio
+
+### Página de Análise
+- [x] Criar página /benchmark-analysis
+- [x] Implementar gráfico de linha comparativo (Recharts)
+- [x] Exibir performance do portfólio vs benchmarks selecionados
+- [x] Suporte para Ibovespa, S&P500 e CDI
+- [x] Cards de resumo com métricas principais (Alpha, retorno, ganho/perda)
+- [x] Seção de insights com explicações
+
+### Filtros e Integração
+- [x] Adicionar filtro de período (1M, 3M, 6M, 1A, 2A, 5A, Max)
+- [x] Adicionar seletor de benchmarks (Ibovespa, S&P500, CDI)
+- [x] Adicionar link no menu do dashboard
+- [x] Adicionar rota no App.tsx
+- [x] Botão de atualizar dados
+
+### Testes
+- [x] Validar integração com Yahoo Finance API
+- [x] Testar procedures tRPC de benchmarks
+- [x] Validar cálculos de métricas financeiras

@@ -1001,7 +1001,76 @@ ${financialContext}${webSearchResults}`;
         return null;
       }
     }),
+   }),
+
+  // Benchmark routes
+  benchmarks: router({
+    getHistory: protectedProcedure
+      .input(z.object({
+        benchmark: z.enum(["ibovespa", "sp500", "cdi"]),
+        range: z.enum(["1mo", "3mo", "6mo", "1y", "2y", "5y", "max"]).default("1y"),
+      }))
+      .query(async ({ input }) => {
+        const { getBenchmarkHistory } = await import("./_core/benchmarks");
+        return await getBenchmarkHistory(input.benchmark, input.range);
+      }),
+    
+    getMultiple: protectedProcedure
+      .input(z.object({
+        benchmarks: z.array(z.enum(["ibovespa", "sp500", "cdi"])),
+        range: z.enum(["1mo", "3mo", "6mo", "1y", "2y", "5y", "max"]).default("1y"),
+      }))
+      .query(async ({ input }) => {
+        const { getMultipleBenchmarks } = await import("./_core/benchmarks");
+        return await getMultipleBenchmarks(input.benchmarks, input.range);
+      }),
+    
+    comparePortfolio: protectedProcedure
+      .input(z.object({
+        benchmark: z.enum(["ibovespa", "sp500", "cdi"]),
+        range: z.enum(["1mo", "3mo", "6mo", "1y", "2y", "5y", "max"]).default("1y"),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { getBenchmarkHistory, calculateAlpha } = await import("./_core/benchmarks");
+        
+        // Buscar histórico do benchmark
+        const benchmarkHistory = await getBenchmarkHistory(input.benchmark, input.range);
+        
+        // Buscar investimentos do usuário
+        const investments = await db.getUserInvestments(ctx.user.id);
+        
+        // Calcular valor total do portfólio
+        const portfolioValue = investments.reduce((sum, inv) => {
+          return sum + parseFloat(inv.currentValue || inv.totalInvested);
+        }, 0);
+        
+        const initialValue = investments.reduce((sum, inv) => {
+          return sum + parseFloat(inv.totalInvested);
+        }, 0);
+        
+        // Calcular retornos
+        const portfolioReturn = initialValue > 0 ? ((portfolioValue - initialValue) / initialValue) * 100 : 0;
+        const benchmarkReturn = benchmarkHistory.changePercent;
+        
+        // Calcular Alpha
+        const alpha = calculateAlpha(portfolioReturn, benchmarkReturn);
+        
+        return {
+          benchmark: input.benchmark,
+          benchmarkHistory,
+          portfolio: {
+            currentValue: portfolioValue,
+            initialValue,
+            return: portfolioValue - initialValue,
+            returnPercent: portfolioReturn,
+          },
+          metrics: {
+            alpha,
+            beta: 0, // Placeholder - precisa dados históricos
+            sharpeRatio: 0, // Placeholder - precisa dados históricos
+          },
+        };
+      }),
   }),
 });
-
 export type AppRouter = typeof appRouter;
