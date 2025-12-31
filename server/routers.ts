@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
+import { updateUser } from "./db-user-update";
 import { invokeLLM } from "./_core/llm";
 import { sendGroqChat, getGroqModels, testGroqConnection, initializeGroqClient } from "./_core/groq";
 import { searchWeb, needsWebSearch, initializeTavilyClient, testTavilyConnection } from "./_core/tavily";
@@ -809,6 +810,104 @@ ${financialContext}${webSearchResults}`;
         activeGoalsCount: goals.filter(g => !g.isCompleted).length,
         unreadAlertsCount: alerts.length,
         recentTransactions: transactions.slice(0, 10),
+      };
+    }),
+  }),
+
+  // ==================== CHECKOUT ====================
+  checkout: router({
+    createCheckoutSession: protectedProcedure
+      .input(z.object({
+        plan: z.enum(["premium", "family"]),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { stripe } = await import("./_core/stripe");
+        const { PRODUCTS } = await import("./products");
+        
+        const plan = input.plan.toUpperCase() as "PREMIUM" | "FAMILY";
+        const product = PRODUCTS[plan];
+        
+        if (!product.priceId) {
+          throw new Error(`Price ID not configured for ${plan} plan`);
+        }
+        
+        // Create or retrieve Stripe customer
+        let customerId = ctx.user.stripeCustomerId;
+        
+        if (!customerId) {
+          const customer = await stripe.customers.create({
+            email: ctx.user.email || undefined,
+            name: ctx.user.name || undefined,
+            metadata: {
+              userId: ctx.user.id.toString(),
+            },
+          });
+          customerId = customer.id;
+          
+          // Update user with Stripe customer ID
+          await updateUser(ctx.user.id, { stripeCustomerId: customerId });
+        }
+        
+        // Create checkout session
+        const session = await stripe.checkout.sessions.create({
+          customer: customerId,
+          mode: "subscription",
+          payment_method_types: ["card"],
+          line_items: [
+            {
+              price: product.priceId,
+              quantity: 1,
+            },
+          ],
+          success_url: `${process.env.VITE_FRONTEND_FORGE_API_URL || "http://localhost:3000"}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${process.env.VITE_FRONTEND_FORGE_API_URL || "http://localhost:3000"}/checkout/canceled`,
+          subscription_data: {
+            trial_period_days: 14,
+            metadata: {
+              userId: ctx.user.id.toString(),
+              plan: input.plan,
+            },
+          },
+          metadata: {
+            userId: ctx.user.id.toString(),
+            plan: input.plan,
+          },
+        });
+        
+        return {
+          sessionId: session.id,
+          url: session.url,
+        };
+      }),
+    
+    getSubscriptionStatus: protectedProcedure.query(async ({ ctx }) => {
+      return {
+        plan: ctx.user.subscriptionPlan || "free",
+        status: ctx.user.subscriptionStatus || null,
+        endsAt: ctx.user.subscriptionEndsAt || null,
+        stripeCustomerId: ctx.user.stripeCustomerId || null,
+        stripeSubscriptionId: ctx.user.stripeSubscriptionId || null,
+      };
+    }),
+    
+    cancelSubscription: protectedProcedure.mutation(async ({ ctx }) => {
+      if (!ctx.user.stripeSubscriptionId) {
+        throw new Error("No active subscription found");
+      }
+      
+      const { stripe } = await import("./_core/stripe");
+      
+      // Cancel at period end
+      const subscription = await stripe.subscriptions.update(
+        ctx.user.stripeSubscriptionId,
+        {
+          cancel_at_period_end: true,
+        }
+      );
+      
+      return {
+        success: true,
+        cancelAt: subscription.cancel_at ? new Date(subscription.cancel_at * 1000) : null,
       };
     }),
   }),

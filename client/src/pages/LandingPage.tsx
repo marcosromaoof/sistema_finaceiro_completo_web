@@ -3,8 +3,35 @@ import SupportChatWidget from "@/components/SupportChatWidget";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, TrendingUp, Shield, BarChart3, Target, CreditCard, Users, Zap } from "lucide-react";
 import { getLoginUrl } from "@/const";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
+import { useState } from "react";
 
 export default function LandingPage() {
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const createCheckoutSession = trpc.checkout.createCheckoutSession.useMutation({
+    onSuccess: (data) => {
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    },
+    onError: (error) => {
+      toast.error("Erro ao iniciar checkout", {
+        description: error.message,
+      });
+      setLoadingPlan(null);
+    },
+  });
+
+  const handleCheckout = async (plan: "free" | "premium" | "family") => {
+    if (plan === "free") {
+      window.location.href = getLoginUrl();
+      return;
+    }
+
+    setLoadingPlan(plan);
+    createCheckoutSession.mutate({ plan });
+  };
   const features = [
     {
       icon: <TrendingUp className="h-8 w-8 text-primary" />,
@@ -269,8 +296,13 @@ export default function LandingPage() {
                       </li>
                     ))}
                   </ul>
-                  <Button className="w-full" variant={plan.popular ? "default" : "outline"} asChild>
-                    <a href={getLoginUrl()}>{plan.cta}</a>
+                  <Button 
+                    className="w-full" 
+                    variant={plan.popular ? "default" : "outline"}
+                    onClick={() => handleCheckout(plan.name.toLowerCase() as "free" | "premium" | "family")}
+                    disabled={loadingPlan !== null}
+                  >
+                    {loadingPlan === plan.name.toLowerCase() ? "Carregando..." : plan.cta}
                   </Button>
                 </CardContent>
               </Card>

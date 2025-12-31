@@ -363,3 +363,42 @@
 - [x] Atualizar todo.md
 - [ ] Atualizar variável de ambiente VITE_APP_TITLE (manual via UI)
 - [x] Verificar todas as referências ao nome antigo
+
+
+## Implementação Completa do Checkout Stripe (✅ Concluído)
+
+### Schema do Banco de Dados
+- [x] Adicionar campos de assinatura Stripe na tabela users
+- [x] Executar migração do banco de dados
+
+### Procedures tRPC
+- [x] Criar procedure createCheckoutSession
+- [x] Criar procedure getSubscriptionStatus
+- [x] Criar procedure cancelSubscription
+- [x] Criar helper updateUser para atualizar dados do usuário
+
+### Páginas de Checkout
+- [x] Criar página /checkout/success
+- [x] Criar página /checkout/canceled
+- [x] Adicionar rotas no App.tsx
+
+### Integração Landing Page
+- [x] Integrar botão "Começar Grátis" com checkout
+- [x] Integrar botão "Assinar Premium" com checkout
+- [x] Integrar botão "Assinar Family" com checkout
+- [x] Adicionar loading states
+
+### Webhooks Stripe
+- [x] Criar endpoint /api/webhooks/stripe
+- [x] Processar evento checkout.session.completed
+- [x] Processar evento customer.subscription.created
+- [x] Processar evento customer.subscription.updated
+- [x] Processar evento customer.subscription.deleted
+- [x] Processar evento invoice.payment_succeeded
+- [x] Processar evento invoice.payment_failed
+- [x] Atualizar status de assinatura no banco
+
+### Testes
+- [x] Criar testes unitários para procedures de checkout
+- [x] Testar autenticação e validação de parâmetros
+- [x] Testar cancelamento de assinatura
