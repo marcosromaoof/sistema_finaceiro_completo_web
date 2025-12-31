@@ -910,6 +910,79 @@ ${financialContext}${webSearchResults}`;
         cancelAt: subscription.cancel_at ? new Date(subscription.cancel_at * 1000) : null,
       };
     }),
+    
+    createCustomerPortalSession: protectedProcedure.mutation(async ({ ctx }) => {
+      if (!ctx.user.stripeCustomerId) {
+        throw new Error("No Stripe customer found");
+      }
+      
+      const { stripe } = await import("./_core/stripe");
+      
+      const session = await stripe.billingPortal.sessions.create({
+        customer: ctx.user.stripeCustomerId,
+        return_url: `${process.env.VITE_FRONTEND_FORGE_API_URL || "http://localhost:3000"}/dashboard/billing`,
+      });
+      
+      return {
+        url: session.url,
+      };
+    }),
+    
+    getInvoices: protectedProcedure.query(async ({ ctx }) => {
+      if (!ctx.user.stripeCustomerId) {
+        return [];
+      }
+      
+      const { stripe } = await import("./_core/stripe");
+      
+      const invoices = await stripe.invoices.list({
+        customer: ctx.user.stripeCustomerId,
+        limit: 12,
+      });
+      
+      return invoices.data.map(invoice => ({
+        id: invoice.id,
+        amount: invoice.amount_paid,
+        currency: invoice.currency,
+        status: invoice.status,
+        created: invoice.created,
+        invoicePdf: invoice.invoice_pdf,
+        hostedInvoiceUrl: invoice.hosted_invoice_url,
+        periodStart: invoice.period_start,
+        periodEnd: invoice.period_end,
+      }));
+    }),
+    
+    getCurrentSubscription: protectedProcedure.query(async ({ ctx }) => {
+      if (!ctx.user.stripeSubscriptionId) {
+        return null;
+      }
+      
+      const { stripe } = await import("./_core/stripe");
+      
+      try {
+        const subscription = await stripe.subscriptions.retrieve(
+          ctx.user.stripeSubscriptionId
+        );
+        
+        return {
+          id: subscription.id,
+          status: subscription.status,
+          currentPeriodEnd: (subscription as any).current_period_end,
+          cancelAtPeriodEnd: (subscription as any).cancel_at_period_end,
+          cancelAt: (subscription as any).cancel_at,
+          items: subscription.items.data.map(item => ({
+            priceId: item.price.id,
+            amount: item.price.unit_amount,
+            currency: item.price.currency,
+            interval: item.price.recurring?.interval,
+          })),
+        };
+      } catch (error) {
+        console.error("[Billing] Failed to retrieve subscription:", error);
+        return null;
+      }
+    }),
   }),
 });
 

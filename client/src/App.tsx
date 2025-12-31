@@ -31,6 +31,7 @@ import APIConfiguration from "./pages/APIConfiguration";
 import Support from "./pages/Support";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCanceled from "./pages/CheckoutCanceled";
+import Billing from "./pages/Billing";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -74,6 +75,7 @@ function Router() {
       <Route path="/settings" component={Settings} />
       <Route path="/checkout/success" component={CheckoutSuccess} />
       <Route path="/checkout/canceled" component={CheckoutCanceled} />
+      <Route path="/billing" component={Billing} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

@@ -49,6 +49,7 @@ const userMenuItems = [
   { icon: ArrowRightLeft, label: "Transferências", path: "/auto-transfers" },
   { icon: Shield, label: "2FA", path: "/2fa" },
   { icon: Users, label: "Login Social", path: "/social-login" },
+  { icon: CreditCard, label: "Cobrança", path: "/billing" },
   { icon: HelpCircle, label: "Suporte", path: "/support" },
   { icon: Settings, label: "Configurações", path: "/settings" },
 ];

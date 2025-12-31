@@ -402,3 +402,31 @@
 - [x] Criar testes unitários para procedures de checkout
 - [x] Testar autenticação e validação de parâmetros
 - [x] Testar cancelamento de assinatura
+
+
+## Página de Billing (✅ Concluído)
+
+### Procedures tRPC
+- [x] Criar procedure createCustomerPortalSession
+- [x] Criar procedure getInvoices
+- [x] Criar procedure getCurrentSubscription
+
+### Página de Billing
+- [x] Criar página /dashboard/billing
+- [x] Exibir informações da assinatura atual
+- [x] Exibir próxima data de cobrança
+- [x] Botão para gerenciar assinatura (Customer Portal)
+- [x] Botão para atualizar método de pagamento (via Customer Portal)
+- [x] Histórico de faturas com download
+- [x] Opções de upgrade/downgrade de plano (via Customer Portal)
+- [x] Botão para cancelar assinatura
+
+### Integração
+- [x] Adicionar rota no App.tsx
+- [x] Adicionar link no menu do dashboard
+- [x] UI completa com badges de status e formatação de valores
+
+### Testes
+- [x] Criar testes unitários para procedures de billing
+- [x] Testar autenticação e validação de Stripe customer
+- [x] Testar retorno de faturas e assinatura
