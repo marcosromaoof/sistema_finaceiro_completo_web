@@ -2,17 +2,21 @@ import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { trpc } from "@/lib/trpc";
-import { Send, Bot, User, Loader2 } from "lucide-react";
+import { Send, Bot, User, Loader2, Settings, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Streamdown } from "streamdown";
+import { Badge } from "@/components/ui/badge";
 
 interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
+  model?: string;
 }
 
 export default function AIChat() {
@@ -21,17 +25,22 @@ export default function AIChat() {
       id: "1",
       role: "assistant",
       content:
-        "Olá! 👋 Sou seu assistente financeiro com IA. Posso ajudá-lo com:\n\n- **Análise de gastos**: Veja onde seu dinheiro está indo\n- **Recomendações**: Dicas personalizadas para economizar\n- **Planejamento**: Ajude a atingir suas metas financeiras\n- **Educação**: Aprenda sobre finanças pessoais\n\nComo posso ajudá-lo hoje?",
+        "Olá! 👋 Sou seu assistente financeiro com IA **Llama 3.1 70B** da Groq.\n\nTenho acesso aos seus dados financeiros e posso ajudá-lo com:\n\n- **Análise personalizada** de seus gastos e receitas\n- **Recomendações inteligentes** baseadas no seu perfil financeiro\n- **Planejamento estratégico** para atingir suas metas\n- **Insights acionáveis** sobre investimentos e dívidas\n- **Educação financeira** adaptada à sua situação\n\nComo posso ajudá-lo hoje?",
       timestamp: new Date(),
+      model: "llama-3.1-70b-versatile",
     },
   ]);
 
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [apiKey, setApiKey] = useState("");
+  const [selectedModel, setSelectedModel] = useState<"llama-3.1-70b-versatile" | "llama-3.1-8b-instant" | "mixtral-8x7b-32768">("llama-3.1-70b-versatile");
+  const [showSettings, setShowSettings] = useState(false);
+  
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  const { data: userTransactions } = trpc.transactions.list.useQuery({} as any);
-  const { data: userAccounts } = trpc.accounts.list.useQuery({} as any);
+  const sendMessageMutation = trpc.aiChat.sendMessage.useMutation();
+  const { data: models } = trpc.aiChat.getModels.useQuery();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -39,10 +48,17 @@ export default function AIChat() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [messages]);
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
+
+    // Check if API key is configured
+    if (!apiKey.trim()) {
+      toast.error("Por favor, configure sua API Key do Groq nas configurações");
+      setShowSettings(true);
+      return;
+    }
 
     // Add user message
     const userMessage: Message = {
@@ -57,135 +73,212 @@ export default function AIChat() {
     setIsLoading(true);
 
     try {
-      // Simulate AI response with financial context
-      const context = {
-        totalAccounts: userAccounts?.length || 0,
-        totalTransactions: userTransactions?.length || 0,
-        recentTransactions: userTransactions?.slice(0, 5) || [],
-      };
+      const response = await sendMessageMutation.mutateAsync({
+        message: input,
+        apiKey: apiKey,
+        model: selectedModel,
+      });
 
-      // Generate AI response based on user input
-      const aiResponse = generateAIResponse(input, context);
+      if (response.success) {
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: response.message,
+          timestamp: new Date(),
+          model: response.model,
+        };
 
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: aiResponse,
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-    } catch (error) {
-      toast.error("Erro ao processar sua mensagem");
+        setMessages((prev) => [...prev, assistantMessage]);
+      } else {
+        toast.error(response.message || "Erro ao processar mensagem");
+      }
+    } catch (error: any) {
+      console.error("Chat error:", error);
+      toast.error(error.message || "Erro ao enviar mensagem");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const generateAIResponse = (input: string, context: any): string => {
-    const lowerInput = input.toLowerCase();
-
-    if (lowerInput.includes("saldo") || lowerInput.includes("quanto tenho")) {
-      return `Com base em seus dados:\n\n- **Contas ativas**: ${context.totalAccounts}\n- **Transações registradas**: ${context.totalTransactions}\n\nPara ver seu saldo detalhado, acesse a página de Contas ou Dashboard.`;
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
     }
-
-    if (lowerInput.includes("gasto") || lowerInput.includes("despesa")) {
-      return `Analisando seus gastos:\n\n📊 Você tem ${context.totalTransactions} transações registradas.\n\n**Dicas para reduzir gastos:**\n1. Revise assinaturas recorrentes\n2. Defina orçamentos por categoria\n3. Acompanhe gastos diários\n4. Use a análise de recorrentes para encontrar oportunidades de economia`;
-    }
-
-    if (lowerInput.includes("meta") || lowerInput.includes("objetivo")) {
-      return `Ótimo! Definir metas é fundamental para o sucesso financeiro.\n\n**Como criar uma meta eficaz:**\n1. Seja específico (ex: "Economizar R$ 5.000")\n2. Defina um prazo realista\n3. Calcule quanto precisa poupar por mês\n4. Acompanhe o progresso regularmente\n\nAcesse a página de Metas para criar sua primeira meta!`;
-    }
-
-    if (lowerInput.includes("investimento") || lowerInput.includes("investir")) {
-      return `Investir é uma ótima forma de fazer seu dinheiro crescer!\n\n**Tipos de investimentos:**\n- **Renda Fixa**: CDB, Tesouro Direto (mais seguro)\n- **Renda Variável**: Ações, Fundos (maior potencial)\n- **Diversificação**: Combine diferentes tipos\n\nComece pequeno e vá aumentando conforme aprende. Acesse a seção de Investimentos para registrar seus aportes!`;
-    }
-
-    if (lowerInput.includes("dívida") || lowerInput.includes("empréstimo")) {
-      return `Gerenciar dívidas é importante para sua saúde financeira.\n\n**Estratégias para quitar dívidas:**\n1. **Método Snowball**: Pague as menores primeiro (psicológico)\n2. **Método Avalanche**: Pague as com maior juros (financeiro)\n3. **Consolidação**: Negocie uma única dívida menor\n\nRegistre suas dívidas na seção de Dívidas e escolha a estratégia ideal!`;
-    }
-
-    if (lowerInput.includes("relatório") || lowerInput.includes("exportar")) {
-      return `Você pode gerar relatórios completos de suas finanças!\n\n**Tipos de relatórios disponíveis:**\n- Resumo mensal\n- Análise por categoria\n- Relatório anual\n- Exportação em CSV, Excel ou PDF\n\nAcesse a página de Relatórios para gerar seus documentos.`;
-    }
-
-    return `Entendi sua pergunta sobre "${input}".\n\n**Recursos disponíveis:**\n- 📊 Dashboard para visão geral\n- 💰 Gestão de contas e transações\n- 📈 Análise de investimentos\n- 🎯 Planejamento de metas\n- 📋 Relatórios detalhados\n\nComo posso ajudá-lo com mais detalhes?`;
   };
 
-  const suggestedQuestions = [
-    "Qual é meu saldo total?",
-    "Como reduzir meus gastos?",
-    "Como criar uma meta financeira?",
-    "Como investir melhor?",
-    "Como gerenciar minhas dívidas?",
-  ];
+  const getModelBadge = (model?: string) => {
+    if (!model) return null;
+    
+    if (model.includes("70b")) {
+      return <Badge variant="default" className="ml-2">Llama 3.1 70B</Badge>;
+    }
+    if (model.includes("8b")) {
+      return <Badge variant="secondary" className="ml-2">Llama 3.1 8B</Badge>;
+    }
+    if (model.includes("mixtral")) {
+      return <Badge variant="outline" className="ml-2">Mixtral 8x7B</Badge>;
+    }
+    return null;
+  };
 
   return (
     <DashboardLayout>
-      <div className="p-6 space-y-6 max-w-4xl mx-auto">
+      <div className="container py-8 h-[calc(100vh-4rem)] flex flex-col">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2 flex items-center gap-2">
-            <Bot className="w-8 h-8 text-primary" />
-            Assistente Financeiro com IA
-          </h1>
-          <p className="text-muted-foreground">
-            Faça perguntas sobre suas finanças e receba recomendações personalizadas
-          </p>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold flex items-center gap-2">
+              <Bot className="h-8 w-8 text-primary" />
+              Assistente Financeiro com IA
+            </h1>
+            <p className="text-muted-foreground flex items-center gap-2">
+              Powered by Groq & Llama 3.1 70B
+              <Sparkles className="h-4 w-4 text-yellow-500" />
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowSettings(!showSettings)}
+          >
+            <Settings className="h-4 w-4 mr-2" />
+            Configurações
+          </Button>
         </div>
 
-        {/* Chat Container */}
-        <Card className="h-96 md:h-[500px] flex flex-col">
-          <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
+        {/* Settings Panel */}
+        {showSettings && (
+          <Card className="mb-4">
+            <CardHeader>
+              <CardTitle className="text-lg">Configurações do Chat</CardTitle>
+              <CardDescription>
+                Configure sua API Key do Groq e escolha o modelo de IA
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="api-key">Groq API Key</Label>
+                <Input
+                  id="api-key"
+                  type="password"
+                  placeholder="gsk_..."
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Obtenha sua chave gratuita em{" "}
+                  <a
+                    href="https://console.groq.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    console.groq.com
+                  </a>
+                  {" "}ou configure no{" "}
+                  <a href="/api-config" className="text-primary hover:underline">
+                    Painel Admin
+                  </a>
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="model">Modelo de IA</Label>
+                <Select
+                  value={selectedModel}
+                  onValueChange={(value: any) => setSelectedModel(value)}
+                >
+                  <SelectTrigger id="model">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="llama-3.1-70b-versatile">
+                      Llama 3.1 70B (Recomendado)
+                    </SelectItem>
+                    <SelectItem value="llama-3.1-8b-instant">
+                      Llama 3.1 8B (Rápido)
+                    </SelectItem>
+                    <SelectItem value="mixtral-8x7b-32768">
+                      Mixtral 8x7B (Balanceado)
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">
+                  {selectedModel === "llama-3.1-70b-versatile" &&
+                    "Melhor para análises complexas e raciocínio avançado"}
+                  {selectedModel === "llama-3.1-8b-instant" &&
+                    "Respostas mais rápidas para consultas simples"}
+                  {selectedModel === "mixtral-8x7b-32768" &&
+                    "Bom equilíbrio entre velocidade e qualidade"}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Chat Messages */}
+        <Card className="flex-1 flex flex-col overflow-hidden">
+          <CardContent className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex gap-3 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex gap-3 ${
+                  message.role === "user" ? "justify-end" : "justify-start"
+                }`}
               >
                 {message.role === "assistant" && (
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Bot className="w-5 h-5 text-primary" />
+                  <div className="flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                      <Bot className="h-5 w-5 text-primary-foreground" />
+                    </div>
                   </div>
                 )}
 
                 <div
-                  className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-2 rounded-lg ${
+                  className={`max-w-[80%] rounded-lg p-4 ${
                     message.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-br-none"
-                      : "bg-muted text-foreground rounded-bl-none"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted"
                   }`}
                 >
                   {message.role === "assistant" ? (
-                    <Streamdown>{message.content}</Streamdown>
+                    <div className="prose prose-sm dark:prose-invert max-w-none">
+                      <Streamdown>{message.content}</Streamdown>
+                    </div>
                   ) : (
-                    <p className="text-sm">{message.content}</p>
+                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                   )}
-                  <p className="text-xs opacity-70 mt-1">
-                    {message.timestamp.toLocaleTimeString("pt-BR", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
+                  <div className="flex items-center gap-2 mt-2">
+                    <p className="text-xs opacity-70">
+                      {message.timestamp.toLocaleTimeString("pt-BR", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                    {message.role === "assistant" && getModelBadge(message.model)}
+                  </div>
                 </div>
 
                 {message.role === "user" && (
-                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                    <User className="w-5 h-5 text-primary-foreground" />
+                  <div className="flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                      <User className="h-5 w-5" />
+                    </div>
                   </div>
                 )}
               </div>
             ))}
 
             {isLoading && (
-              <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-primary" />
+              <div className="flex gap-3 justify-start">
+                <div className="flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                    <Bot className="h-5 w-5 text-primary-foreground" />
+                  </div>
                 </div>
-                <div className="bg-muted px-4 py-2 rounded-lg rounded-bl-none">
-                  <Loader2 className="w-5 h-5 animate-spin" />
+                <div className="bg-muted rounded-lg p-4">
+                  <Loader2 className="h-5 w-5 animate-spin" />
                 </div>
               </div>
             )}
@@ -194,72 +287,33 @@ export default function AIChat() {
           </CardContent>
 
           {/* Input Area */}
-          <div className="border-t p-4 space-y-3">
+          <div className="border-t p-4">
             <div className="flex gap-2">
               <Input
-                placeholder="Faça uma pergunta sobre suas finanças..."
+                placeholder="Digite sua pergunta sobre finanças..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter" && !isLoading) {
-                    handleSendMessage();
-                  }
-                }}
+                onKeyPress={handleKeyPress}
                 disabled={isLoading}
+                className="flex-1"
               />
-              <Button onClick={handleSendMessage} disabled={isLoading || !input.trim()}>
+              <Button
+                onClick={handleSendMessage}
+                disabled={isLoading || !input.trim()}
+                size="icon"
+              >
                 {isLoading ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  <Send className="w-4 h-4" />
+                  <Send className="h-4 w-4" />
                 )}
               </Button>
             </div>
-
-            {/* Suggested Questions */}
-            {messages.length === 1 && (
-              <div className="space-y-2">
-                <p className="text-xs text-muted-foreground">Perguntas sugeridas:</p>
-                <div className="flex flex-wrap gap-2">
-                  {suggestedQuestions.map((question) => (
-                    <Button
-                      key={question}
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        setInput(question);
-                      }}
-                      className="text-xs"
-                    >
-                      {question}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            )}
+            <p className="text-xs text-muted-foreground mt-2">
+              💡 Dica: Pergunte sobre seus gastos, metas, investimentos ou peça análises personalizadas
+            </p>
           </div>
         </Card>
-
-        {/* Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">💡 Dica</CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              O assistente pode ajudá-lo com análise de gastos, recomendações de economia e planejamento financeiro.
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">🔒 Privacidade</CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              Seus dados financeiros são criptografados e nunca são compartilhados com terceiros.
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </DashboardLayout>
   );

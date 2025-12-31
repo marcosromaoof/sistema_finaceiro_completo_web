@@ -232,10 +232,13 @@
 - [x] Adicionar status de conexão (conectado/desconectado)
 
 ### Integração com Groq
-- [ ] Implementar cliente Groq API
-- [ ] Adicionar suporte a Llama 3.1 70B
-- [ ] Adicionar suporte a Mixtral 8x7B
+- [x] Implementar cliente Groq API no backend
+- [x] Adicionar suporte a Llama 3.1 70B
+- [x] Adicionar suporte a Mixtral 8x7B
 - [ ] Implementar fallback automático
+- [x] Integrar com Chat IA
+- [x] Adicionar contexto financeiro do usuário
+- [x] Criar procedures tRPC para chat
 
 ### Integração com Tavily Search
 - [ ] Implementar cliente Tavily API

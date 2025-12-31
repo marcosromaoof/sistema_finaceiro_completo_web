@@ -5,6 +5,7 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { invokeLLM } from "./_core/llm";
+import { sendGroqChat, testGroqConnection, getGroqModels, initializeGroqClient } from "./_core/groq";
 
 export const appRouter = router({
   system: systemRouter,
@@ -548,6 +549,118 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ ctx, input }) => {
         return await db.deleteAlert(input.id, ctx.user.id);
+      }),
+  }),
+
+  // ==================== AI CHAT ====================
+  aiChat: router({    
+    // Send message to AI with financial context
+    sendMessage: protectedProcedure
+      .input(z.object({
+        message: z.string().min(1),
+        apiKey: z.string().optional(),
+        model: z.enum(["llama-3.1-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"]).default("llama-3.1-70b-versatile"),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // Get user's financial context
+        const accounts = await db.getUserAccounts(ctx.user.id);
+        const transactions = await db.getUserTransactions(ctx.user.id, 50);
+        const budgets = await db.getUserBudgets(ctx.user.id);
+        const goals = await db.getUserGoals(ctx.user.id);
+        const debts = await db.getUserDebts(ctx.user.id);
+        
+        // Calculate financial summary
+        const totalBalance = accounts.reduce((sum, acc) => sum + parseFloat(acc.balance), 0);
+        const totalDebt = debts.reduce((sum, debt) => sum + parseFloat(debt.remainingAmount), 0);
+        const netWorth = totalBalance - totalDebt;
+        
+        // Get current month transactions
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const monthTransactions = transactions.filter(t => new Date(t.date) >= startOfMonth);
+        
+        const monthIncome = monthTransactions
+          .filter(t => t.type === "income")
+          .reduce((sum, t) => sum + parseFloat(t.amount), 0);
+        
+        const monthExpenses = monthTransactions
+          .filter(t => t.type === "expense")
+          .reduce((sum, t) => sum + parseFloat(t.amount), 0);
+        
+        // Build context for AI
+        const financialContext = `
+Contexto Financeiro do Usuário:
+- Patrimônio Líquido: R$ ${netWorth.toFixed(2)}
+- Saldo Total em Contas: R$ ${totalBalance.toFixed(2)}
+- Dívidas Totais: R$ ${totalDebt.toFixed(2)}
+- Receitas do Mês: R$ ${monthIncome.toFixed(2)}
+- Despesas do Mês: R$ ${monthExpenses.toFixed(2)}
+- Número de Contas: ${accounts.length}
+- Orçamentos Ativos: ${budgets.length}
+- Metas Ativas: ${goals.filter(g => !g.isCompleted).length}
+- Dívidas Ativas: ${debts.length}
+
+Últimas Transações:
+${transactions.slice(0, 10).map(t => 
+  `- ${t.type === 'income' ? 'Receita' : 'Despesa'}: R$ ${parseFloat(t.amount).toFixed(2)} - ${t.description || 'Sem descrição'} (${new Date(t.date).toLocaleDateString('pt-BR')})`
+).join('\n')}
+`;
+        
+        const systemPrompt = `Você é um assistente financeiro especializado em finanças pessoais. 
+Você tem acesso aos dados financeiros do usuário e deve fornecer análises precisas, conselhos práticos e insights acionáveis.
+Sempre responda em português brasileiro de forma clara e profissional.
+Use os dados financeiros fornecidos para dar respostas personalizadas e relevantes.
+${financialContext}`;
+        
+        try {
+          const response = await sendGroqChat(
+            [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: input.message },
+            ],
+            { model: input.model },
+            input.apiKey
+          );
+          
+          return {
+            success: true,
+            message: response,
+            model: input.model,
+          };
+        } catch (error: any) {
+          console.error("[AI Chat] Error:", error);
+          return {
+            success: false,
+            message: error.message || "Erro ao processar mensagem",
+            model: input.model,
+          };
+        }
+      }),
+    
+    // Test Groq API connection
+    testConnection: protectedProcedure
+      .input(z.object({ apiKey: z.string() }))
+      .mutation(async ({ input }) => {
+        const isValid = await testGroqConnection(input.apiKey);
+        return { success: isValid };
+      }),
+    
+    // Get available models
+    getModels: protectedProcedure.query(() => {
+      return getGroqModels();
+    }),
+    
+    // Initialize Groq client (admin only)
+    initialize: protectedProcedure
+      .input(z.object({ apiKey: z.string() }))
+      .mutation(async ({ ctx, input }) => {
+        // Check if user is admin
+        if (ctx.user.role !== "admin") {
+          throw new Error("Unauthorized: Admin access required");
+        }
+        
+        const success = initializeGroqClient(input.apiKey);
+        return { success };
       }),
   }),
 
