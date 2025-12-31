@@ -261,3 +261,66 @@
 - [x] Buscar dados de mercado
 - [x] Criar procedures tRPC para busca
 - [x] Atualizar frontend para mostrar resultados
+
+
+## Transformação em SaaS Completo (Em Progresso)
+
+### Homepage Pública (Landing Page)
+- [x] Criar página inicial pública com hero section
+- [x] Adicionar seção de features/benefícios
+- [x] Criar seção de pricing/planos
+- [x] Adicionar testimonials/depoimentos
+- [x] Criar seção de FAQ
+- [x] Adicionar footer com links importantes
+- [x] Implementar CTA (Call to Action) buttons
+- [ ] Criar página "Sobre Nós"
+- [ ] Criar página "Contato"
+- [ ] Criar página "Termos de Uso"
+- [ ] Criar página "Política de Privacidade"
+
+### Sistema de Tickets/Suporte
+- [x] Criar interface de criação de tickets
+- [x] Implementar listagem de tickets do usuário
+- [x] Adicionar sistema de prioridades
+- [ ] Criar painel admin para gerenciar tickets
+- [ ] Implementar sistema de respostas
+- [ ] Adicionar notificações de novos tickets
+- [x] Criar sistema de status (aberto, em andamento, fechado)
+- [ ] Implementar upload de anexos em tickets
+
+### Sistema de Cobrança e Planos
+- [ ] Criar página de planos e preços
+- [ ] Implementar checkout com Stripe
+- [ ] Criar sistema de assinaturas recorrentes
+- [ ] Implementar webhooks do Stripe
+- [ ] Criar página de gerenciamento de assinatura
+- [ ] Adicionar histórico de pagamentos
+- [ ] Implementar cancelamento de assinatura
+- [ ] Criar sistema de upgrade/downgrade de planos
+- [ ] Adicionar trial gratuito de 14 dias
+
+### Login Social com Google
+- [ ] Configurar Google OAuth 2.0
+- [ ] Implementar botão "Login com Google"
+- [ ] Criar fluxo de autenticação OAuth
+- [ ] Sincronizar dados do perfil Google
+- [ ] Implementar linking de contas
+- [ ] Adicionar opção de desconectar conta Google
+
+### Verificação de Layout
+- [ ] Verificar todas as páginas têm layout consistente
+- [ ] Garantir menu lateral aparece em todas as páginas autenticadas
+- [ ] Verificar responsividade mobile
+- [ ] Corrigir problemas de navegação
+- [ ] Garantir breadcrumbs funcionando
+- [ ] Verificar estados de loading
+- [ ] Verificar estados de erro
+
+### Melhorias UX/UI
+- [ ] Adicionar animações de transição
+- [ ] Melhorar feedback visual de ações
+- [ ] Implementar skeleton loaders
+- [ ] Adicionar empty states informativos
+- [ ] Melhorar mensagens de erro
+- [ ] Adicionar tooltips explicativos
+- [ ] Implementar tour guiado para novos usuários

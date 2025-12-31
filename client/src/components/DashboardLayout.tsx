@@ -27,11 +27,11 @@ import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat, Bot, Shield, Zap, Users, ArrowRightLeft, Key } from "lucide-react";
+import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat, Bot, Shield, Zap, Users, ArrowRightLeft, Key, HelpCircle } from "lucide-react";
 
 // Menu items para todos os usuários
 const userMenuItems = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
   { icon: Wallet, label: "Contas", path: "/accounts" },
   { icon: Receipt, label: "Transações", path: "/transactions" },
   { icon: Upload, label: "Importar", path: "/import" },
@@ -49,6 +49,7 @@ const userMenuItems = [
   { icon: ArrowRightLeft, label: "Transferências", path: "/auto-transfers" },
   { icon: Shield, label: "2FA", path: "/2fa" },
   { icon: Users, label: "Login Social", path: "/social-login" },
+  { icon: HelpCircle, label: "Suporte", path: "/support" },
   { icon: Settings, label: "Configurações", path: "/settings" },
 ];
 
@@ -122,7 +123,7 @@ export default function DashboardLayout({
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton size="lg" asChild>
-                  <a href="/">
+                  <a href="/dashboard">
                     <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                       <LayoutDashboard className="size-4" />
                     </div>

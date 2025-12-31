@@ -743,6 +743,35 @@ ${financialContext}${webSearchResults}`;
       }),
   }),
 
+  // ==================== SUPPORT ====================
+  support: router({ listTickets: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getUserTickets(ctx.user.id);
+    }),
+    
+    createTicket: protectedProcedure
+      .input(z.object({
+        subject: z.string().min(5),
+        category: z.enum(["technical", "billing", "feature", "other"]),
+        priority: z.enum(["low", "medium", "high", "urgent"]),
+        description: z.string().min(20),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return await db.createTicket({
+          userId: ctx.user.id,
+          ...input,
+        });
+      }),
+    
+    updateTicketStatus: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        status: z.enum(["open", "in_progress", "resolved", "closed"]),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        return await db.updateTicketStatus(input.id, input.status, ctx.user.id);
+      }),
+  }),
+
   // ==================== DASHBOARD ====================
   dashboard: router({
     summary: protectedProcedure.query(async ({ ctx }) => {

@@ -15,6 +15,13 @@
       "when": 1767177116184,
       "tag": "0001_cooing_black_bird",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1767186037109,
+      "tag": "0002_safe_shocker",
+      "breakpoints": true
     }
   ]
 }

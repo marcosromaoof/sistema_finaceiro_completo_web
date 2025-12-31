@@ -14,7 +14,8 @@ import {
   investmentReturns, InvestmentReturn, InsertInvestmentReturn,
   retirementPlans, RetirementPlan, InsertRetirementPlan,
   categorizationRules, CategorizationRule, InsertCategorizationRule,
-  alerts, Alert, InsertAlert
+  alerts, Alert, InsertAlert,
+  supportTickets, SupportTicket, InsertSupportTicket
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -546,4 +547,42 @@ export async function deleteAlert(id: number, userId: number) {
   if (!db) throw new Error("Database not available");
   
   return await db.delete(alerts).where(and(eq(alerts.id, id), eq(alerts.userId, userId)));
+}
+
+
+// ==================== SUPPORT TICKET OPERATIONS ====================
+
+export async function createTicket(ticket: {
+  userId: number;
+  subject: string;
+  category: "technical" | "billing" | "feature" | "other";
+  priority: "low" | "medium" | "high" | "urgent";
+  description: string;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(supportTickets).values({
+    ...ticket,
+    status: "open" as const,
+  });
+  return result;
+}
+
+export async function getUserTickets(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(supportTickets)
+    .where(eq(supportTickets.userId, userId))
+    .orderBy(desc(supportTickets.createdAt));
+}
+
+export async function updateTicketStatus(id: number, status: "open" | "in_progress" | "resolved" | "closed", userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  return await db.update(supportTickets)
+    .set({ status, updatedAt: new Date() })
+    .where(and(eq(supportTickets.id, id), eq(supportTickets.userId, userId)));
 }
