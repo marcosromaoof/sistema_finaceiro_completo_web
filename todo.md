@@ -873,3 +873,92 @@
 - [x] Adicionar padding (p-6) ao conteúdo principal
 - [x] Testar responsividade em diferentes tamanhos de tela
 - [x] Validar que conteúdo não é cortado pela sidebar
+
+## Área Admin - Melhorias e Correções (🔧 Em Andamento)
+
+### Layout e Navegação
+- [ ] Criar componente AdminLayout com menu lateral dedicado
+- [ ] Adicionar botão "Voltar para Área de Usuário"
+- [ ] Implementar navegação entre páginas admin
+- [ ] Corrigir botões quebrados (Configurar, etc)
+
+### Gerenciamento de Usuários
+- [ ] Criar página de listagem de usuários com filtros
+- [ ] Implementar detalhes do usuário (modal ou página)
+- [ ] Adicionar ações: editar, banir, alterar plano
+- [ ] Sistema de busca por nome/email
+
+### Planos e Assinaturas
+- [ ] Página de gerenciamento de planos
+- [ ] CRUD completo de planos (criar, editar, arquivar)
+- [ ] Configuração de preços e recursos por plano
+- [ ] Migração de usuários entre planos
+
+### Cupons de Desconto
+- [ ] Página de gerenciamento de cupons
+- [ ] Criar cupons (% ou valor fixo)
+- [ ] Definir validade e limite de uso
+- [ ] Visualizar uso de cupons
+
+### Sistema de Banimento
+- [ ] Implementar função de banir/desbanir usuário
+- [ ] Adicionar campo "isBanned" no schema de users
+- [ ] Bloquear acesso de usuários banidos
+- [ ] Histórico de banimentos
+
+## Menu Financeiro Admin (🔧 Em Andamento)
+
+### Gerenciamento de Transações
+- [ ] Criar página de listagem de todas as transações do sistema
+- [ ] Implementar filtros (usuário, data, valor, status, tipo)
+- [ ] Adicionar função de estorno de transações
+- [ ] Sistema de busca por ID, descrição ou usuário
+- [ ] Exportar transações para CSV/Excel
+
+### Aprovação de Transações
+- [ ] Criar sistema de aprovação manual de transações
+- [ ] Adicionar campo "status" (pendente/aprovada/rejeitada) no schema
+- [ ] Página de transações pendentes de aprovação
+- [ ] Notificar usuário quando transação for aprovada/rejeitada
+- [ ] Histórico de aprovações
+
+### Gerenciamento de Planos
+- [ ] Página CRUD de planos de assinatura
+- [ ] Criar novo plano (nome, preço, recursos, duração)
+- [ ] Editar planos existentes
+- [ ] Arquivar/desativar planos
+- [ ] Migrar usuários entre planos
+
+### Categorias Globais
+- [ ] Página de gerenciamento de categorias do sistema
+- [ ] Criar categorias padrão para novos usuários
+- [ ] Editar categorias existentes (nome, cor, ícone)
+- [ ] Estatísticas de uso por categoria
+- [ ] Mesclar categorias duplicadas
+
+### Promoções e Cupons
+- [ ] Página de criação de promoções
+- [ ] Cupons de desconto (% ou valor fixo)
+- [ ] Definir validade e limite de uso
+- [ ] Aplicar promoções a planos específicos
+- [ ] Relatório de uso de cupons
+
+### Relatórios Financeiros
+- [ ] Dashboard de receitas e despesas
+- [ ] Gráficos de evolução financeira
+- [ ] Análise de churn e conversão
+- [ ] Exportar relatórios em PDF
+- [ ] Comparação mês a mês
+
+## Menu Admin com Seção Financeira (✅ Parcialmente Concluído)
+
+- [x] Criar AdminLayout com menu lateral dedicado
+- [x] Organizar menu em seções (Principal, Financeiro, Configurações)
+- [x] Adicionar botão "Voltar para Área de Usuário"
+- [x] Criar página de gerenciamento de transações
+- [x] Implementar filtros e busca de transações
+- [x] Adicionar função de estorno
+- [x] Exportar transações para CSV
+- [ ] Criar páginas de Planos, Categorias, Promoções
+- [ ] Implementar sistema de aprovação de transações
+- [ ] Criar relatórios financeiros admin

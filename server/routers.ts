@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, adminProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { updateUser } from "./db-user-update";
@@ -233,6 +233,18 @@ export const appRouter = router({
         }
         
         return { categoryId: suggestedCategoryId };
+      }),
+    
+    // Admin procedures
+    getAll: adminProcedure
+      .query(async () => {
+        return await db.getAllTransactions();
+      }),
+    
+    refund: adminProcedure
+      .input(z.object({ transactionId: z.number() }))
+      .mutation(async ({ input }) => {
+        return await db.refundTransaction(input.transactionId);
       }),
   }),
 

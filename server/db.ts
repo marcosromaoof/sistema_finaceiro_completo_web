@@ -685,3 +685,50 @@ export async function deleteApiSetting(key: string): Promise<void> {
 
   await db.delete(apiSettings).where(eq(apiSettings.key, key));
 }
+
+
+// ==================== ADMIN FUNCTIONS ====================
+
+/**
+ * Get all transactions (admin only)
+ */
+export async function getAllTransactions() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(transactions).orderBy(desc(transactions.date));
+}
+
+/**
+ * Refund a transaction (admin only)
+ */
+export async function refundTransaction(transactionId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [transaction] = await db
+    .select()
+    .from(transactions)
+    .where(eq(transactions.id, transactionId));
+
+  if (!transaction) {
+    throw new Error("Transaction not found");
+  }
+
+  // Create reverse transaction
+  await db.insert(transactions).values({
+    userId: transaction.userId,
+    accountId: transaction.accountId,
+    categoryId: transaction.categoryId,
+    type: transaction.type === "income" ? "expense" : "income",
+    amount: transaction.amount,
+    description: `Estorno: ${transaction.description || ""}`,
+    date: new Date(),
+    isPending: false,
+    isRecurring: false,
+    tags: transaction.tags,
+    notes: `Estorno da transação #${transactionId}`,
+  });
+
+  return { success: true, message: "Transação estornada com sucesso" };
+}

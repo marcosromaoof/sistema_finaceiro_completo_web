@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AdminLayout from "@/components/AdminLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -11,10 +12,8 @@ import {
   BarChart3, Activity, AlertCircle, Lock
 } from "lucide-react";
 import { toast } from "sonner";
-import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function AdminDashboard() {
-  const { user } = useAuth();
   const [showKeys, setShowKeys] = useState(false);
 
   // Configurações de IA
@@ -34,21 +33,6 @@ export default function AdminDashboard() {
   // Configurações de WhatsApp
   const [whatsappNumber, setWhatsappNumber] = useState("+55 11 99999-9999");
   const [whatsappToken, setWhatsappToken] = useState("EAAx****");
-
-  // Verificar se é admin
-  if (user?.role !== 'admin') {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center space-y-4">
-          <Lock className="h-16 w-16 text-red-600 mx-auto" />
-          <h1 className="text-2xl font-bold">Acesso Negado</h1>
-          <p className="text-muted-foreground">
-            Apenas administradores podem acessar este painel.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   const handleSaveConfig = (section: string) => {
     toast.success(`Configurações de ${section} salvas com sucesso!`);
@@ -97,7 +81,8 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="container py-8 space-y-8">
+    <AdminLayout>
+      <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -486,6 +471,7 @@ export default function AdminDashboard() {
           </div>
         </TabsContent>
       </Tabs>
-    </div>
+      </div>
+    </AdminLayout>
   );
 }

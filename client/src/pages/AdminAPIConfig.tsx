@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import AdminLayout from "@/components/AdminLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -142,7 +143,8 @@ export default function AdminAPIConfig() {
   }
 
   return (
-    <div className="container max-w-4xl py-8">
+    <AdminLayout>
+      <div className="max-w-4xl">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Configurações de API</h1>
         <p className="text-muted-foreground">
@@ -249,6 +251,7 @@ export default function AdminAPIConfig() {
           <p>• Configure limites de uso para evitar cobranças inesperadas</p>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </AdminLayout>
   );
 }
