@@ -18,6 +18,9 @@ import ImportTransactions from "./pages/ImportTransactions";
 import Education from "./pages/Education";
 import Reports from "./pages/Reports";
 import RecurringExpenses from "./pages/RecurringExpenses";
+import AdminDashboard from "./pages/AdminDashboard";
+import AIChat from "./pages/AIChat";
+import N8nIntegration from "./pages/N8nIntegration";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -41,6 +44,9 @@ function Router() {
       <Route path="/education" component={Education} />
       <Route path="/reports" component={Reports} />
       <Route path="/recurring" component={RecurringExpenses} />
+      <Route path="/admin" component={AdminDashboard} />
+      <Route path="/ai-chat" component={AIChat} />
+      <Route path="/n8n" component={N8nIntegration} />
       <Route path="/budgets" component={Budgets} />
       <Route path="/goals" component={Goals} />
       <Route path="/debts" component={Debts} />
