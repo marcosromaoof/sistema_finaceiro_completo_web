@@ -1,0 +1,25 @@
+{
+  "query": "SELECT id, name, email FROM users",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2c2NcGeqAHP3sCL.root --database WoVCxrzJrtK4BBLZ3ys8B9 --execute SELECT id, name, email FROM users",
+  "rows": [
+    {
+      "id": "1",
+      "name": "Marcos Romão",
+      "email": "jurubbamir4@gmail.com"
+    },
+    {
+      "id": "2",
+      "name": "Marcos Romao",
+      "email": "marcosromaopj@gmail.com"
+    },
+    {
+      "id": "9",
+      "name": "manusmr1 ia",
+      "email": "iamanusmr@gmail.com"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\n1\tMarcos Romão\tjurubbamir4@gmail.com\n2\tMarcos Romao\tmarcosromaopj@gmail.com\n9\tmanusmr1 ia\tiamanusmr@gmail.com\n",
+  "stderr": "",
+  "execution_time_ms": 88
+}

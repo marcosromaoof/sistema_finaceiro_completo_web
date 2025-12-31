@@ -845,3 +845,31 @@
 - [x] Adicionar 4 categorias de receitas (Salário, Investimentos, Freelance, Outros)
 - [x] Executar script no banco de dados
 - [x] Validar que categorias aparecem no sistema
+
+## Correções de UX (🔧 Em Andamento)
+
+### Categorias Não Aparecem no Formulário
+- [ ] Buscar todos os usuários existentes no banco
+- [ ] Criar categorias padrão para cada usuário
+- [ ] Validar que categorias aparecem no select de transações
+- [ ] Testar criação de transação com categoria
+
+### Layout da Barra Lateral
+- [ ] Investigar problema de sobreposição no DashboardLayout
+- [ ] Ajustar padding/margin do conteúdo principal
+- [ ] Testar responsividade em diferentes tamanhos de tela
+- [ ] Validar que conteúdo não é cortado pela sidebar
+
+## ✅ Correções de UX Concluídas
+
+### Categorias Não Aparecem no Formulário ✅
+- [x] Buscar todos os usuários existentes no banco (3 usuários encontrados)
+- [x] Criar categorias padrão para usuários 2 e 3 (26 categorias criadas)
+- [x] Validar que categorias aparecem no select de transações
+- [x] Testar criação de transação com categoria
+
+### Layout da Barra Lateral ✅
+- [x] Investigar problema de sobreposição no DashboardLayout
+- [x] Adicionar padding (p-6) ao conteúdo principal
+- [x] Testar responsividade em diferentes tamanhos de tela
+- [x] Validar que conteúdo não é cortado pela sidebar
