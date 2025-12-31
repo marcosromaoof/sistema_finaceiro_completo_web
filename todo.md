@@ -1016,3 +1016,7 @@
 ## Melhorias Menu Admin (31/12/2025)
 - [x] Remover opções admin do menu de usuários (APIs de IA, Push, n8n)
 - [x] Criar botão Admin verde destacado
+
+## Correções Integrações e n8n (31/12/2025)
+- [x] Criar página de Integrações admin (erro 404)
+- [x] Corrigir botão "Criar Nova Automação" n8n

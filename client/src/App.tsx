@@ -24,6 +24,7 @@ import AdminAPIConfig from "./pages/AdminAPIConfig";
 import AdminTransactions from "./pages/AdminTransactions";
 import AdminUsers from "./pages/AdminUsers";
 import AdminBans from "./pages/AdminBans";
+import AdminIntegrations from "./pages/AdminIntegrations";
 import AIChat from "./pages/AIChat";
 import N8nIntegration from "./pages/N8nIntegration";
 import FamilySharing from "./pages/FamilySharing";
@@ -67,6 +68,7 @@ function Router() {
       <Route path="/admin/transactions" component={AdminTransactions} />
       <Route path="/admin/users" component={AdminUsers} />
       <Route path="/admin/bans" component={AdminBans} />
+      <Route path="/admin/integrations" component={AdminIntegrations} />
       <Route path="/ai-chat" component={AIChat} />
       <Route path="/n8n" component={N8nIntegration} />
       <Route path="/budgets" component={Budgets} />

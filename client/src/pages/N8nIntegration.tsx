@@ -3,9 +3,25 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Copy, Check, AlertCircle, Zap, MessageSquare, Bell, Settings } from "lucide-react";
+import { Copy, Check, AlertCircle, Zap, MessageSquare, Bell, Settings, Plus, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Automation {
   id: string;
@@ -18,6 +34,12 @@ interface Automation {
 
 export default function N8nIntegration() {
   const [copied, setCopied] = useState(false);
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [newAutomation, setNewAutomation] = useState({
+    name: "",
+    trigger: "",
+    action: "",
+  });
   const [automations, setAutomations] = useState<Automation[]>([
     {
       id: "1",
@@ -53,6 +75,27 @@ export default function N8nIntegration() {
       )
     );
     toast.success("Automação atualizada");
+  };
+
+  const handleCreateAutomation = () => {
+    if (!newAutomation.name || !newAutomation.trigger || !newAutomation.action) {
+      toast.error("Preencha todos os campos");
+      return;
+    }
+
+    const automation: Automation = {
+      id: (automations.length + 1).toString(),
+      name: newAutomation.name,
+      trigger: newAutomation.trigger,
+      action: newAutomation.action,
+      status: "active",
+      createdAt: new Date(),
+    };
+
+    setAutomations([...automations, automation]);
+    setShowCreateDialog(false);
+    setNewAutomation({ name: "", trigger: "", action: "" });
+    toast.success("Automação criada com sucesso!");
   };
 
   return (
@@ -214,8 +257,12 @@ export default function N8nIntegration() {
               ))}
             </div>
 
-            <Button className="w-full mt-4" variant="outline">
-              <Zap className="w-4 h-4 mr-2" />
+            <Button 
+              className="w-full mt-4" 
+              variant="outline"
+              onClick={() => setShowCreateDialog(true)}
+            >
+              <Plus className="w-4 h-4 mr-2" />
               Criar Nova Automação
             </Button>
           </CardContent>
@@ -263,6 +310,90 @@ Response:
             </div>
           </CardContent>
         </Card>
+
+        {/* Dialog para Criar Automação */}
+        <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Zap className="w-5 h-5 text-yellow-500" />
+                Criar Nova Automação
+              </DialogTitle>
+              <DialogDescription>
+                Configure um novo workflow de automação
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Nome da Automação</Label>
+                <Input
+                  id="name"
+                  placeholder="Ex: WhatsApp - Alerta de Gastos"
+                  value={newAutomation.name}
+                  onChange={(e) => setNewAutomation({ ...newAutomation, name: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="trigger">Trigger (Gatilho)</Label>
+                <Select
+                  value={newAutomation.trigger}
+                  onValueChange={(value) => setNewAutomation({ ...newAutomation, trigger: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione o gatilho" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Transação criada">Transação criada</SelectItem>
+                    <SelectItem value="Orçamento ultrapassado">Orçamento ultrapassado</SelectItem>
+                    <SelectItem value="Meta atingida">Meta atingida</SelectItem>
+                    <SelectItem value="Pagamento de dívida">Pagamento de dívida</SelectItem>
+                    <SelectItem value="Mensagem WhatsApp recebida">Mensagem WhatsApp recebida</SelectItem>
+                    <SelectItem value="Alerta disparado">Alerta disparado</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="action">Ação</Label>
+                <Select
+                  value={newAutomation.action}
+                  onValueChange={(value) => setNewAutomation({ ...newAutomation, action: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione a ação" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Enviar mensagem WhatsApp">Enviar mensagem WhatsApp</SelectItem>
+                    <SelectItem value="Enviar email de alerta">Enviar email de alerta</SelectItem>
+                    <SelectItem value="Criar notificação push">Criar notificação push</SelectItem>
+                    <SelectItem value="Enviar saldo atual">Enviar saldo atual</SelectItem>
+                    <SelectItem value="Gerar relatório">Gerar relatório</SelectItem>
+                    <SelectItem value="Webhook HTTP">Webhook HTTP</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <p className="text-sm text-blue-900">
+                  💡 <strong>Dica:</strong> Após criar a automação, você precisará configurá-la no n8n
+                  usando o webhook fornecido acima.
+                </p>
+              </div>
+            </div>
+
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowCreateDialog(false)}>
+                Cancelar
+              </Button>
+              <Button onClick={handleCreateAutomation}>
+                <Plus className="w-4 h-4 mr-2" />
+                Criar Automação
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </DashboardLayout>
   );
