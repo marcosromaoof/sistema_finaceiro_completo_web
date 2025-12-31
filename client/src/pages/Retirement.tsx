@@ -94,6 +94,7 @@ export default function Retirement() {
       currentAge: data.currentAge,
       retirementAge: data.targetAge,
       currentSavings: data.currentSavings,
+      targetAmount: data.targetAmount,
       monthlyContribution: data.monthlyContribution,
       expectedReturn: data.expectedReturn,
     };
@@ -320,7 +321,7 @@ export default function Retirement() {
             </div>
           ) : plans && plans.length > 0 ? (
             plans.map((plan: any) => {
-              const yearsToRetirement = plan.targetAge - plan.currentAge;
+              const yearsToRetirement = plan.retirementAge - plan.currentAge;
               const projection = calculateProjection(
                 parseFloat(plan.currentSavings),
                 parseFloat(plan.monthlyContribution),
@@ -342,7 +343,7 @@ export default function Retirement() {
                       <div>
                         <CardTitle className="text-base">{plan.name}</CardTitle>
                         <CardDescription>
-                          Aposentadoria aos {plan.targetAge} anos ({yearsToRetirement} anos)
+                          Aposentadoria aos {plan.retirementAge} anos ({yearsToRetirement} anos)
                         </CardDescription>
                       </div>
                       <div className="flex items-center gap-2">

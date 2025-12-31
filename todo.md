@@ -797,3 +797,21 @@
 - [x] Criar transação via chat ("gastei R$ 50 no mercado")
 - [x] Confirmação visual antes de executar ações
 - [x] Feedback de sucesso após criar transação
+
+## Corrigir Cálculos NaN na Aposentadoria (🔧 Em Andamento)
+- [ ] Investigar código da página de Aposentadoria
+- [ ] Identificar onde os cálculos retornam NaN
+- [ ] Corrigir lógica de cálculo de anos até aposentadoria
+- [ ] Corrigir cálculo de valor alvo
+- [ ] Validar que todos os valores aparecem corretamente
+- [ ] Testar com diferentes cenários
+
+## ✅ Correção Concluída - Cálculos NaN na Aposentadoria
+
+- [x] Investigar código da página de Aposentadoria
+- [x] Identificar onde os cálculos retornam NaN
+- [x] Corrigir lógica de cálculo de anos até aposentadoria (targetAge → retirementAge)
+- [x] Adicionar campo targetAmount ao schema do banco
+- [x] Adicionar targetAmount ao input do procedure create
+- [x] Adicionar targetAmount ao submitData do formulário
+- [x] Validar que todos os valores aparecem corretamente

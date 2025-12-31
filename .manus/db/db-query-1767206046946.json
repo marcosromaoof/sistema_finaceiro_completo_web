@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE retirementPlans ADD COLUMN targetAmount DECIMAL(15, 2) AFTER currentSavings",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2c2NcGeqAHP3sCL.root --database WoVCxrzJrtK4BBLZ3ys8B9 --execute ALTER TABLE retirementPlans ADD COLUMN targetAmount DECIMAL(15, 2) AFTER currentSavings",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 571
+}

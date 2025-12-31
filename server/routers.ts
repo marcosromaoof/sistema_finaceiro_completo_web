@@ -516,6 +516,7 @@ export const appRouter = router({
         currentAge: z.number(),
         retirementAge: z.number(),
         currentSavings: z.string().default("0.00"),
+        targetAmount: z.string().optional(),
         monthlyContribution: z.string(),
         expectedReturn: z.string(),
         inflationRate: z.string().default("3.50"),

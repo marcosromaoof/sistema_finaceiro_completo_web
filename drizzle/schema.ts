@@ -268,6 +268,7 @@ export const retirementPlans = mysqlTable("retirementPlans", {
   currentAge: int("currentAge").notNull(),
   retirementAge: int("retirementAge").notNull(),
   currentSavings: decimal("currentSavings", { precision: 15, scale: 2 }).default("0.00").notNull(),
+  targetAmount: decimal("targetAmount", { precision: 15, scale: 2 }),
   monthlyContribution: decimal("monthlyContribution", { precision: 15, scale: 2 }).notNull(),
   expectedReturn: decimal("expectedReturn", { precision: 5, scale: 2 }).notNull(), // Annual percentage
   inflationRate: decimal("inflationRate", { precision: 5, scale: 2 }).default("3.50").notNull(),

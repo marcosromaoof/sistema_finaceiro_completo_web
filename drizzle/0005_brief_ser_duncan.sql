@@ -1,0 +1,1 @@
+ALTER TABLE `retirementPlans` ADD `targetAmount` decimal(15,2);
