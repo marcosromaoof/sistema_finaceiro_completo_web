@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { trpc } from "@/lib/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Download, FileText, BarChart3, TrendingUp, Calendar } from "lucide-react";
+import { exportTransactionsToPDF, exportTransactionsToExcel } from "@/lib/exportReports";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -137,38 +138,25 @@ export default function Reports() {
   };
 
   const downloadExcel = (data: any) => {
-    // Simplified Excel export - in production, use xlsx library
-    downloadCSV(data);
-    toast.info("Para Excel completo, use a exportação CSV e abra no Excel");
+    exportTransactionsToExcel(data.transactions || [], {
+      title: "Relatório Financeiro",
+      summary: data.summary ? {
+        totalIncome: data.summary.totalIncome,
+        totalExpenses: data.summary.totalExpenses,
+        balance: data.summary.netIncome,
+      } : undefined,
+    });
   };
 
   const downloadPDF = (data: any) => {
-    // Simplified PDF export - in production, use jsPDF or similar
-    const content = `
-RELATÓRIO FINANCEIRO
-Data: ${new Date().toLocaleDateString("pt-BR")}
-
-RESUMO:
-- Receitas: R$ ${data.summary?.totalIncome?.toFixed(2) || 0}
-- Despesas: R$ ${data.summary?.totalExpenses?.toFixed(2) || 0}
-- Líquido: R$ ${data.summary?.netIncome?.toFixed(2) || 0}
-- Total de Transações: ${data.summary?.transactionCount || 0}
-- Categoria Principal: ${data.summary?.topCategory}
-
-TRANSAÇÕES:
-${(data.transactions || [])
-  .map(
-    (t: any) =>
-      `${new Date(t.date).toLocaleDateString("pt-BR")} - ${t.description} - R$ ${t.amount}`
-  )
-  .join("\n")}
-    `;
-
-    const blob = new Blob([content], { type: "text/plain;charset=utf-8;" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `relatorio_${new Date().getTime()}.txt`;
-    link.click();
+    exportTransactionsToPDF(data.transactions || [], {
+      title: "Relatório Financeiro",
+      summary: data.summary ? {
+        totalIncome: data.summary.totalIncome,
+        totalExpenses: data.summary.totalExpenses,
+        balance: data.summary.netIncome,
+      } : undefined,
+    });
   };
 
   return (

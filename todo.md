@@ -441,3 +441,39 @@
 - [x] Remover arquivo products.ts antigo
 - [x] Testar página de billing no frontend
 - [x] Executar todos os testes (35 testes passando)
+
+
+## Próximas Contas a Vencer no Dashboard (✅ Concluído)
+- [x] Criar procedure tRPC para buscar transações futuras (getUpcomingBills)
+- [x] Criar função getUpcomingBills no db.ts
+- [x] Criar componente UpcomingBills no dashboard
+- [x] Exibir próximas 7 contas a vencer (configurável)
+- [x] Mostrar data de vencimento, valor e categoria
+- [x] Adicionar badge de status (vence hoje, atrasado, futuro com dias)
+- [x] Adicionar botão para marcar como pago
+- [x] Integrar no Dashboard principal (Home.tsx)
+- [x] Adicionar campo isPending ao update de transações
+- [x] Criar testes unitários (7 testes passando)
+
+## Exportação PDF/Excel de Relatórios (✅ Concluído)
+- [x] Instalar bibliotecas (jspdf, jspdf-autotable, xlsx)
+- [x] Criar helper exportReports.ts com funções de exportação
+- [x] Implementar exportação PDF com formatação (autoTable)
+- [x] Implementar exportação Excel com múltiplas abas (Transações + Resumo)
+- [x] Integrar exportações na página de relatórios
+- [x] Incluir resumo financeiro no PDF (receitas, despesas, saldo)
+- [x] Adicionar cabeçalho, rodapé e paginação no PDF
+- [x] Formatar valores em moeda brasileira (R$)
+- [x] Adicionar timestamps nos nomes dos arquivos
+
+## Análise de Gastos Recorrentes (✅ Concluído)
+- [x] Criar algoritmo para detectar transações recorrentes (recurringAnalysis.ts)
+- [x] Implementar agrupamento por similaridade de descrição e valor
+- [x] Detectar frequência (semanal, mensal, trimestral, anual)
+- [x] Calcular impacto anual e mensal
+- [x] Criar procedure tRPC analyzeRecurring
+- [x] Atualizar página RecurringExpenses com novo algoritmo
+- [x] Exibir lista de gastos recorrentes detectados
+- [x] Mostrar próxima data esperada de cobrança
+- [x] Adicionar sugestões de economia para gastos > R$1000/ano
+- [x] Exibir cards de resumo (total, impacto anual, impacto mensal)

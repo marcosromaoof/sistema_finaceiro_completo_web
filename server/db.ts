@@ -242,6 +242,37 @@ export async function deleteTransaction(id: number, userId: number) {
   return await db.delete(transactions).where(and(eq(transactions.id, id), eq(transactions.userId, userId)));
 }
 
+export async function getUpcomingBills(userId: number, days: number = 30, limit: number = 10) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const now = new Date();
+  const futureDate = new Date();
+  futureDate.setDate(futureDate.getDate() + days);
+  
+  const results = await db.select({
+    transaction: transactions,
+    account: accounts,
+    category: categories,
+  })
+    .from(transactions)
+    .leftJoin(accounts, eq(transactions.accountId, accounts.id))
+    .leftJoin(categories, eq(transactions.categoryId, categories.id))
+    .where(
+      and(
+        eq(transactions.userId, userId),
+        eq(transactions.type, "expense"),
+        eq(transactions.isPending, true),
+        gte(transactions.date, now),
+        lte(transactions.date, futureDate)
+      )
+    )
+    .orderBy(asc(transactions.date))
+    .limit(limit);
+  
+  return results;
+}
+
 // ==================== BUDGET OPERATIONS ====================
 
 export async function createBudget(budget: InsertBudget) {

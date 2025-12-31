@@ -139,6 +139,23 @@ export const appRouter = router({
         return await db.getTransactionsByDateRange(ctx.user.id, input.startDate, input.endDate);
       }),
     
+    getUpcomingBills: protectedProcedure
+      .input(z.object({
+        days: z.number().default(30),
+        limit: z.number().default(10),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { getUpcomingBills } = await import("./db");
+        return await getUpcomingBills(ctx.user.id, input.days, input.limit);
+      }),
+    
+    analyzeRecurring: protectedProcedure
+      .query(async ({ ctx }) => {
+        const transactions = await db.getUserTransactions(ctx.user.id);
+        const { detectRecurringTransactions } = await import("./recurringAnalysis");
+        return detectRecurringTransactions(transactions);
+      }),
+    
     create: protectedProcedure
       .input(z.object({
         accountId: z.number(),
@@ -168,6 +185,7 @@ export const appRouter = router({
         amount: z.string().optional(),
         description: z.string().optional(),
         date: z.date().optional(),
+        isPending: z.boolean().optional(),
         notes: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {

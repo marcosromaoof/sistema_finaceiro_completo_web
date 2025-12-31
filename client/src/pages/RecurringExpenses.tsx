@@ -3,115 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
-import { AlertCircle, TrendingDown, Calendar, DollarSign, Zap } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-
-interface RecurringExpense {
-  id: number;
-  description: string;
-  amount: number;
-  frequency: "daily" | "weekly" | "monthly" | "yearly";
-  category: string;
-  lastDate: Date;
-  nextDate: Date;
-  status: "active" | "inactive";
-  savings?: number;
-}
+import { AlertCircle, TrendingDown, Calendar, DollarSign, RefreshCw, Clock, CheckCircle2 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function RecurringExpenses() {
-  const { data: transactions } = trpc.transactions.list.useQuery({});
-  const [recurringExpenses, setRecurringExpenses] = useState<RecurringExpense[]>([]);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-
-  const analyzeRecurringExpenses = () => {
-    setIsAnalyzing(true);
-
-    try {
-      if (!transactions || transactions.length === 0) {
-        toast.error("Nenhuma transação encontrada");
-        setIsAnalyzing(false);
-        return;
-      }
-
-      // Group transactions by description
-      const grouped = transactions.reduce(
-        (acc, t) => {
-          const key = t.description || "Sem descrição";
-          if (!acc[key]) {
-            acc[key] = [];
-          }
-          acc[key].push(t);
-          return acc;
-        },
-        {} as Record<string, any[]>
-      );
-
-      // Identify recurring patterns
-      const recurring: RecurringExpense[] = [];
-
-      Object.entries(grouped).forEach(([description, trans]) => {
-        if (trans.length >= 2) {
-          // Sort by date
-          const sorted = trans.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
-          // Calculate intervals
-          const intervals: number[] = [];
-          for (let i = 1; i < sorted.length; i++) {
-            const diff = new Date(sorted[i].date).getTime() - new Date(sorted[i - 1].date).getTime();
-            intervals.push(Math.round(diff / (1000 * 60 * 60 * 24))); // Convert to days
-          }
-
-          // Check if intervals are consistent (within 2 days tolerance)
-          const avgInterval = intervals.reduce((a, b) => a + b, 0) / intervals.length;
-          const isConsistent = intervals.every((i) => Math.abs(i - avgInterval) <= 2);
-
-          if (isConsistent && avgInterval > 0) {
-            let frequency: "daily" | "weekly" | "monthly" | "yearly" = "monthly";
-            if (avgInterval <= 1) frequency = "daily";
-            else if (avgInterval <= 7) frequency = "weekly";
-            else if (avgInterval <= 35) frequency = "monthly";
-            else frequency = "yearly";
-
-            const avgAmount = trans.reduce((sum, t) => sum + parseFloat(t.amount || 0), 0) / trans.length;
-            const lastDate = new Date(sorted[sorted.length - 1].date);
-            const nextDate = new Date(lastDate);
-
-            if (frequency === "daily") nextDate.setDate(nextDate.getDate() + 1);
-            else if (frequency === "weekly") nextDate.setDate(nextDate.getDate() + 7);
-            else if (frequency === "monthly") nextDate.setMonth(nextDate.getMonth() + 1);
-            else nextDate.setFullYear(nextDate.getFullYear() + 1);
-
-            // Calculate potential savings if cancelled
-            let monthlySavings = 0;
-            if (frequency === "daily") monthlySavings = avgAmount * 30;
-            else if (frequency === "weekly") monthlySavings = avgAmount * 4.33;
-            else if (frequency === "monthly") monthlySavings = avgAmount;
-            else monthlySavings = avgAmount / 12;
-
-            recurring.push({
-              id: Math.random(),
-              description,
-              amount: avgAmount,
-              frequency,
-              category: trans[0].categoryId || "Sem categoria",
-              lastDate,
-              nextDate,
-              status: "active",
-              savings: monthlySavings,
-            });
-          }
-        }
-      });
-
-      setRecurringExpenses(recurring.sort((a, b) => (b.savings || 0) - (a.savings || 0)));
-      toast.success(`${recurring.length} despesas recorrentes identificadas!`);
-    } catch (error) {
-      toast.error("Erro ao analisar despesas recorrentes");
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
+  const { data: recurring = [], isLoading, refetch } = trpc.transactions.analyzeRecurring.useQuery();
 
   const getFrequencyLabel = (freq: string) => {
     switch (freq) {
@@ -143,8 +39,15 @@ export default function RecurringExpenses() {
     }
   };
 
-  const totalMonthlySavings = recurringExpenses.reduce((sum, e) => sum + (e.savings || 0), 0);
-  const totalMonthlyExpense = recurringExpenses.reduce((sum, e) => sum + e.amount, 0);
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(value);
+  };
+
+  const totalAnnualImpact = recurring.reduce((sum: number, item: any) => sum + item.annualImpact, 0);
+  const totalMonthlyImpact = totalAnnualImpact / 12;
 
   return (
     <DashboardLayout>
@@ -157,67 +60,47 @@ export default function RecurringExpenses() {
           </p>
         </div>
 
-        {/* Analysis Button */}
-        <Card className="bg-blue-50 border-blue-200">
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Zap className="w-6 h-6 text-blue-600" />
-                <div>
-                  <p className="font-medium text-blue-900">Analisar Despesas Recorrentes</p>
-                  <p className="text-sm text-blue-700">
-                    Clique para identificar padrões de gastos repetidos
-                  </p>
-                </div>
-              </div>
-              <Button onClick={analyzeRecurringExpenses} disabled={isAnalyzing}>
-                {isAnalyzing ? "Analisando..." : "Analisar Agora"}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+
 
         {/* Summary Cards */}
-        {recurringExpenses.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground mb-2">Despesas Recorrentes</p>
-                  <p className="text-3xl font-bold text-foreground">
-                    {recurringExpenses.length}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground mb-2">Gasto Mensal</p>
-                  <p className="text-3xl font-bold text-red-600">
-                    R$ {totalMonthlyExpense.toFixed(2)}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground mb-2">Economia Potencial</p>
-                  <p className="text-3xl font-bold text-green-600">
-                    R$ {totalMonthlySavings.toFixed(2)}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card>
+            <CardContent className="pt-6">
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground mb-2">Despesas Recorrentes</p>
+                <p className="text-3xl font-bold text-foreground">
+                  {recurring.length}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-6">
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground mb-2">Impacto Anual</p>
+                <p className="text-3xl font-bold text-red-600">
+                  {formatCurrency(totalAnnualImpact)}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-6">
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground mb-2">Impacto Mensal</p>
+                <p className="text-3xl font-bold text-red-600">
+                  {formatCurrency(totalMonthlyImpact)}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Recurring Expenses List */}
         <div className="space-y-4">
-          {recurringExpenses.length > 0 ? (
-            recurringExpenses.map((expense) => (
-              <Card key={expense.id}>
+          {recurring.length > 0 ? (
+            recurring.map((expense: any, index: number) => (
+              <Card key={index}>
                 <CardContent className="pt-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -230,34 +113,31 @@ export default function RecurringExpenses() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                         <div>
                           <p className="text-muted-foreground mb-1">Valor</p>
-                          <p className="font-medium">R$ {expense.amount.toFixed(2)}</p>
+                          <p className="font-medium">R$ {parseFloat(expense.amount).toFixed(2)}</p>
                         </div>
                         <div>
-                          <p className="text-muted-foreground mb-1">Categoria</p>
-                          <p className="font-medium">{expense.category}</p>
+                          <p className="text-muted-foreground mb-1">Ocorrências</p>
+                          <p className="font-medium">{expense.occurrences}x</p>
                         </div>
                         <div>
                           <p className="text-muted-foreground mb-1">Última Ocorrência</p>
                           <p className="font-medium">
-                            {expense.lastDate.toLocaleDateString("pt-BR")}
+                            {new Date(expense.lastDate).toLocaleDateString("pt-BR")}
                           </p>
                         </div>
                         <div>
                           <p className="text-muted-foreground mb-1">Próxima Ocorrência</p>
                           <p className="font-medium">
-                            {expense.nextDate.toLocaleDateString("pt-BR")}
+                            {new Date(expense.nextExpectedDate).toLocaleDateString("pt-BR")}
                           </p>
                         </div>
                       </div>
                     </div>
                     <div className="text-right ml-4">
-                      <p className="text-sm text-muted-foreground mb-2">Economia Mensal</p>
-                      <p className="text-2xl font-bold text-green-600">
-                        R$ {(expense.savings || 0).toFixed(2)}
+                      <p className="text-sm text-muted-foreground mb-2">Impacto Anual</p>
+                      <p className="text-2xl font-bold text-red-600">
+                        R$ {expense.annualImpact.toFixed(2)}
                       </p>
-                      <Button variant="outline" size="sm" className="mt-3">
-                        Cancelar
-                      </Button>
                     </div>
                   </div>
                 </CardContent>
@@ -271,7 +151,7 @@ export default function RecurringExpenses() {
                   Nenhuma despesa recorrente identificada
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Clique em "Analisar Agora" para começar
+                  Adicione mais transações para identificar padrões
                 </p>
               </CardContent>
             </Card>

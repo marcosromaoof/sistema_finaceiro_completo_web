@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { UpcomingBills } from "@/components/UpcomingBills";
 
 export default function Home() {
   const { data: summary, isLoading } = trpc.dashboard.summary.useQuery();
@@ -182,6 +183,9 @@ export default function Home() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Upcoming Bills */}
+        <UpcomingBills />
 
         {/* Recent Transactions */}
         <Card>
