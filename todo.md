@@ -180,3 +180,42 @@
 - [ ] Comparação com Ibovespa
 - [ ] Comparação com S&P500
 - [ ] Gráficos comparativos
+
+
+## Melhorias Solicitadas
+
+### Controle de Acesso
+- [x] Implementar middleware de autorização baseado em roles
+- [x] Separar rotas admin de rotas de usuário
+- [x] Ocultar menu admin para usuários comuns
+- [ ] Proteger procedures admin com adminProcedure
+
+### Painel Admin Avançado
+- [x] Configurações de pagamento (Stripe keys)
+- [x] Configurações de IA (OpenAI, Claude, Gemini tokens)
+- [x] Configurações de n8n (webhook URLs, API keys)
+- [x] Configurações de WhatsApp (número, token)
+- [x] Gestão de usuários avançada
+- [x] Métricas e analytics detalhados
+- [ ] Logs de sistema e auditoria
+
+### Chat IA Profissional
+- [x] Interface de chat moderna com histórico
+- [x] Contexto financeiro do usuário
+- [x] Análises inteligentes de gastos
+- [x] Sugestões personalizadas
+- [x] Integração com dados reais do usuário
+- [x] Streaming de respostas
+- [x] Markdown rendering
+
+### Dashboard Melhorado
+- [ ] Gráficos interativos (Recharts)
+- [ ] Próximas contas a vencer
+- [ ] Tendências mensais
+- [ ] Comparação período anterior
+
+### Revisão de Código
+- [ ] Otimizar queries do banco
+- [ ] Melhorar tratamento de erros
+- [ ] Adicionar validações
+- [ ] Documentar funções complexas
