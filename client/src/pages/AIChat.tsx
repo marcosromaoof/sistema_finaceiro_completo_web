@@ -25,15 +25,15 @@ export default function AIChat() {
       id: "1",
       role: "assistant",
       content:
-        "Olá! 👋 Sou seu assistente financeiro com IA **Llama 3.1 70B** da Groq.\n\nTenho acesso aos seus dados financeiros e posso ajudá-lo com:\n\n- **Análise personalizada** de seus gastos e receitas\n- **Recomendações inteligentes** baseadas no seu perfil financeiro\n- **Planejamento estratégico** para atingir suas metas\n- **Insights acionáveis** sobre investimentos e dívidas\n- **Educação financeira** adaptada à sua situação\n\nComo posso ajudá-lo hoje?",
+        "Olá! Eu sou o **Finança A.I**, seu assistente financeiro.\n\nEstou aqui para ajudar você a controlar seu dinheiro, gastar melhor e investir com inteligência.\n\n**Eu posso:**\n\n• Analisar seus hábitos financeiros\n• Criar recomendações personalizadas\n• Ajudar no planejamento e nas metas\n• Dar insights sobre dívidas e investimentos\n• Ensinar finanças de forma clara e prática\n\n**Como deseja começar?**",
       timestamp: new Date(),
-      model: "llama-3.1-70b-versatile",
+      model: "llama-3.3-70b-versatile",
     },
   ]);
 
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState<"llama-3.1-70b-versatile" | "llama-3.1-8b-instant" | "mixtral-8x7b-32768">("llama-3.1-70b-versatile");
+  const [selectedModel, setSelectedModel] = useState<"llama-3.3-70b-versatile" | "llama-3.1-8b-instant" | "mixtral-8x7b-32768">("llama-3.3-70b-versatile");
   const [showSettings, setShowSettings] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -101,6 +101,9 @@ export default function AIChat() {
   const getModelBadge = (model?: string) => {
     if (!model) return null;
     
+    if (model.includes("3.3")) {
+      return <Badge variant="default" className="ml-2">Llama 3.3 70B</Badge>;
+    }
     if (model.includes("70b")) {
       return <Badge variant="default" className="ml-2">Llama 3.1 70B</Badge>;
     }
@@ -121,10 +124,10 @@ export default function AIChat() {
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">
               <Bot className="h-8 w-8 text-primary" />
-              Assistente Financeiro com IA
+              Finança A.I
             </h1>
             <p className="text-muted-foreground flex items-center gap-2">
-              Powered by Groq & Llama 3.1 70B
+              Seu assistente financeiro inteligente
               <Sparkles className="h-4 w-4 text-yellow-500" />
             </p>
           </div>
@@ -158,8 +161,8 @@ export default function AIChat() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="llama-3.1-70b-versatile">
-                      Llama 3.1 70B (Recomendado)
+                    <SelectItem value="llama-3.3-70b-versatile">
+                      Llama 3.3 70B (Recomendado)
                     </SelectItem>
                     <SelectItem value="llama-3.1-8b-instant">
                       Llama 3.1 8B (Rápido)
@@ -170,8 +173,8 @@ export default function AIChat() {
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground">
-                  {selectedModel === "llama-3.1-70b-versatile" &&
-                    "Melhor para análises complexas e raciocínio avançado"}
+                  {selectedModel === "llama-3.3-70b-versatile" &&
+                    "Modelo mais avançado - Melhor para análises complexas e raciocínio"}
                   {selectedModel === "llama-3.1-8b-instant" &&
                     "Respostas mais rápidas para consultas simples"}
                   {selectedModel === "mixtral-8x7b-32768" &&

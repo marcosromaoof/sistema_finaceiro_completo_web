@@ -698,3 +698,19 @@
 - [x] Adicionar item no menu do DashboardLayout
 - [x] Testar salvamento e carregamento de API Keys
 - [x] Validar que apenas admins podem acessar
+
+## Atualização do Chat IA - Nome e Mensagem (🔧 Em Andamento)
+- [ ] Atualizar título para "Finança A.I"
+- [ ] Atualizar mensagem de boas-vindas
+- [ ] Corrigir modelo Llama 3.1 70B descontinuado
+- [ ] Atualizar para modelo suportado (Llama 3.3 70B ou Llama 3.1 8B)
+- [ ] Testar chat com novo modelo
+- [ ] Validar que mensagem aparece corretamente
+
+## ✅ Atualização do Chat IA Concluída
+- [x] Atualizar título para "Finança A.I"
+- [x] Atualizar mensagem de boas-vindas
+- [x] Corrigir modelo Llama 3.1 70B descontinuado
+- [x] Atualizar para modelo suportado (Llama 3.3 70B)
+- [x] Testar chat com novo modelo
+- [x] Validar que mensagem aparece corretamente

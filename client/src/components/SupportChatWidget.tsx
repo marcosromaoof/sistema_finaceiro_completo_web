@@ -147,7 +147,7 @@ Responda de forma clara, objetiva e amigável. Se não souber algo específico, 
 
     sendMessage.mutate({
       message: `${systemContext}\n\nUsuário: ${userMessage}`,
-      model: "llama-3.1-70b-versatile"
+      model: "llama-3.3-70b-versatile"
     });
   };
 

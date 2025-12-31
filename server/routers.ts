@@ -578,7 +578,7 @@ export const appRouter = router({
     sendMessage: protectedProcedure
       .input(z.object({
         message: z.string().min(1),
-        model: z.enum(["llama-3.1-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"]).default("llama-3.1-70b-versatile"),
+        model: z.enum(["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"]).default("llama-3.3-70b-versatile"),
       }))
       .mutation(async ({ ctx, input }) => {
         // Get API keys from database (admin configured)

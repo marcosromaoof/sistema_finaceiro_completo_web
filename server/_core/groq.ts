@@ -47,7 +47,7 @@ export interface GroqMessage {
 }
 
 export interface GroqChatOptions {
-  model?: "llama-3.1-70b-versatile" | "llama-3.1-8b-instant" | "mixtral-8x7b-32768";
+  model?: "llama-3.3-70b-versatile" | "llama-3.1-8b-instant" | "mixtral-8x7b-32768";
   temperature?: number;
   maxTokens?: number;
   stream?: boolean;
@@ -55,7 +55,7 @@ export interface GroqChatOptions {
 
 /**
  * Send chat completion request to Groq
- * Uses Llama 3.1 70B by default for best quality
+ * Uses Llama 3.3 70B by default for best quality
  */
 export async function sendGroqChat(
   messages: GroqMessage[],
@@ -69,7 +69,7 @@ export async function sendGroqChat(
   }
 
   const {
-    model = "llama-3.1-70b-versatile",
+    model = "llama-3.3-70b-versatile",
     temperature = 0.7,
     maxTokens = 2048,
   } = options;
@@ -115,7 +115,7 @@ export async function* sendGroqChatStream(
   }
 
   const {
-    model = "llama-3.1-70b-versatile",
+    model = "llama-3.3-70b-versatile",
     temperature = 0.7,
     maxTokens = 2048,
   } = options;
@@ -175,9 +175,9 @@ export async function testGroqConnection(apiKey: string): Promise<boolean> {
 export function getGroqModels() {
   return [
     {
-      id: "llama-3.1-70b-versatile",
-      name: "Llama 3.1 70B",
-      description: "Best for complex analysis and reasoning",
+      id: "llama-3.3-70b-versatile",
+      name: "Llama 3.3 70B",
+      description: "Most advanced model - Best for complex analysis and reasoning",
       contextWindow: 131072,
       recommended: true,
     },
