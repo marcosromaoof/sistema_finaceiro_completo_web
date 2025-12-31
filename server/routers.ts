@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, adminProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
+import * as gamification from "./db-gamification";
 import { updateUser } from "./db-user-update";
 import { invokeLLM } from "./_core/llm";
 import { sendGroqChat, getGroqModels, testGroqConnection, initializeGroqClient } from "./_core/groq";
@@ -1263,6 +1264,36 @@ ${financialContext}${webSearchResults}`;
       .mutation(async ({ input }) => {
         await db.deactivateBan(input.banId);
         return { success: true };
+      }),
+  }),
+
+  // ==================== GAMIFICATION ====================
+  gamification: router({
+    // Get user progress
+    getProgress: protectedProcedure.query(async ({ ctx }) => {
+      return await gamification.getUserProgress(ctx.user.id);
+    }),
+
+    // Get user achievements
+    getAchievements: protectedProcedure.query(async ({ ctx }) => {
+      return await gamification.getUserAchievements(ctx.user.id);
+    }),
+
+    // Get achievement progress
+    getAchievementProgress: protectedProcedure.query(async ({ ctx }) => {
+      return await gamification.getAchievementProgress(ctx.user.id);
+    }),
+
+    // Daily login XP
+    dailyLogin: protectedProcedure.mutation(async ({ ctx }) => {
+      return await gamification.addDailyLoginXP(ctx.user.id);
+    }),
+
+    // Get level info
+    getLevelInfo: protectedProcedure
+      .input(z.object({ level: z.number() }))
+      .query(({ input }) => {
+        return gamification.getLevelInfo(input.level);
       }),
   }),
 });

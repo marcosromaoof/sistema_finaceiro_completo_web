@@ -25,6 +25,7 @@ import { PatrimonyChart } from "@/components/PatrimonyChart";
 import { GoalsSection } from "@/components/GoalsSection";
 import { CategoryChart } from "@/components/CategoryChart";
 import { AIInsights } from "@/components/AIInsights";
+import { GamificationWidget } from "@/components/GamificationWidget";
 
 export default function Home() {
   const { data: summary, isLoading } = trpc.dashboard.summary.useQuery();
@@ -308,8 +309,11 @@ export default function Home() {
           </div>
         </div>
 
-        {/* AI Insights */}
-        <AIInsights />
+        {/* Two Column: AI Insights + Gamification */}
+        <div className="grid gap-6 lg:grid-cols-2">
+          <AIInsights />
+          <GamificationWidget />
+        </div>
 
         {/* Goals Section */}
         <GoalsSection />

@@ -1092,3 +1092,21 @@
 - [ ] Implementar timeline de metas com milestones
 - [ ] Adicionar drag-and-drop para reordenar cards
 - [ ] Salvar preferências de layout no localStorage
+
+## Implementação Gamificação Completa + Localização Brasil (31/12/2025)
+- [x] Implementar procedures tRPC para detecção automática de conquistas
+- [x] Criar sistema de cálculo de XP e níveis
+- [x] Implementar sistema de streaks diários
+- [x] Criar widget de progresso de gamificação no dashboard
+- [ ] Desenvolver página completa de conquistas com grid de badges
+- [ ] Adicionar filtros por categoria na página de conquistas
+- [ ] Implementar histórico cronológico de conquistas
+- [ ] Localizar sistema para público brasileiro:
+  - [ ] Substituir contas de teste por bancos brasileiros reais
+  - [ ] Adicionar lista completa de bancos BR (Itaú, Bradesco, Santander, Caixa, BB, Nubank, Inter, etc)
+  - [ ] Ajustar formatação de moeda para padrão BR (R$)
+  - [ ] Ajustar datas para formato brasileiro (DD/MM/AAAA)
+  - [ ] Revisar textos e termos para português BR
+- [ ] Criar relatório completo do projeto para consulta GPT/Gemini
+- [ ] Consultar GPT e Gemini com relatório completo
+- [ ] Implementar melhorias sugeridas pelas IAs
