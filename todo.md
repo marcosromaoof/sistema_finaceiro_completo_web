@@ -1058,3 +1058,6 @@
 - [ ] Implementar sidebar colapsável no DashboardLayout
 - [ ] Adicionar animação confetti ao atingir meta
 - [ ] Testar responsividade de todos os componentes
+
+## Melhorias Botões Pricing (31/12/2025)
+- [x] Adicionar efeitos hover premium aos botões Free e Family (ripple, shadow)
