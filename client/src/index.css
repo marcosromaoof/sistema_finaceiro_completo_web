@@ -4,11 +4,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Fortuna Design System - Premium Financial Platform */
 @theme inline {
+  /* Border Radius */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Color Mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -28,11 +32,15 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  
+  /* Chart Colors */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  
+  /* Sidebar Colors */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -41,175 +49,392 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* Premium Financial Colors */
+  --color-prosperity: var(--prosperity);
+  --color-prosperity-foreground: var(--prosperity-foreground);
+  --color-premium: var(--premium);
+  --color-premium-foreground: var(--premium-foreground);
+  --color-trust: var(--trust);
+  --color-trust-foreground: var(--trust-foreground);
+  --color-emerald: var(--emerald);
+  --color-sapphire: var(--sapphire);
+  --color-graphite: var(--graphite);
 }
 
 :root {
-  /* Modern fintech color palette - Professional blues and greens */
-  --primary: oklch(0.55 0.18 240);
-  --primary-foreground: oklch(0.98 0.005 240);
-  --sidebar-primary: oklch(0.55 0.18 240);
-  --sidebar-primary-foreground: oklch(0.98 0.005 240);
-  --chart-1: oklch(0.55 0.18 240);
-  --chart-2: oklch(0.65 0.15 160);
-  --chart-3: oklch(0.70 0.15 280);
-  --chart-4: oklch(0.65 0.18 40);
-  --chart-5: oklch(0.58 0.20 25);
-  --radius: 0.5rem;
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Montserrat', 'Inter', sans-serif;
+  --font-mono: 'SF Mono', 'Roboto Mono', 'Courier New', monospace;
+  
+  /* Spacing Scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  
+  /* Border Radius */
+  --radius: 0.75rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+  
+  /* Premium Financial Colors - Light Mode */
+  --prosperity: oklch(0.50 0.15 145);        /* Verde Prosperidade #0A8F3A */
+  --prosperity-foreground: oklch(0.98 0 0);
+  --premium: oklch(0.70 0.12 85);            /* Dourado Premium #D4AF37 */
+  --premium-foreground: oklch(0.20 0 0);
+  --trust: oklch(0.25 0.08 240);             /* Azul Confiança #0F2A44 */
+  --trust-foreground: oklch(0.98 0 0);
+  --emerald: oklch(0.45 0.12 160);           /* Esmeralda #2E8B57 */
+  --sapphire: oklch(0.40 0.15 250);          /* Safira #0F52BA */
+  --graphite: oklch(0.35 0.02 240);          /* Grafite #404040 */
+  
+  /* Base Colors */
+  --primary: oklch(0.50 0.15 145);           /* Prosperity Green */
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.70 0.12 85);          /* Premium Gold */
+  --secondary-foreground: oklch(0.20 0 0);
+  --accent: oklch(0.45 0.12 160);            /* Emerald */
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.55 0.22 25);        /* Red */
+  --destructive-foreground: oklch(0.98 0 0);
+  
+  /* Neutral Colors */
   --background: oklch(0.98 0.005 240);
   --foreground: oklch(0.20 0.01 240);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.20 0.01 240);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.20 0.01 240);
-  --secondary: oklch(0.95 0.01 240);
-  --secondary-foreground: oklch(0.20 0.01 240);
   --muted: oklch(0.95 0.01 240);
   --muted-foreground: oklch(0.50 0.01 240);
-  --accent: oklch(0.65 0.15 160);
-  --accent-foreground: oklch(0.98 0.005 240);
-  --destructive: oklch(0.58 0.20 25);
-  --destructive-foreground: oklch(0.98 0.005 240);
   --border: oklch(0.90 0.01 240);
   --input: oklch(0.90 0.01 240);
-  --ring: oklch(0.55 0.18 240);
+  --ring: oklch(0.50 0.15 145);
+  
+  /* Sidebar */
   --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.20 0.01 240);
+  --sidebar-primary: oklch(0.50 0.15 145);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
   --sidebar-accent: oklch(0.95 0.01 240);
   --sidebar-accent-foreground: oklch(0.20 0.01 240);
   --sidebar-border: oklch(0.90 0.01 240);
-  --sidebar-ring: oklch(0.55 0.18 240);
+  --sidebar-ring: oklch(0.50 0.15 145);
+  
+  /* Chart Colors */
+  --chart-1: oklch(0.50 0.15 145);  /* Prosperity Green */
+  --chart-2: oklch(0.70 0.12 85);   /* Premium Gold */
+  --chart-3: oklch(0.40 0.15 250);  /* Sapphire Blue */
+  --chart-4: oklch(0.45 0.12 160);  /* Emerald */
+  --chart-5: oklch(0.55 0.22 25);   /* Red */
 }
 
 .dark {
-  --primary: oklch(0.60 0.18 240);
-  --primary-foreground: oklch(0.15 0.01 240);
-  --sidebar-primary: oklch(0.60 0.18 240);
-  --sidebar-primary-foreground: oklch(0.15 0.01 240);
-  --background: oklch(0.15 0.01 240);
+  /* Premium Financial Colors - Dark Mode */
+  --prosperity: oklch(0.60 0.18 145);
+  --prosperity-foreground: oklch(0.98 0 0);
+  --premium: oklch(0.75 0.15 85);
+  --premium-foreground: oklch(0.15 0 0);
+  --trust: oklch(0.30 0.10 240);
+  --trust-foreground: oklch(0.98 0 0);
+  --emerald: oklch(0.55 0.15 160);
+  --sapphire: oklch(0.50 0.18 250);
+  --graphite: oklch(0.40 0.03 240);
+  
+  /* Base Colors - Dark Mode */
+  --primary: oklch(0.60 0.18 145);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.75 0.15 85);
+  --secondary-foreground: oklch(0.15 0 0);
+  --accent: oklch(0.55 0.15 160);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.60 0.24 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  
+  /* Neutral Colors - Dark Mode */
+  --background: oklch(0.12 0.015 240);       /* Deep dark blue */
   --foreground: oklch(0.95 0.005 240);
-  --card: oklch(0.18 0.01 240);
+  --card: oklch(0.16 0.015 240);             /* Slightly lighter than bg */
   --card-foreground: oklch(0.95 0.005 240);
-  --popover: oklch(0.18 0.01 240);
+  --popover: oklch(0.16 0.015 240);
   --popover-foreground: oklch(0.95 0.005 240);
-  --secondary: oklch(0.25 0.01 240);
-  --secondary-foreground: oklch(0.95 0.005 240);
-  --muted: oklch(0.25 0.01 240);
-  --muted-foreground: oklch(0.60 0.01 240);
-  --accent: oklch(0.65 0.15 160);
-  --accent-foreground: oklch(0.15 0.01 240);
-  --destructive: oklch(0.62 0.22 25);
-  --destructive-foreground: oklch(0.95 0.005 240);
-  --border: oklch(0.25 0.01 240);
-  --input: oklch(0.25 0.01 240);
-  --ring: oklch(0.60 0.18 240);
-  --chart-1: oklch(0.60 0.18 240);
-  --chart-2: oklch(0.65 0.15 160);
-  --chart-3: oklch(0.70 0.15 280);
-  --chart-4: oklch(0.68 0.18 40);
-  --chart-5: oklch(0.62 0.22 25);
-  --sidebar: oklch(0.18 0.01 240);
+  --muted: oklch(0.22 0.015 240);
+  --muted-foreground: oklch(0.65 0.01 240);
+  --border: oklch(0.25 0.015 240);
+  --input: oklch(0.25 0.015 240);
+  --ring: oklch(0.60 0.18 145);
+  
+  /* Sidebar - Dark Mode */
+  --sidebar: oklch(0.14 0.015 240);
   --sidebar-foreground: oklch(0.95 0.005 240);
-  --sidebar-accent: oklch(0.25 0.01 240);
+  --sidebar-primary: oklch(0.60 0.18 145);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.22 0.015 240);
   --sidebar-accent-foreground: oklch(0.95 0.005 240);
-  --sidebar-border: oklch(0.25 0.01 240);
-  --sidebar-ring: oklch(0.60 0.18 240);
+  --sidebar-border: oklch(0.25 0.015 240);
+  --sidebar-ring: oklch(0.60 0.18 145);
+  
+  /* Chart Colors - Dark Mode */
+  --chart-1: oklch(0.60 0.18 145);
+  --chart-2: oklch(0.75 0.15 85);
+  --chart-3: oklch(0.50 0.18 250);
+  --chart-4: oklch(0.55 0.15 160);
+  --chart-5: oklch(0.60 0.24 25);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
-  button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]),
-  [type="button"]:not(:disabled),
-  [type="submit"]:not(:disabled),
-  [type="reset"]:not(:disabled),
-  a[href],
-  select:not(:disabled),
-  input[type="checkbox"]:not(:disabled),
-  input[type="radio"]:not(:disabled) {
-    @apply cursor-pointer;
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  
+  code, pre {
+    font-family: var(--font-mono);
   }
 }
 
-@layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
-  .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
-    padding-right: 1rem;
+@layer utilities {
+  /* Glassmorphism Effects */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
-
-  .flex {
-    min-height: 0;
-    min-width: 0;
+  
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
-
-  /* Custom scrollbar for better UX */
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  
+  /* Gradient Backgrounds */
+  .gradient-prosperity {
+    background: linear-gradient(135deg, oklch(0.50 0.15 145) 0%, oklch(0.70 0.12 85) 100%);
   }
-  .scrollbar-thin::-webkit-scrollbar-track {
-    @apply bg-muted/30;
-    border-radius: 4px;
+  
+  .gradient-sky {
+    background: linear-gradient(135deg, oklch(0.25 0.08 240) 0%, oklch(0.40 0.15 250) 100%);
   }
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/30;
-    border-radius: 4px;
+  
+  .gradient-emerald {
+    background: linear-gradient(135deg, oklch(0.45 0.12 160) 0%, oklch(0.50 0.15 145) 100%);
   }
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/50;
+  
+  /* Text Gradients */
+  .text-gradient-prosperity {
+    background: linear-gradient(135deg, oklch(0.50 0.15 145) 0%, oklch(0.70 0.12 85) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-
-  /* Number formatting utilities */
-  .text-income {
-    @apply text-accent;
+  
+  /* Hover Effects */
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  .text-expense {
-    @apply text-destructive;
+  
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
   }
-  .bg-income {
-    @apply bg-accent/10 text-accent;
+  
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in;
   }
-  .bg-expense {
-    @apply bg-destructive/10 text-destructive;
+  
+  .slide-up {
+    animation: slideUp 0.5s ease-out;
   }
-
-  /* Card hover effects for interactive elements */
-  .card-interactive {
-    @apply transition-all duration-200 hover:shadow-lg hover:scale-[1.02] cursor-pointer;
+  
+  .scale-in {
+    animation: scaleIn 0.3s ease-out;
   }
-
-  @media (min-width: 640px) {
-    .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
-      padding-right: 1.5rem;
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
-
-  @media (min-width: 1024px) {
-    .container {
-      padding-left: 2rem; /* 32px - desktop padding */
-      padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Ripple Effect */
+  .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ripple::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .ripple:active::after {
+    width: 300px;
+    height: 300px;
+  }
+  
+  /* Metric Cards - Applied manually */
+  .metric-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Progress Bars */
+  .progress-bar {
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--muted);
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: all 0.5s ease-out;
+  }
+  
+  /* Status Badges */
+  .badge-success {
+    background-color: color-mix(in oklch, var(--prosperity) 10%, transparent);
+    color: var(--prosperity);
+    border: 1px solid color-mix(in oklch, var(--prosperity) 20%, transparent);
+  }
+  
+  .badge-warning {
+    background-color: color-mix(in oklch, var(--premium) 10%, transparent);
+    color: var(--premium);
+    border: 1px solid color-mix(in oklch, var(--premium) 20%, transparent);
+  }
+  
+  .badge-danger {
+    background-color: color-mix(in oklch, var(--destructive) 10%, transparent);
+    color: var(--destructive);
+    border: 1px solid color-mix(in oklch, var(--destructive) 20%, transparent);
+  }
+  
+  .badge-info {
+    background-color: color-mix(in oklch, var(--sapphire) 10%, transparent);
+    color: var(--sapphire);
+    border: 1px solid color-mix(in oklch, var(--sapphire) 20%, transparent);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Selection */
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Focus Visible */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Container Customization */
+.container {
+  @apply mx-auto px-4 sm:px-6 lg:px-8;
+  max-width: 1400px;
+}
+
+/* Flex Utilities */
+.flex,
+.inline-flex {
+  min-width: 0;
+  min-height: 0;
 }
