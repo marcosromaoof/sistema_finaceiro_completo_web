@@ -107,7 +107,7 @@ export default function LandingPage() {
     {
       name: "Maria Silva",
       role: "Empresária",
-      content: "O FinMaster Pro transformou completamente a forma como gerencio minhas finanças. Consegui economizar 30% em 3 meses!",
+      content: "O Organizai transformou completamente a forma como gerencio minhas finanças. Consegui economizar 30% em 3 meses!",
       avatar: "MS"
     },
     {
@@ -143,7 +143,7 @@ export default function LandingPage() {
     },
     {
       question: "Posso usar em múltiplos dispositivos?",
-      answer: "Sim! O FinMaster Pro funciona em qualquer dispositivo - computador, tablet ou smartphone, com sincronização automática."
+      answer: "Sim! O Organizai funciona em qualquer dispositivo - computador, tablet ou smartphone, com sincronização automática."
     }
   ];
 
@@ -156,7 +156,7 @@ export default function LandingPage() {
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <TrendingUp className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="font-bold text-xl">FinMaster Pro</span>
+            <span className="font-bold text-xl">Organizai</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <a href="#features" className="text-sm font-medium hover:text-primary transition-colors">
@@ -193,7 +193,7 @@ export default function LandingPage() {
             </h1>
             <p className="text-lg text-muted-foreground mb-8">
               Gerencie contas, orçamentos, metas e investimentos em uma plataforma completa com inteligência artificial. 
-              Tome decisões financeiras mais inteligentes com o FinMaster Pro.
+              Tome decisões financeiras mais inteligentes com o Organizai.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
@@ -285,7 +285,7 @@ export default function LandingPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">O Que Dizem Nossos Clientes</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Milhares de pessoas já transformaram suas finanças com o FinMaster Pro
+              Milhares de pessoas já transformaram suas finanças com o Organizai
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -317,7 +317,7 @@ export default function LandingPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Perguntas Frequentes</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Tire suas dúvidas sobre o FinMaster Pro
+              Tire suas dúvidas sobre o Organizai
             </p>
           </div>
           <div className="max-w-3xl mx-auto space-y-4">
@@ -357,7 +357,7 @@ export default function LandingPage() {
                 <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
                   <TrendingUp className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <span className="font-bold text-lg">FinMaster Pro</span>
+                <span className="font-bold text-lg">Organizai</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Gestão financeira inteligente para você e sua família.
@@ -392,7 +392,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2025 FinMaster Pro. Todos os direitos reservados.</p>
+            <p>© 2025 Organizai. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>

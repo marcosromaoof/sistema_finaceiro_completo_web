@@ -73,7 +73,7 @@ export default function N8nIntegration() {
         <Card>
           <CardHeader>
             <CardTitle>Configuração de Webhook</CardTitle>
-            <CardDescription>Use esta URL para conectar seu n8n ao FinMaster Pro</CardDescription>
+            <CardDescription>Use esta URL para conectar seu n8n ao Organizai</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex gap-2">

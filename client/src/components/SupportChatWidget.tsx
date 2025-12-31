@@ -15,7 +15,7 @@ export default function SupportChatWidget() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Olá! 👋 Sou o assistente do FinMaster Pro. Como posso ajudar você hoje?"
+      content: "Olá! 👋 Sou o assistente do Organizai. Como posso ajudar você hoje?"
     }
   ]);
   const [input, setInput] = useState("");
@@ -51,9 +51,9 @@ export default function SupportChatWidget() {
 
     // Context sobre o sistema para a IA
     const systemContext = `
-Você é o assistente de suporte do FinMaster Pro, uma plataforma completa de gestão financeira pessoal.
+Você é o assistente de suporte do Organizai, uma plataforma completa de gestão financeira pessoal.
 
-FUNCIONALIDADES PRINCIPAIS DO FINMASTER PRO:
+FUNCIONALIDADES PRINCIPAIS DO ORGANIZAI:
 
 1. DASHBOARD INTELIGENTE
    - Visão consolidada do patrimônio líquido
@@ -179,7 +179,7 @@ Responda de forma clara, objetiva e amigável. Se não souber algo específico, 
             <div className="flex items-center gap-2">
               <Bot className="h-5 w-5" />
               <div>
-                <div className="font-semibold">Assistente FinMaster</div>
+                <div className="font-semibold">Assistente Organizai</div>
                 <div className="text-xs opacity-90">Online • Responde em segundos</div>
               </div>
             </div>

@@ -69,7 +69,7 @@ export default function SocialLogin() {
             Contas Conectadas
           </CardTitle>
           <CardDescription>
-            Gerencie as contas sociais vinculadas à sua conta do FinMaster Pro
+            Gerencie as contas sociais vinculadas à sua conta do Organizai
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -149,7 +149,7 @@ export default function SocialLogin() {
           </p>
           <p>
             <strong>Desconexão:</strong> Você pode desconectar suas contas sociais a qualquer
-            momento sem perder acesso à sua conta do FinMaster Pro.
+            momento sem perder acesso à sua conta do Organizai.
           </p>
         </CardContent>
       </Card>

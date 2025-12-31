@@ -92,7 +92,7 @@ export default function DashboardLayout({
         <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
           <div className="flex flex-col items-center gap-6">
             <h1 className="text-2xl font-semibold tracking-tight text-center">
-              FinMaster Pro
+              Organizai
             </h1>
             <p className="text-sm text-muted-foreground text-center max-w-sm">
               Sua plataforma completa de gestão financeira pessoal. Faça login para continuar.
@@ -128,7 +128,7 @@ export default function DashboardLayout({
                       <LayoutDashboard className="size-4" />
                     </div>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">FinMaster Pro</span>
+                      <span className="truncate font-semibold">Organizai</span>
                       <span className="truncate text-xs text-muted-foreground">
                         Gestão Financeira
                       </span>

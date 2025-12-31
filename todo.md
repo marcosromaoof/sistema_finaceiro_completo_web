@@ -1,4 +1,4 @@
-# FinMaster Pro - Lista de Tarefas
+# Organizai - Lista de Tarefas
 
 ## Infraestrutura e Configuração
 - [x] Definir schema do banco de dados com todas as tabelas necessárias
@@ -353,13 +353,13 @@
 ## Renomeação da Aplicação (Nova Solicitação)
 
 ### Renomear de "FinMaster Pro" para "Organizai"
-- [ ] Atualizar nome na landing page (hero, header, footer)
-- [ ] Atualizar nome no dashboard e sidebar
-- [ ] Atualizar nome em todos os componentes
-- [ ] Atualizar título da página (document.title)
-- [ ] Atualizar metadados (meta tags)
-- [ ] Atualizar variável de ambiente VITE_APP_TITLE
-- [ ] Atualizar package.json
-- [ ] Atualizar README.md
-- [ ] Atualizar todo.md
-- [ ] Verificar todas as referências ao nome antigo
+- [x] Atualizar nome na landing page (hero, header, footer)
+- [x] Atualizar nome no dashboard e sidebar
+- [x] Atualizar nome em todos os componentes
+- [x] Atualizar nome no SupportChatWidget
+- [x] Atualizar nome em N8nIntegration
+- [x] Atualizar nome em SocialLogin
+- [x] Atualizar package.json
+- [x] Atualizar todo.md
+- [ ] Atualizar variável de ambiente VITE_APP_TITLE (manual via UI)
+- [x] Verificar todas as referências ao nome antigo
