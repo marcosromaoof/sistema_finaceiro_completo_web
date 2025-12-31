@@ -1,11 +1,10 @@
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
+
 import { trpc } from "@/lib/trpc";
-import { Send, Bot, User, Loader2, Settings, Sparkles } from "lucide-react";
+import { Send, Bot, User, Loader2, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Streamdown } from "streamdown";
@@ -33,8 +32,7 @@ export default function AIChat() {
 
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState<"llama-3.3-70b-versatile" | "llama-3.1-8b-instant" | "mixtral-8x7b-32768">("llama-3.3-70b-versatile");
-  const [showSettings, setShowSettings] = useState(false);
+  const selectedModel = "llama-3.3-70b-versatile"; // Fixed model, no user configuration
   
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -119,59 +117,9 @@ export default function AIChat() {
               <Sparkles className="h-4 w-4 text-yellow-500" />
             </p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowSettings(!showSettings)}
-          >
-            <Settings className="h-4 w-4 mr-2" />
-            Configurações
-          </Button>
+
         </div>
 
-        {/* Settings Panel */}
-        {showSettings && (
-          <Card className="mb-4">
-            <CardHeader>
-              <CardTitle className="text-lg">Configurações do Chat</CardTitle>
-              <CardDescription>
-                Escolha o modelo de IA. A API Key é configurada pelo administrador no Painel Admin.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="model">Modelo de IA</Label>
-                <Select
-                  value={selectedModel}
-                  onValueChange={(value: any) => setSelectedModel(value)}
-                >
-                  <SelectTrigger id="model">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="llama-3.3-70b-versatile">
-                      Llama 3.3 70B (Recomendado)
-                    </SelectItem>
-                    <SelectItem value="llama-3.1-8b-instant">
-                      Llama 3.1 8B (Rápido)
-                    </SelectItem>
-                    <SelectItem value="mixtral-8x7b-32768">
-                      Mixtral 8x7B (Balanceado)
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <p className="text-xs text-muted-foreground">
-                  {selectedModel === "llama-3.3-70b-versatile" &&
-                    "Modelo mais avançado - Melhor para análises complexas e raciocínio"}
-                  {selectedModel === "llama-3.1-8b-instant" &&
-                    "Respostas mais rápidas para consultas simples"}
-                  {selectedModel === "mixtral-8x7b-32768" &&
-                    "Bom equilíbrio entre velocidade e qualidade"}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
 
         {/* Chat Messages */}
         <Card className="flex-1 flex flex-col overflow-hidden">

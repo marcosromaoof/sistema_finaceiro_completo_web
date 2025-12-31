@@ -724,3 +724,17 @@
 - [x] Alterar função getModelBadge para mostrar "Finança A.I" ao invés do nome técnico do modelo
 - [x] Testar que badge aparece corretamente nas mensagens
 - [x] Validar que não quebra outras funcionalidades
+
+## Remover Configurações do Chat para Usuários Comuns (🔧 Em Andamento)
+- [ ] Remover botão "Configurações" do header do chat
+- [ ] Remover painel de seleção de modelo
+- [ ] Remover estado showSettings
+- [ ] Simplificar código removendo lógica de configuração
+- [ ] Testar que chat funciona sem botão de configurações
+
+## ✅ Configurações Removidas do Chat
+- [x] Remover botão "Configurações" do header do chat
+- [x] Remover painel de seleção de modelo
+- [x] Remover estado showSettings
+- [x] Simplificar código removendo lógica de configuração
+- [x] Testar que chat funciona sem botão de configurações
