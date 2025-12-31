@@ -1042,3 +1042,6 @@
 - [ ] Criar componentes de progresso circular para metas - próxima fase
 - [ ] Implementar sidebar colapsável - próxima fase
 - [ ] Adicionar animações especiais (confetti ao atingir meta) - próxima fase
+
+## Ajustes Landing Page (31/12/2025)
+- [x] Remover botão "Ver Demonstração" do hero section

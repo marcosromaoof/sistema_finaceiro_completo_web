@@ -250,15 +250,12 @@ export default function LandingPage() {
             </p>
             
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center slide-up" style={{ animationDelay: '0.2s' }}>
+            <div className="flex justify-center slide-up" style={{ animationDelay: '0.2s' }}>
               <Button size="lg" asChild className="gradient-prosperity border-0 hover-lift ripple text-lg px-8 py-6">
                 <a href={getLoginUrl()}>
                   Começar Grátis
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
-              </Button>
-              <Button size="lg" variant="outline" asChild className="glass hover:bg-white/10 text-white border-white/20 hover-lift text-lg px-8 py-6">
-                <a href="#features">Ver Demonstração</a>
               </Button>
             </div>
             
