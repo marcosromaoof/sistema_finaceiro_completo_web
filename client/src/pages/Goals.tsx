@@ -24,7 +24,7 @@ const goalSchema = z.object({
   targetDate: z.string().optional(),
   category: z.enum(["short_term", "medium_term", "long_term"]),
   description: z.string().optional(),
-  color: z.string().default("#10b981"),
+  color: z.string().optional(),
 });
 
 type GoalFormData = z.infer<typeof goalSchema>;

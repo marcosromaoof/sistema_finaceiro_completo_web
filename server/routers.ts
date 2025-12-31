@@ -298,7 +298,7 @@ export const appRouter = router({
         targetDate: z.date().optional(),
         category: z.enum(["short_term", "medium_term", "long_term"]),
         description: z.string().optional(),
-        color: z.string().default("#10b981"),
+        color: z.string().optional(),
         icon: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {

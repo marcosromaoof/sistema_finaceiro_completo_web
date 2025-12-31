@@ -815,3 +815,33 @@
 - [x] Adicionar targetAmount ao input do procedure create
 - [x] Adicionar targetAmount ao submitData do formulário
 - [x] Validar que todos os valores aparecem corretamente
+
+## Corrigir Criação de Metas e Categorias (🔧 Em Andamento)
+
+### Erro ao Criar Meta
+- [ ] Investigar erro de valores default inválidos
+- [ ] Corrigir formulário de metas para não enviar campos com `?` e `default`
+- [ ] Validar campos obrigatórios antes de enviar
+- [ ] Testar criação de meta com sucesso
+
+### Categorias Padrão
+- [ ] Criar script para inserir categorias padrão
+- [ ] Adicionar categorias de despesas (Alimentação, Transporte, Moradia, etc)
+- [ ] Adicionar categorias de receitas (Salário, Investimentos, etc)
+- [ ] Executar script no banco de dados
+- [ ] Validar que categorias aparecem no sistema
+
+## ✅ Correções Concluídas - Metas e Categorias
+
+### Erro ao Criar Meta ✅
+- [x] Investigar erro de valores default inválidos
+- [x] Corrigir formulário de metas para não enviar campos com valores default problemáticos
+- [x] Remover default do campo color no schema e procedure
+- [x] Testar criação de meta com sucesso
+
+### Categorias Padrão ✅
+- [x] Criar script para inserir categorias padrão
+- [x] Adicionar 9 categorias de despesas (Alimentação, Transporte, Moradia, Saúde, Educação, Lazer, Vestuário, Contas, Outros)
+- [x] Adicionar 4 categorias de receitas (Salário, Investimentos, Freelance, Outros)
+- [x] Executar script no banco de dados
+- [x] Validar que categorias aparecem no sistema
