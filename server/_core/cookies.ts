@@ -24,22 +24,21 @@ function isSecureRequest(req: Request) {
 export function getSessionCookieOptions(
   req: Request
 ): Pick<CookieOptions, "domain" | "httpOnly" | "path" | "sameSite" | "secure"> {
-  // const hostname = req.hostname;
-  // const shouldSetDomain =
-  //   hostname &&
-  //   !LOCAL_HOSTS.has(hostname) &&
-  //   !isIpAddress(hostname) &&
-  //   hostname !== "127.0.0.1" &&
-  //   hostname !== "::1";
+  const hostname = req.hostname;
+  const shouldSetDomain =
+    hostname &&
+    !LOCAL_HOSTS.has(hostname) &&
+    !isIpAddress(hostname) &&
+    hostname !== "127.0.0.1" &&
+    hostname !== "::1";
 
-  // const domain =
-  //   shouldSetDomain && !hostname.startsWith(".")
-  //     ? `.${hostname}`
-  //     : shouldSetDomain
-  //       ? hostname
-  //       : undefined;
+  // Don't add leading dot - let browser handle subdomain sharing
+  const domain = shouldSetDomain ? hostname : undefined;
+
+  console.log(`[Cookie] hostname: ${hostname}, shouldSetDomain: ${shouldSetDomain}, domain: ${domain}`);
 
   return {
+    domain,
     httpOnly: true,
     path: "/",
     sameSite: "lax",

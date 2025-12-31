@@ -639,3 +639,19 @@
 - [x] Adicionar delay de 100ms para garantir processamento do cookie
 - [x] Adicionar logs detalhados para debug
 - [x] Reiniciar servidor com correções aplicadas
+
+## Correção OAuth no Domínio Publicado (🔧 Em Andamento)
+- [ ] Investigar por que OAuth não funciona em finmasterpro-wovcxrzj.manus.space
+- [ ] Verificar configuração de domínio do cookie
+- [ ] Testar se cookie está sendo enviado nas requisições
+- [ ] Verificar logs do servidor em produção
+- [ ] Ajustar configurações de cookie para domínio publicado
+- [ ] Publicar nova versão e testar em janela anônima
+
+## Atualização: Correção OAuth Implementada
+- [x] Investigar por que OAuth não funciona em finmasterpro-wovcxrzj.manus.space
+- [x] Verificar configuração de domínio do cookie (código estava comentado)
+- [x] Descomentar e ajustar código de domínio do cookie
+- [x] Adicionar logs detalhados para debug de hostname e domain
+- [x] Reiniciar servidor com correções aplicadas
+- [ ] Publicar nova versão e testar em janela anônima
