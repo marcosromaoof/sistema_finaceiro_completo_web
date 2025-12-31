@@ -26,9 +26,9 @@
 
 ## Transações
 - [x] CRUD de transações (receitas e despesas)
-- [ ] Importação de transações (CSV/OFX)
-- [ ] Categorização automática usando IA
-- [ ] Regras de categorização personalizáveis
+- [x] Importação de transações (CSV/OFX)
+- [x] Categorização automática usando IA
+- [x] Regras de categorização personalizáveis
 - [ ] Aprendizado contínuo com correções do usuário
 - [x] Histórico completo de transações
 
@@ -83,8 +83,8 @@
 
 ## Educação Financeira
 - [x] Calculadoras financeiras (integrado em Aposentadoria e Dívidas)
-- [ ] Dicas e tutoriais dentro do app
-- [ ] Artigos educativos
+- [x] Dicas e tutoriais dentro do app
+- [x] Artigos educativos
 
 ## Testes e Qualidade
 - [x] Testes unitários para procedures críticos

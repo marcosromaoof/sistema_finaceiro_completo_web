@@ -21,23 +21,25 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings } from "lucide-react";
+import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload } from "lucide-react";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
   { icon: Wallet, label: "Contas", path: "/accounts" },
   { icon: Receipt, label: "Transações", path: "/transactions" },
+  { icon: Upload, label: "Importar", path: "/import" },
   { icon: PieChart, label: "Orçamentos", path: "/budgets" },
   { icon: Target, label: "Metas", path: "/goals" },
   { icon: CreditCard, label: "Dívidas", path: "/debts" },
   { icon: TrendingUp, label: "Investimentos", path: "/investments" },
   { icon: Calendar, label: "Aposentadoria", path: "/retirement" },
+  { icon: BookOpen, label: "Educação", path: "/education" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";

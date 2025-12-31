@@ -14,6 +14,8 @@ import Investments from "./pages/Investments";
 import Retirement from "./pages/Retirement";
 import Settings from "./pages/Settings";
 import Alerts from "./pages/Alerts";
+import ImportTransactions from "./pages/ImportTransactions";
+import Education from "./pages/Education";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -33,6 +35,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/accounts" component={Accounts} />
       <Route path="/transactions" component={Transactions} />
+      <Route path="/import" component={ImportTransactions} />
+      <Route path="/education" component={Education} />
       <Route path="/budgets" component={Budgets} />
       <Route path="/goals" component={Goals} />
       <Route path="/debts" component={Debts} />
