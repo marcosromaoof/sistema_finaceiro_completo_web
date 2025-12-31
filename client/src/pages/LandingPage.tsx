@@ -385,10 +385,10 @@ export default function LandingPage() {
                 </ul>
                 
                 <Button
-                  className={`w-full hover-lift ripple ${
+                  className={`w-full transition-all duration-300 ${
                     plan.popular 
-                      ? 'gradient-prosperity border-0' 
-                      : 'bg-muted hover:bg-muted/80'
+                      ? 'gradient-prosperity border-0 hover-lift ripple hover:shadow-xl' 
+                      : 'bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 hover:border-primary hover:scale-105'
                   }`}
                   size="lg"
                   onClick={() => handleCheckout(plan.name.toLowerCase() as "free" | "premium" | "family")}

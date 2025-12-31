@@ -1045,3 +1045,7 @@
 
 ## Ajustes Landing Page (31/12/2025)
 - [x] Remover botão "Ver Demonstração" do hero section
+
+## Correções Planos Pricing (31/12/2025)
+- [x] Corrigir visibilidade dos botões Free e Family (quase invisíveis)
+- [x] Adicionar animações hover aos botões Free e Family
