@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "782d03f1-7e05-4d29-888c-d8c75e4e9acc",
-  "prevId": "77d226fc-ea36-468c-8860-a72559c4a1d2",
+  "id": "2588d859-09f7-4cc6-bccb-3eae39365ab8",
+  "prevId": "782d03f1-7e05-4d29-888c-d8c75e4e9acc",
   "tables": {
     "accounts": {
       "name": "accounts",
@@ -237,6 +237,91 @@
         }
       },
       "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "apiSettings": {
+      "name": "apiSettings",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "value": {
+          "name": "value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {
+        "apiSettings_key_idx": {
+          "name": "apiSettings_key_idx",
+          "columns": [
+            "key"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "apiSettings_id": {
+          "name": "apiSettings_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "apiSettings_key_unique": {
+          "name": "apiSettings_key_unique",
+          "columns": [
+            "key"
+          ]
+        }
+      },
       "checkConstraint": {}
     },
     "budgets": {

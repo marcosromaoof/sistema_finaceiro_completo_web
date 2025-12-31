@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO apiSettings (`key`, `value`, `description`, `isActive`) \nVALUES ('groq_api_key', 'CONFIGURE_NO_PAINEL_ADMIN', 'API Key do Groq para Chat IA', true)\nON DUPLICATE KEY UPDATE `value` = 'CONFIGURE_NO_PAINEL_ADMIN', `description` = 'API Key do Groq para Chat IA';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2c2NcGeqAHP3sCL.root --database WoVCxrzJrtK4BBLZ3ys8B9 --execute INSERT INTO apiSettings (`key`, `value`, `description`, `isActive`) \nVALUES ('groq_api_key', 'CONFIGURE_NO_PAINEL_ADMIN', 'API Key do Groq para Chat IA', true)\nON DUPLICATE KEY UPDATE `value` = 'CONFIGURE_NO_PAINEL_ADMIN', `description` = 'API Key do Groq para Chat IA';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 188
+}

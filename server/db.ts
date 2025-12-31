@@ -15,7 +15,8 @@ import {
   retirementPlans, RetirementPlan, InsertRetirementPlan,
   categorizationRules, CategorizationRule, InsertCategorizationRule,
   alerts, Alert, InsertAlert,
-  supportTickets, SupportTicket, InsertSupportTicket
+  supportTickets, SupportTicket, InsertSupportTicket,
+  apiSettings, ApiSetting, InsertApiSetting
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -616,4 +617,71 @@ export async function updateTicketStatus(id: number, status: "open" | "in_progre
   return await db.update(supportTickets)
     .set({ status, updatedAt: new Date() })
     .where(and(eq(supportTickets.id, id), eq(supportTickets.userId, userId)));
+}
+
+
+// ==================== API SETTINGS OPERATIONS ====================
+
+export async function getApiSetting(key: string): Promise<ApiSetting | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const results = await db
+    .select()
+    .from(apiSettings)
+    .where(eq(apiSettings.key, key))
+    .limit(1);
+
+  return results[0] || null;
+}
+
+export async function upsertApiSetting(data: { key: string; value: string; description?: string }): Promise<ApiSetting> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const existing = await getApiSetting(data.key);
+
+  if (existing) {
+    await db
+      .update(apiSettings)
+      .set({ 
+        value: data.value, 
+        description: data.description,
+        updatedAt: new Date() 
+      })
+      .where(eq(apiSettings.id, existing.id));
+
+    return { ...existing, value: data.value, description: data.description ?? null };
+  } else {
+    const result = await db.insert(apiSettings).values({
+      key: data.key,
+      value: data.value,
+      description: data.description,
+      isActive: true,
+    });
+
+    return {
+      id: Number(result[0].insertId),
+      key: data.key,
+      value: data.value,
+      description: data.description ?? null,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+  }
+}
+
+export async function getAllApiSettings(): Promise<ApiSetting[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db.select().from(apiSettings).where(eq(apiSettings.isActive, true));
+}
+
+export async function deleteApiSetting(key: string): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.delete(apiSettings).where(eq(apiSettings.key, key));
 }

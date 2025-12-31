@@ -369,3 +369,22 @@ export const dividends = mysqlTable("dividends", {
 
 export type Dividend = typeof dividends.$inferSelect;
 export type InsertDividend = typeof dividends.$inferInsert;
+
+/**
+ * Configurações de APIs (Groq, Gemini, Tavily, etc)
+ * Armazena API keys e configurações globais do sistema
+ */
+export const apiSettings = mysqlTable("apiSettings", {
+  id: int("id").autoincrement().primaryKey(),
+  key: varchar("key", { length: 100 }).notNull().unique(), // groq_api_key, gemini_api_key, tavily_api_key, etc
+  value: text("value").notNull(), // API key ou valor da configuração
+  description: text("description"), // Descrição da configuração
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  keyIdx: index("apiSettings_key_idx").on(table.key),
+}));
+
+export type ApiSetting = typeof apiSettings.$inferSelect;
+export type InsertApiSetting = typeof apiSettings.$inferInsert;

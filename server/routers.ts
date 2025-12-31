@@ -578,10 +578,19 @@ export const appRouter = router({
     sendMessage: protectedProcedure
       .input(z.object({
         message: z.string().min(1),
-        apiKey: z.string().optional(),
         model: z.enum(["llama-3.1-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"]).default("llama-3.1-70b-versatile"),
       }))
       .mutation(async ({ ctx, input }) => {
+        // Get API keys from database (admin configured)
+        const groqSetting = await db.getApiSetting("groq_api_key");
+        const tavilySetting = await db.getApiSetting("tavily_api_key");
+        
+        const groqApiKey = groqSetting?.value;
+        const tavilyApiKey = tavilySetting?.value;
+        
+        if (!groqApiKey) {
+          throw new Error("API Key do Groq não configurada. Configure no Painel Admin.");
+        }
         // Check if query needs web search
         let webSearchResults = "";
         if (needsWebSearch(input.message)) {
@@ -589,7 +598,7 @@ export const appRouter = router({
             const searchResult = await searchWeb(input.message, {
               maxResults: 3,
               includeAnswer: true,
-            }, input.apiKey);
+            }, tavilyApiKey);
             
             if (searchResult.answer) {
               webSearchResults = `\n\nInformações da Web:\n${searchResult.answer}\n\nFontes:\n${searchResult.results.map(r => `- ${r.title}: ${r.url}`).join('\n')}`;
@@ -656,7 +665,7 @@ ${financialContext}${webSearchResults}`;
               { role: "user", content: input.message },
             ],
             { model: input.model },
-            input.apiKey
+            groqApiKey
           );
           
           return {
@@ -1147,6 +1156,48 @@ ${financialContext}${webSearchResults}`;
       .query(async ({ ctx, input }) => {
         const { getDividendStats } = await import("./db-dividends");
         return await getDividendStats(ctx.user.id, input);
+      }),
+  }),
+
+  // ==================== API SETTINGS ====================
+  apiSettings: router({
+    // Get API setting by key
+    get: protectedProcedure
+      .input(z.object({ key: z.string() }))
+      .query(async ({ input }) => {
+        return await db.getApiSetting(input.key);
+      }),
+
+    // Get all API settings
+    getAll: protectedProcedure
+      .query(async () => {
+        return await db.getAllApiSettings();
+      }),
+
+    // Upsert API setting (admin only)
+    upsert: protectedProcedure
+      .input(z.object({
+        key: z.string(),
+        value: z.string(),
+        description: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // Check if user is admin
+        if (ctx.user.role !== 'admin') {
+          throw new Error('Apenas administradores podem configurar API keys');
+        }
+        return await db.upsertApiSetting(input);
+      }),
+
+    // Delete API setting (admin only)
+    delete: protectedProcedure
+      .input(z.object({ key: z.string() }))
+      .mutation(async ({ ctx, input }) => {
+        // Check if user is admin
+        if (ctx.user.role !== 'admin') {
+          throw new Error('Apenas administradores podem deletar API keys');
+        }
+        return await db.deleteApiSetting(input.key);
       }),
   }),
 });

@@ -33,7 +33,6 @@ export default function AIChat() {
 
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [apiKey, setApiKey] = useState("");
   const [selectedModel, setSelectedModel] = useState<"llama-3.1-70b-versatile" | "llama-3.1-8b-instant" | "mixtral-8x7b-32768">("llama-3.1-70b-versatile");
   const [showSettings, setShowSettings] = useState(false);
   
@@ -53,13 +52,6 @@ export default function AIChat() {
   const handleSendMessage = async () => {
     if (!input.trim()) return;
 
-    // Check if API key is configured
-    if (!apiKey.trim()) {
-      toast.error("Por favor, configure sua API Key do Groq nas configurações");
-      setShowSettings(true);
-      return;
-    }
-
     // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -75,7 +67,6 @@ export default function AIChat() {
     try {
       const response = await sendMessageMutation.mutateAsync({
         message: input,
-        apiKey: apiKey,
         model: selectedModel,
       });
 
@@ -153,36 +144,10 @@ export default function AIChat() {
             <CardHeader>
               <CardTitle className="text-lg">Configurações do Chat</CardTitle>
               <CardDescription>
-                Configure sua API Key do Groq e escolha o modelo de IA
+                Escolha o modelo de IA. A API Key é configurada pelo administrador no Painel Admin.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="api-key">Groq API Key</Label>
-                <Input
-                  id="api-key"
-                  type="password"
-                  placeholder="gsk_..."
-                  value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Obtenha sua chave gratuita em{" "}
-                  <a
-                    href="https://console.groq.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    console.groq.com
-                  </a>
-                  {" "}ou configure no{" "}
-                  <a href="/api-config" className="text-primary hover:underline">
-                    Painel Admin
-                  </a>
-                </p>
-              </div>
-
               <div className="space-y-2">
                 <Label htmlFor="model">Modelo de IA</Label>
                 <Select

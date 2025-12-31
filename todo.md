@@ -655,3 +655,22 @@
 - [x] Adicionar logs detalhados para debug de hostname e domain
 - [x] Reiniciar servidor com correções aplicadas
 - [ ] Publicar nova versão e testar em janela anônima
+
+## Correção Chat IA - Buscar API Key do Painel Admin (🔧 Em Andamento)
+- [ ] Investigar como o Chat IA busca a API Key do Groq
+- [ ] Verificar se existe tabela de configurações no banco
+- [ ] Corrigir backend para buscar API Key do painel admin
+- [ ] Remover solicitação de API Key local no frontend
+- [ ] Testar chat com API Key configurada no admin
+- [ ] Validar que configuração persiste após logout/login
+
+## ✅ Correção Chat IA Concluída
+- [x] Investigar como o Chat IA busca a API Key do Groq
+- [x] Criar tabela apiSettings no banco de dados
+- [x] Criar funções CRUD para apiSettings no db.ts
+- [x] Modificar procedure aiChat.sendMessage para buscar API Key do banco
+- [x] Remover solicitação de API Key local no frontend
+- [x] Adicionar procedures tRPC para gerenciar API Settings (admin)
+- [x] Reiniciar servidor e validar correções
+- [ ] Configurar API Key real do Groq no Painel Admin
+- [ ] Testar chat com API Key configurada
