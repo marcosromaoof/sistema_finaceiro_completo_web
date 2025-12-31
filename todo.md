@@ -738,3 +738,62 @@
 - [x] Remover estado showSettings
 - [x] Simplificar código removendo lógica de configuração
 - [x] Testar que chat funciona sem botão de configurações
+
+## Redesign do Chat - Interface Moderna Estilo Manus (🔧 Em Andamento)
+
+### Interface Visual
+- [ ] Redesenhar layout do chat com design moderno
+- [ ] Adicionar avatares elegantes para usuário e IA
+- [ ] Implementar animações suaves de entrada de mensagens
+- [ ] Melhorar tipografia e espaçamento
+- [ ] Adicionar indicador de digitação animado
+- [ ] Criar cards visuais para respostas estruturadas
+
+### Capacidade de Criar Dados
+- [ ] Implementar detecção de intenção (criar transação, meta, orçamento)
+- [ ] Criar componentes de confirmação visual
+- [ ] Adicionar botões de ação rápida nas mensagens
+- [ ] Implementar formulários inline no chat
+- [ ] Criar sistema de feedback visual após ações
+
+### Backend e Integração
+- [ ] Adicionar procedures tRPC para ações do chat
+- [ ] Implementar parsing de intenções com IA
+- [ ] Criar validação de dados extraídos
+- [ ] Integrar com tabelas existentes (transactions, goals, budgets)
+- [ ] Adicionar logs de ações executadas
+
+### Funcionalidades Específicas
+- [ ] Criar transação via chat ("gastei R$ 50 no mercado")
+- [ ] Adicionar meta via chat ("quero economizar R$ 5000")
+- [ ] Criar orçamento via chat ("limitar gastos em alimentação")
+- [ ] Sugestões contextuais baseadas em histórico
+- [ ] Confirmação antes de executar ações
+
+## ✅ Redesign do Chat - Fase 1 Concluída
+
+### Interface Visual ✅
+- [x] Redesenhar layout do chat com design moderno
+- [x] Adicionar avatares elegantes para usuário e IA
+- [x] Implementar animações suaves de entrada de mensagens
+- [x] Melhorar tipografia e espaçamento
+- [x] Adicionar indicador de digitação animado
+- [x] Criar cards visuais para respostas estruturadas
+
+### Capacidade de Criar Dados ✅
+- [x] Implementar detecção de intenção (criar transação)
+- [x] Criar componentes de confirmação visual
+- [x] Adicionar botões de ação rápida nas mensagens
+- [x] Criar sistema de feedback visual após ações
+
+### Backend e Integração ✅
+- [x] Integrar com procedures tRPC existentes
+- [x] Implementar parsing de intenções básico
+- [x] Integrar com tabela transactions
+- [x] Buscar conta ativa do usuário automaticamente
+- [x] Invalidar queries após criar transação
+
+### Funcionalidades Implementadas ✅
+- [x] Criar transação via chat ("gastei R$ 50 no mercado")
+- [x] Confirmação visual antes de executar ações
+- [x] Feedback de sucesso após criar transação
