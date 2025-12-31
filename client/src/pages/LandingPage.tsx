@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import SupportChatWidget from "@/components/SupportChatWidget";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, TrendingUp, Shield, BarChart3, Target, CreditCard, Users, Zap } from "lucide-react";
 import { getLoginUrl } from "@/const";
@@ -395,6 +396,9 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* Support Chat Widget */}
+      <SupportChatWidget />
     </div>
   );
 }

@@ -324,3 +324,27 @@
 - [ ] Melhorar mensagens de erro
 - [ ] Adicionar tooltips explicativos
 - [ ] Implementar tour guiado para novos usuários
+
+
+## Melhorias na Landing Page e Suporte (Nova Solicitação)
+
+### Landing Page Profissional
+- [ ] Adicionar imagens ilustrativas para cada funcionalidade
+- [ ] Criar seção detalhada de recursos com screenshots
+- [ ] Adicionar animações e transições suaves
+- [ ] Melhorar hero section com imagem de destaque
+- [ ] Criar seção de casos de uso
+- [ ] Adicionar seção de estatísticas/números
+- [ ] Melhorar seção de depoimentos com fotos
+- [ ] Adicionar seção de comparação com concorrentes
+- [ ] Criar galeria de screenshots do sistema
+
+### Chat de Suporte com IA
+- [x] Criar componente de chat flutuante na landing page
+- [x] Implementar interface de chat moderna
+- [x] Integrar com Groq/LLM para respostas automáticas
+- [x] Criar base de conhecimento do sistema
+- [x] Configurar IA com informações de todas as funcionalidades
+- [x] Adicionar respostas pré-programadas para perguntas frequentes
+- [x] Implementar histórico de conversas
+- [ ] Adicionar opção de escalar para suporte humano
