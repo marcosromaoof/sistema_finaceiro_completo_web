@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { PRODUCTS } from "../../../server/products";
+import { PRODUCTS } from "../../../shared/products";
 
 export default function Billing() {
   const [isLoadingPortal, setIsLoadingPortal] = useState(false);

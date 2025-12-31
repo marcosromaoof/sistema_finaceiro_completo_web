@@ -822,12 +822,12 @@ ${financialContext}${webSearchResults}`;
       }))
       .mutation(async ({ ctx, input }) => {
         const { stripe } = await import("./_core/stripe");
-        const { PRODUCTS } = await import("./products");
+        const { getPriceId } = await import("../shared/products");
         
         const plan = input.plan.toUpperCase() as "PREMIUM" | "FAMILY";
-        const product = PRODUCTS[plan];
+        const priceId = getPriceId(plan);
         
-        if (!product.priceId) {
+        if (!priceId) {
           throw new Error(`Price ID not configured for ${plan} plan`);
         }
         
@@ -855,7 +855,7 @@ ${financialContext}${webSearchResults}`;
           payment_method_types: ["card"],
           line_items: [
             {
-              price: product.priceId,
+              price: priceId,
               quantity: 1,
             },
           ],

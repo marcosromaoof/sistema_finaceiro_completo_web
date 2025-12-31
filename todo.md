@@ -430,3 +430,14 @@
 - [x] Criar testes unitários para procedures de billing
 - [x] Testar autenticação e validação de Stripe customer
 - [x] Testar retorno de faturas e assinatura
+
+
+## Correção de Erro: process is not defined (✅ Concluído)
+- [x] Mover products.ts para pasta shared
+- [x] Remover dependências de process.env do código compartilhado
+- [x] Criar função getPriceId para uso server-side
+- [x] Atualizar imports no Billing.tsx
+- [x] Atualizar imports no server/routers.ts
+- [x] Remover arquivo products.ts antigo
+- [x] Testar página de billing no frontend
+- [x] Executar todos os testes (35 testes passando)
