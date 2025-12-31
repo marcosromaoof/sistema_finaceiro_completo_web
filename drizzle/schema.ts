@@ -389,3 +389,25 @@ export const apiSettings = mysqlTable("apiSettings", {
 
 export type ApiSetting = typeof apiSettings.$inferSelect;
 export type InsertApiSetting = typeof apiSettings.$inferInsert;
+
+
+/**
+ * Banimentos de usuários
+ */
+export const bans = mysqlTable("bans", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  bannedBy: int("bannedBy").notNull(), // ID do admin que baniu
+  reason: text("reason").notNull(),
+  type: mysqlEnum("type", ["temporary", "permanent"]).notNull(),
+  expiresAt: timestamp("expiresAt"), // Null para banimentos permanentes
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("bans_userId_idx").on(table.userId),
+  bannedByIdx: index("bans_bannedBy_idx").on(table.bannedBy),
+}));
+
+export type Ban = typeof bans.$inferSelect;
+export type InsertBan = typeof bans.$inferInsert;

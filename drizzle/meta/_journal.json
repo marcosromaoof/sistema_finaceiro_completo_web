@@ -43,6 +43,13 @@
       "when": 1767206171480,
       "tag": "0005_brief_ser_duncan",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1767208721662,
+      "tag": "0006_slippery_solo",
+      "breakpoints": true
     }
   ]
 }

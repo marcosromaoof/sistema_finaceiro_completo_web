@@ -16,7 +16,8 @@ import {
   categorizationRules, CategorizationRule, InsertCategorizationRule,
   alerts, Alert, InsertAlert,
   supportTickets, SupportTicket, InsertSupportTicket,
-  apiSettings, ApiSetting, InsertApiSetting
+  apiSettings, ApiSetting, InsertApiSetting,
+  bans
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -731,4 +732,76 @@ export async function refundTransaction(transactionId: number) {
   });
 
   return { success: true, message: "Transação estornada com sucesso" };
+}
+
+
+/**
+ * Get all users (admin only)
+ */
+export async function getAllUsers() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(users).orderBy(desc(users.createdAt));
+}
+
+/**
+ * Update user role (admin only)
+ */
+export async function updateUserRole(userId: number, role: "user" | "admin") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .update(users)
+    .set({ role })
+    .where(eq(users.id, userId));
+
+  return { success: true, message: "Role atualizada com sucesso" };
+}
+
+
+// ============================================================================
+// Banimentos
+// ============================================================================
+
+export async function createBan(data: { userId: number; bannedBy: number; reason: string; type: "temporary" | "permanent"; expiresAt?: Date }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [result] = await db.insert(bans).values(data);
+  return result;
+}
+
+export async function getAllBans() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(bans).orderBy(desc(bans.createdAt));
+}
+
+export async function getActiveBanForUser(userId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const [ban] = await db
+    .select()
+    .from(bans)
+    .where(and(
+      eq(bans.userId, userId),
+      eq(bans.isActive, true)
+    ))
+    .orderBy(desc(bans.createdAt))
+    .limit(1);
+  return ban;
+}
+
+export async function deactivateBan(banId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .update(bans)
+    .set({ isActive: false })
+    .where(eq(bans.id, banId));
 }

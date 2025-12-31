@@ -962,3 +962,43 @@
 - [ ] Criar páginas de Planos, Categorias, Promoções
 - [ ] Implementar sistema de aprovação de transações
 - [ ] Criar relatórios financeiros admin
+
+## Implementação de 3 Páginas Admin (🔧 Em Andamento)
+
+### 1. Gerenciamento de Usuários
+- [ ] Criar página AdminUsers.tsx
+- [ ] Tabela com todos os usuários do sistema
+- [ ] Filtros por role, plano, status
+- [ ] Busca por nome/email
+- [ ] Editar role (user/admin)
+- [ ] Botão de banimento rápido
+- [ ] Modal de detalhes do usuário
+- [ ] Backend: procedures para listar e editar usuários
+
+### 2. Dashboard Admin com Métricas
+- [ ] Melhorar página AdminDashboard.tsx
+- [ ] Gráfico de receita mensal (Chart.js)
+- [ ] Gráfico de novos usuários
+- [ ] Taxa de conversão
+- [ ] Churn rate
+- [ ] Transações recentes
+- [ ] Backend: procedures para métricas
+
+### 3. Sistema de Banimentos
+- [ ] Criar página AdminBans.tsx
+- [ ] Formulário para banir usuário
+- [ ] Tipo: temporário/permanente
+- [ ] Campo de motivo obrigatório
+- [ ] Lista de usuários banidos
+- [ ] Botão de reverter banimento
+- [ ] Histórico de banimentos
+- [ ] Backend: tabela bans + procedures
+
+## Páginas Admin Implementadas (31/12/2025)
+- [x] AdminLayout com menu lateral organizado
+- [x] Seção Financeiro no menu admin
+- [x] Página de Gerenciamento de Usuários (/admin/users)
+- [x] Página de Gerenciamento de Transações (/admin/transactions)
+- [x] Sistema de Banimentos (/admin/bans)
+- [x] Backend procedures para admin (getAllUsers, updateUserRole, getAllBans, banUser, unbanUser)
+- [x] Tabela bans no banco de dados

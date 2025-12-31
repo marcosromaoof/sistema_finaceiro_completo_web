@@ -1213,5 +1213,57 @@ ${financialContext}${webSearchResults}`;
         return await db.deleteApiSetting(input.key);
       }),
   }),
+
+  // ==================== ADMIN ====================
+  admin: router({
+    // Get all users (admin only)
+    getAllUsers: adminProcedure.query(async () => {
+      return await db.getAllUsers();
+    }),
+
+    // Update user role (admin only)
+    updateUserRole: adminProcedure
+      .input(z.object({
+        userId: z.number(),
+        role: z.enum(["user", "admin"]),
+      }))
+      .mutation(async ({ input }) => {
+        return await db.updateUserRole(input.userId, input.role);
+      }),
+
+    // Get all bans
+    getAllBans: adminProcedure.query(async () => {
+      return await db.getAllBans();
+    }),
+
+    // Ban user
+    banUser: adminProcedure
+      .input(z.object({
+        userId: z.number(),
+        reason: z.string(),
+        type: z.enum(["temporary", "permanent"]),
+        expiresAt: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const expiresAt = input.expiresAt ? new Date(input.expiresAt) : undefined;
+        return await db.createBan({
+          userId: input.userId,
+          bannedBy: ctx.user.id,
+          reason: input.reason,
+          type: input.type,
+          expiresAt,
+        });
+      }),
+
+    // Unban user
+    unbanUser: adminProcedure
+      .input(z.object({
+        banId: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        await db.deactivateBan(input.banId);
+        return { success: true };
+      }),
+  }),
 });
 export type AppRouter = typeof appRouter;

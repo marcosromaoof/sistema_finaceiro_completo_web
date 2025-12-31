@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `bans` (\n  `id` int AUTO_INCREMENT PRIMARY KEY,\n  `userId` int NOT NULL,\n  `bannedBy` int NOT NULL,\n  `reason` text NOT NULL,\n  `type` enum('temporary', 'permanent') NOT NULL,\n  `expiresAt` timestamp NULL,\n  `isActive` boolean NOT NULL DEFAULT true,\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  INDEX `bans_userId_idx` (`userId`),\n  INDEX `bans_bannedBy_idx` (`bannedBy`)\n)",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2c2NcGeqAHP3sCL.root --database WoVCxrzJrtK4BBLZ3ys8B9 --execute CREATE TABLE IF NOT EXISTS `bans` (\n  `id` int AUTO_INCREMENT PRIMARY KEY,\n  `userId` int NOT NULL,\n  `bannedBy` int NOT NULL,\n  `reason` text NOT NULL,\n  `type` enum('temporary', 'permanent') NOT NULL,\n  `expiresAt` timestamp NULL,\n  `isActive` boolean NOT NULL DEFAULT true,\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  INDEX `bans_userId_idx` (`userId`),\n  INDEX `bans_bannedBy_idx` (`bannedBy`)\n)",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 455
+}
