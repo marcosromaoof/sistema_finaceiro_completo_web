@@ -23,6 +23,8 @@ import { DashboardSkeleton } from "@/components/skeletons/PageSkeleton";
 import { FadeIn, StaggerChildren, StaggerItem } from "@/components/animations/FadeIn";
 import { PatrimonyChart } from "@/components/PatrimonyChart";
 import { GoalsSection } from "@/components/GoalsSection";
+import { CategoryChart } from "@/components/CategoryChart";
+import { AIInsights } from "@/components/AIInsights";
 
 export default function Home() {
   const { data: summary, isLoading } = trpc.dashboard.summary.useQuery();
@@ -207,8 +209,11 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Patrimony Chart */}
-        <PatrimonyChart />
+        {/* Charts Row */}
+        <div className="grid gap-6 lg:grid-cols-2">
+          <PatrimonyChart />
+          <CategoryChart />
+        </div>
 
         {/* Two Column Layout */}
         <div className="grid gap-6 lg:grid-cols-3">
@@ -302,6 +307,9 @@ export default function Home() {
             <UpcomingBills />
           </div>
         </div>
+
+        {/* AI Insights */}
+        <AIInsights />
 
         {/* Goals Section */}
         <GoalsSection />

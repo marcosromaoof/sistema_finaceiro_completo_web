@@ -1066,3 +1066,9 @@
 - [x] Adicionar efeitos hover premium aos botões de ação rápida
 - [x] Melhorar cards de métricas com glassmorphism e shadows
 - [x] Aplicar cores consistentes com landing page
+
+## Melhorias Dashboard - Fase 3 (31/12/2025)
+- [x] Criar gráfico donut de despesas por categoria
+- [x] Adicionar filtros de período (7D/30D/90D/1A) ao gráfico de patrimônio
+- [x] Criar seção "Insights da IA" com análises automáticas
+- [x] Testar responsividade de todos os novos componentes

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -28,16 +29,50 @@ interface PatrimonyChartProps {
 }
 
 export function PatrimonyChart({ data }: PatrimonyChartProps) {
-  // Mock data se não houver dados reais
-  const mockData = [
-    { date: '01 Dez', value: 115000 },
-    { date: '05 Dez', value: 117500 },
-    { date: '10 Dez', value: 119000 },
-    { date: '15 Dez', value: 121000 },
-    { date: '20 Dez', value: 123500 },
-    { date: '25 Dez', value: 125000 },
-    { date: '30 Dez', value: 125430 },
-  ];
+  const [period, setPeriod] = useState<'7D' | '30D' | '90D' | '1A'>('30D');
+  // Mock data baseado no período selecionado
+  const getMockData = () => {
+    switch (period) {
+      case '7D':
+        return [
+          { date: '24 Dez', value: 124000 },
+          { date: '25 Dez', value: 124300 },
+          { date: '26 Dez', value: 124600 },
+          { date: '27 Dez', value: 124900 },
+          { date: '28 Dez', value: 125100 },
+          { date: '29 Dez', value: 125300 },
+          { date: '30 Dez', value: 125430 },
+        ];
+      case '30D':
+        return [
+          { date: '01 Dez', value: 115000 },
+          { date: '05 Dez', value: 117500 },
+          { date: '10 Dez', value: 119000 },
+          { date: '15 Dez', value: 121000 },
+          { date: '20 Dez', value: 123500 },
+          { date: '25 Dez', value: 125000 },
+          { date: '30 Dez', value: 125430 },
+        ];
+      case '90D':
+        return [
+          { date: 'Out', value: 105000 },
+          { date: 'Nov', value: 110000 },
+          { date: 'Dez', value: 125430 },
+        ];
+      case '1A':
+        return [
+          { date: 'Jan', value: 90000 },
+          { date: 'Mar', value: 95000 },
+          { date: 'Mai', value: 100000 },
+          { date: 'Jul', value: 105000 },
+          { date: 'Set', value: 110000 },
+          { date: 'Nov', value: 120000 },
+          { date: 'Dez', value: 125430 },
+        ];
+    }
+  };
+
+  const mockData = getMockData();
 
   const chartData = data || mockData;
 
@@ -143,16 +178,32 @@ export function PatrimonyChart({ data }: PatrimonyChartProps) {
   return (
     <div className="glass rounded-xl overflow-hidden">
       <div className="p-6 border-b border-border/50">
-        <div className="flex items-center justify-between">
+        <div className="flex items-start justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold">Evolução do Patrimônio</h2>
             <p className="text-sm text-muted-foreground">
-              Últimos 30 dias
+              {period === '7D' && 'Últimos 7 dias'}
+              {period === '30D' && 'Últimos 30 dias'}
+              {period === '90D' && 'Últimos 90 dias'}
+              {period === '1A' && 'Último ano'}
             </p>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <div className="w-3 h-3 rounded-full bg-prosperity"></div>
-            <span className="text-muted-foreground">Patrimônio Líquido</span>
+          
+          {/* Period Filters */}
+          <div className="flex items-center gap-2">
+            {(['7D', '30D', '90D', '1A'] as const).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPeriod(p)}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                  period === p
+                    ? 'bg-prosperity text-white shadow-md'
+                    : 'bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground'
+                }`}
+              >
+                {p}
+              </button>
+            ))}
           </div>
         </div>
       </div>
