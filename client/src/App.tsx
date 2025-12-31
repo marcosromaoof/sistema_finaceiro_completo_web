@@ -21,6 +21,8 @@ import RecurringExpenses from "./pages/RecurringExpenses";
 import AdminDashboard from "./pages/AdminDashboard";
 import AIChat from "./pages/AIChat";
 import N8nIntegration from "./pages/N8nIntegration";
+import FamilySharing from "./pages/FamilySharing";
+import AutoTransfers from "./pages/AutoTransfers";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -53,6 +55,8 @@ function Router() {
       <Route path="/investments" component={Investments} />
       <Route path="/retirement" component={Retirement} />
       <Route path="/alerts" component={Alerts} />
+      <Route path="/family" component={FamilySharing} />
+      <Route path="/auto-transfers" component={AutoTransfers} />
       <Route path="/settings" component={Settings} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

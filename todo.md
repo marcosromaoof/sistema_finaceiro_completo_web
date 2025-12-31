@@ -138,3 +138,45 @@
 - [ ] Push notifications
 - [ ] Segmentação de usuários
 - [ ] Templates de mensagens
+
+
+## Funcionalidades Finais a Implementar
+
+### Autenticação Avançada
+- [ ] 2FA via SMS
+- [ ] 2FA via Authenticator App
+- [ ] Login Social com Google
+- [ ] Login Social com Apple
+- [ ] Login Social com Facebook
+
+### Colaboração Familiar
+- [x] Compartilhamento de orçamentos
+- [x] Compartilhamento de metas
+- [x] Controle de permissões (leitura/edição)
+- [x] Convites para familiares
+- [x] Dashboard familiar consolidado
+
+### Transferências Automáticas
+- [x] Configuração de transferências recorrentes
+- [x] Regras de transferência automática
+- [x] Histórico de transferências automáticas
+- [x] Notificações de transferências realizadas
+
+### Notificações em Massa
+- [ ] Sistema de newsletters
+- [ ] Envio de emails em massa
+- [ ] Segmentação de usuários
+- [ ] Templates de email
+- [ ] Agendamento de envios
+
+### Melhorias no Dashboard
+- [ ] Próximas contas a vencer
+- [ ] Gráficos de tendência
+- [ ] Comparação com mês anterior
+- [ ] Sugestões personalizadas
+
+### Benchmarks de Investimentos
+- [ ] Comparação com CDI
+- [ ] Comparação com Ibovespa
+- [ ] Comparação com S&P500
+- [ ] Gráficos comparativos

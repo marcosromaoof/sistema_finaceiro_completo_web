@@ -27,7 +27,7 @@ import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat, Bot, Shield, Zap } from "lucide-react";
+import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat, Bot, Shield, Zap, Users, ArrowRightLeft } from "lucide-react";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
@@ -45,6 +45,10 @@ const menuItems = [
   { icon: Bot, label: "IA Chat", path: "/ai-chat" },
   { icon: Shield, label: "Admin", path: "/admin" },
   { icon: Zap, label: "n8n", path: "/n8n" },
+  { icon: Bell, label: "Alertas", path: "/alerts" },
+  { icon: Users, label: "Família", path: "/family" },
+  { icon: ArrowRightLeft, label: "Transferências", path: "/auto-transfers" },
+  { icon: Settings, label: "Configurações", path: "/settings" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
