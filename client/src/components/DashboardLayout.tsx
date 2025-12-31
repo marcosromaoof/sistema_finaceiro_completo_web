@@ -27,7 +27,7 @@ import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload } from "lucide-react";
+import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat } from "lucide-react";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
@@ -40,6 +40,8 @@ const menuItems = [
   { icon: TrendingUp, label: "Investimentos", path: "/investments" },
   { icon: Calendar, label: "Aposentadoria", path: "/retirement" },
   { icon: BookOpen, label: "Educação", path: "/education" },
+  { icon: BarChart3, label: "Relatórios", path: "/reports" },
+  { icon: Repeat, label: "Recorrentes", path: "/recurring" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
