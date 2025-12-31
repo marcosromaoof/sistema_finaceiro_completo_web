@@ -346,3 +346,26 @@ export const supportTickets = mysqlTable("supportTickets", {
 
 export type SupportTicket = typeof supportTickets.$inferSelect;
 export type InsertSupportTicket = typeof supportTickets.$inferInsert;
+
+/**
+ * Dividendos e Juros recebidos de investimentos
+ */
+export const dividends = mysqlTable("dividends", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  investmentId: int("investmentId").notNull(),
+  type: mysqlEnum("type", ["dividend", "jcp", "interest", "bonus"]).notNull(),
+  amount: decimal("amount", { precision: 15, scale: 2 }).notNull(),
+  paymentDate: timestamp("paymentDate").notNull(),
+  referenceDate: timestamp("referenceDate"),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("dividends_userId_idx").on(table.userId),
+  investmentIdIdx: index("dividends_investmentId_idx").on(table.investmentId),
+  paymentDateIdx: index("dividends_paymentDate_idx").on(table.paymentDate),
+}));
+
+export type Dividend = typeof dividends.$inferSelect;
+export type InsertDividend = typeof dividends.$inferInsert;

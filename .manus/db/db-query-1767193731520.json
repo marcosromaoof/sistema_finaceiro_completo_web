@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `dividends` (\n  `id` int AUTO_INCREMENT PRIMARY KEY,\n  `userId` int NOT NULL,\n  `investmentId` int NOT NULL,\n  `type` enum('dividend', 'jcp', 'interest', 'bonus') NOT NULL,\n  `amount` decimal(15, 2) NOT NULL,\n  `paymentDate` timestamp NOT NULL,\n  `referenceDate` timestamp,\n  `notes` text,\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  INDEX `dividends_userId_idx` (`userId`),\n  INDEX `dividends_investmentId_idx` (`investmentId`),\n  INDEX `dividends_paymentDate_idx` (`paymentDate`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2c2NcGeqAHP3sCL.root --database WoVCxrzJrtK4BBLZ3ys8B9 --execute CREATE TABLE IF NOT EXISTS `dividends` (\n  `id` int AUTO_INCREMENT PRIMARY KEY,\n  `userId` int NOT NULL,\n  `investmentId` int NOT NULL,\n  `type` enum('dividend', 'jcp', 'interest', 'bonus') NOT NULL,\n  `amount` decimal(15, 2) NOT NULL,\n  `paymentDate` timestamp NOT NULL,\n  `referenceDate` timestamp,\n  `notes` text,\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  INDEX `dividends_userId_idx` (`userId`),\n  INDEX `dividends_investmentId_idx` (`investmentId`),\n  INDEX `dividends_paymentDate_idx` (`paymentDate`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 367
+}

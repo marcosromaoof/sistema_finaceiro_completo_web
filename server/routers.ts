@@ -1072,5 +1072,82 @@ ${financialContext}${webSearchResults}`;
         };
       }),
   }),
+
+  // Dividends routes
+  dividends: router({
+    create: protectedProcedure
+      .input(z.object({
+        investmentId: z.number(),
+        type: z.enum(["dividend", "jcp", "interest", "bonus"]),
+        amount: z.number().positive(),
+        paymentDate: z.date(),
+        referenceDate: z.date().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { createDividend } = await import("./db-dividends");
+        return await createDividend({
+          ...input,
+          amount: input.amount.toString(), // Converter para string (decimal no banco)
+          userId: ctx.user.id,
+        });
+      }),
+
+    list: protectedProcedure
+      .input(z.object({
+        investmentId: z.number().optional(),
+        type: z.enum(["dividend", "jcp", "interest", "bonus"]).optional(),
+        startDate: z.date().optional(),
+        endDate: z.date().optional(),
+      }).optional())
+      .query(async ({ ctx, input }) => {
+        const { listDividends } = await import("./db-dividends");
+        return await listDividends(ctx.user.id, input);
+      }),
+
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const { getDividendById } = await import("./db-dividends");
+        return await getDividendById(input.id, ctx.user.id);
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        investmentId: z.number().optional(),
+        type: z.enum(["dividend", "jcp", "interest", "bonus"]).optional(),
+        amount: z.number().positive().optional(),
+        paymentDate: z.date().optional(),
+        referenceDate: z.date().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { id, ...data } = input;
+        const { updateDividend } = await import("./db-dividends");
+        // Converter amount para string se fornecido (decimal no banco)
+        const updateData = data.amount !== undefined 
+          ? { ...data, amount: data.amount.toString() }
+          : data;
+        return await updateDividend(id, ctx.user.id, updateData as any);
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const { deleteDividend } = await import("./db-dividends");
+        return await deleteDividend(input.id, ctx.user.id);
+      }),
+
+    getStats: protectedProcedure
+      .input(z.object({
+        investmentId: z.number().optional(),
+        year: z.number().optional(),
+      }).optional())
+      .query(async ({ ctx, input }) => {
+        const { getDividendStats } = await import("./db-dividends");
+        return await getDividendStats(ctx.user.id, input);
+      }),
+  }),
 });
 export type AppRouter = typeof appRouter;

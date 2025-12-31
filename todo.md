@@ -580,3 +580,43 @@
 - [x] Adicionar botões de ação (Tentar Novamente, Voltar ao Início, Contatar Suporte)
 - [x] Incluir detalhes técnicos para facilitar suporte
 - [x] Adicionar link para documentação de ajuda
+
+
+## Registro de Dividendos e Juros (Em Desenvolvimento)
+
+### Schema do Banco de Dados
+- [ ] Criar tabela dividends com campos (id, userId, investmentId, type, amount, paymentDate, referenceDate)
+- [ ] Adicionar tipos: dividend, jcp, interest, bonus
+- [ ] Executar migração do banco
+
+### Procedures tRPC
+- [ ] Criar procedure createDividend
+- [ ] Criar procedure listDividends (com filtros)
+- [ ] Criar procedure updateDividend
+- [ ] Criar procedure deleteDividend
+- [ ] Criar procedure getDividendStats (yield, total recebido)
+
+### Página de Dividendos
+- [ ] Criar página /dividends
+- [ ] Formulário para registrar novo dividendo
+- [ ] Tabela com histórico de dividendos
+- [ ] Filtros por investimento, tipo e período
+- [ ] Cards de resumo (total recebido, yield médio, renda mensal)
+
+### Cálculos e Gráficos
+- [ ] Calcular dividend yield por investimento
+- [ ] Calcular renda passiva mensal
+- [ ] Calcular renda passiva anual
+- [ ] Gráfico de evolução de dividendos (linha)
+- [ ] Gráfico de distribuição por tipo (pizza)
+- [ ] Gráfico de dividendos por investimento (barras)
+
+### Integração
+- [ ] Adicionar link na página de Investments
+- [ ] Adicionar rota no App.tsx
+- [ ] Adicionar item no menu do dashboard
+
+### Testes
+- [ ] Criar testes unitários para procedures
+- [ ] Testar cálculos de yield
+- [ ] Testar fluxo completo de CRUD
