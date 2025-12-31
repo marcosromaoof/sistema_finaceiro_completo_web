@@ -16,6 +16,8 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { UpcomingBills } from "@/components/UpcomingBills";
+import { DashboardSkeleton } from "@/components/skeletons/PageSkeleton";
+import { FadeIn, StaggerChildren, StaggerItem } from "@/components/animations/FadeIn";
 
 export default function Home() {
   const { data: summary, isLoading } = trpc.dashboard.summary.useQuery();
@@ -30,24 +32,7 @@ export default function Home() {
   if (isLoading) {
     return (
       <DashboardLayout>
-        <div className="p-6 space-y-6">
-          <div>
-            <Skeleton className="h-8 w-48 mb-2" />
-            <Skeleton className="h-4 w-64" />
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {[1, 2, 3, 4].map((i) => (
-              <Card key={i}>
-                <CardHeader className="pb-2">
-                  <Skeleton className="h-4 w-24" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-8 w-32" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
+        <DashboardSkeleton />
       </DashboardLayout>
     );
   }
@@ -104,17 +89,20 @@ export default function Home() {
     <DashboardLayout>
       <div className="p-6 space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
-          <p className="text-muted-foreground">
-            Visão geral das suas finanças
-          </p>
-        </div>
+        <FadeIn>
+          <div>
+            <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
+            <p className="text-muted-foreground">
+              Visão geral das suas finanças
+            </p>
+          </div>
+        </FadeIn>
 
         {/* Stats Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <StaggerChildren className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => (
-            <Card key={stat.title} className="hover:shadow-md transition-shadow">
+            <StaggerItem key={stat.title}>
+              <Card className="hover:shadow-md transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   {stat.title}
@@ -136,8 +124,9 @@ export default function Home() {
                 </div>
               </CardContent>
             </Card>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerChildren>
 
         {/* Quick Stats */}
         <div className="grid gap-4 md:grid-cols-3">

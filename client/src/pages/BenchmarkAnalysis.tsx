@@ -16,6 +16,9 @@ import {
 } from "recharts";
 import { TrendingUp, TrendingDown, Activity, Target, RefreshCw } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { DashboardSkeleton } from "@/components/skeletons/PageSkeleton";
+import { FadeIn, StaggerChildren, StaggerItem } from "@/components/animations/FadeIn";
+import { InfoTooltip } from "@/components/InfoTooltip";
 
 type RangeOption = "1mo" | "3mo" | "6mo" | "1y" | "2y" | "5y" | "max";
 type BenchmarkOption = "ibovespa" | "sp500" | "cdi";
@@ -81,15 +84,7 @@ export default function BenchmarkAnalysis() {
   if (isLoading) {
     return (
       <DashboardLayout>
-        <div className="p-6 space-y-6">
-          <Skeleton className="h-8 w-64" />
-          <div className="grid gap-4 md:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <Skeleton key={i} className="h-32" />
-            ))}
-          </div>
-          <Skeleton className="h-96" />
-        </div>
+        <DashboardSkeleton />
       </DashboardLayout>
     );
   }
@@ -213,9 +208,15 @@ export default function BenchmarkAnalysis() {
 
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Alpha
-              </CardTitle>
+              <div className="flex items-center gap-1.5">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Alpha
+                </CardTitle>
+                <InfoTooltip 
+                  content="O Alpha mede o retorno do seu portfólio acima (ou abaixo) do benchmark. Um Alpha positivo indica que você está batendo o mercado."
+                  side="right"
+                />
+              </div>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between">

@@ -516,3 +516,50 @@
 - [x] Validar integração com Yahoo Finance API
 - [x] Testar procedures tRPC de benchmarks
 - [x] Validar cálculos de métricas financeiras
+
+
+## Melhorias UX/UI (✅ Concluído)
+
+### Animações
+- [x] Instalar biblioteca framer-motion
+- [x] Criar componente FadeIn para fade-in de elementos
+- [x] Criar componentes StaggerChildren e StaggerItem
+- [x] Adicionar transições de página suaves
+- [x] Implementar hover effects em cards (CSS)
+- [x] Criar arquivo animations.css com animações customizadas
+- [x] Adicionar animações de slide-in, fade-in, scale-in
+- [x] Implementar ripple effect em botões
+- [x] Adicionar animação de checkmark de sucesso
+
+### Skeleton Loaders
+- [x] Criar componente CardSkeleton reutilizável
+- [x] Criar componente TableSkeleton para tabelas
+- [x] Criar componente ChartSkeleton para gráficos
+- [x] Criar componente DashboardSkeleton completo
+- [x] Criar componente TransactionsSkeleton
+- [x] Criar componente FormSkeleton
+- [x] Adicionar skeleton em Dashboard (Home.tsx)
+- [x] Adicionar skeleton em BenchmarkAnalysis
+- [x] Integrar animações FadeIn e Stagger no Home.tsx
+
+### Tooltips
+- [x] Criar componente InfoTooltip reutilizável
+- [x] Criar componente LabelWithTooltip para formulários
+- [x] Adicionar tooltip em métrica Alpha no BenchmarkAnalysis
+- [x] Configurar delay de 200ms para melhor UX
+- [x] Suporte a posição customizável (top, right, bottom, left)
+
+### Micro-interações
+- [x] Criar componente LoadingButton com estado de loading
+- [x] Adicionar animação whileTap (scale 0.95) em botões
+- [x] Implementar ripple effect via CSS
+- [x] Adicionar hover effects em cards (hover-lift, card-hover)
+- [x] Criar animações de pulse e spinner
+- [x] Adicionar progress bar animado
+
+### Polimento Geral
+- [x] Adicionar focus states acessíveis (outline primary)
+- [x] Implementar smooth scrolling (scroll-behavior: smooth)
+- [x] Garantir transições suaves com cubic-bezier
+- [x] Criar biblioteca completa de animações CSS
+- [x] Integrar animações no index.css
