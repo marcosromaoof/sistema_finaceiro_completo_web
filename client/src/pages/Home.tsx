@@ -161,10 +161,12 @@ export default function Home() {
 
         {/* Quick Stats Row */}
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="metric-card">
-            <div className="flex items-center justify-between mb-2">
+          <div className="metric-card hover-lift ripple group">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-medium text-muted-foreground">Contas Ativas</h3>
-              <Wallet className="h-4 w-4 text-primary" />
+              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <Wallet className="h-4 w-4 text-primary" />
+              </div>
             </div>
             <p className="text-3xl font-bold text-foreground">
               {summary.accountsCount}
@@ -174,10 +176,12 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="metric-card">
-            <div className="flex items-center justify-between mb-2">
+          <div className="metric-card hover-lift ripple group">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-medium text-muted-foreground">Metas Ativas</h3>
-              <TrendingUp className="h-4 w-4 text-prosperity" />
+              <div className="p-2 rounded-lg bg-prosperity/10 group-hover:bg-prosperity/20 transition-colors">
+                <TrendingUp className="h-4 w-4 text-prosperity" />
+              </div>
             </div>
             <p className="text-3xl font-bold text-foreground">
               {summary.activeGoalsCount}
@@ -187,10 +191,12 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="metric-card">
-            <div className="flex items-center justify-between mb-2">
+          <div className="metric-card hover-lift ripple group">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-medium text-muted-foreground">Alertas</h3>
-              <AlertCircle className="h-4 w-4 text-destructive" />
+              <div className="p-2 rounded-lg bg-destructive/10 group-hover:bg-destructive/20 transition-colors">
+                <AlertCircle className="h-4 w-4 text-destructive" />
+              </div>
             </div>
             <p className="text-3xl font-bold text-foreground">
               {summary.unreadAlertsCount}
@@ -302,20 +308,28 @@ export default function Home() {
 
         {/* Quick Action Buttons */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <button className="metric-card text-center hover:scale-105 transition-transform group">
-            <Plus className="h-8 w-8 mx-auto mb-2 text-prosperity group-hover:scale-110 transition-transform" />
+          <button className="metric-card text-center hover-lift ripple group">
+            <div className="p-3 rounded-lg bg-prosperity/10 w-fit mx-auto mb-3 group-hover:bg-prosperity/20 transition-colors">
+              <Plus className="h-8 w-8 text-prosperity" />
+            </div>
             <span className="text-sm font-medium">Adicionar Transação</span>
           </button>
-          <button className="metric-card text-center hover:scale-105 transition-transform group">
-            <BarChart3 className="h-8 w-8 mx-auto mb-2 text-primary group-hover:scale-110 transition-transform" />
+          <button className="metric-card text-center hover-lift ripple group">
+            <div className="p-3 rounded-lg bg-primary/10 w-fit mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+              <BarChart3 className="h-8 w-8 text-primary" />
+            </div>
             <span className="text-sm font-medium">Ver Gráficos</span>
           </button>
-          <button className="metric-card text-center hover:scale-105 transition-transform group">
-            <Wallet className="h-8 w-8 mx-auto mb-2 text-secondary group-hover:scale-110 transition-transform" />
+          <button className="metric-card text-center hover-lift ripple group">
+            <div className="p-3 rounded-lg bg-secondary/10 w-fit mx-auto mb-3 group-hover:bg-secondary/20 transition-colors">
+              <Wallet className="h-8 w-8 text-secondary" />
+            </div>
             <span className="text-sm font-medium">Gerenciar Contas</span>
           </button>
-          <button className="metric-card text-center hover:scale-105 transition-transform group">
-            <Settings className="h-8 w-8 mx-auto mb-2 text-muted-foreground group-hover:scale-110 transition-transform" />
+          <button className="metric-card text-center hover-lift ripple group">
+            <div className="p-3 rounded-lg bg-muted/30 w-fit mx-auto mb-3 group-hover:bg-muted/50 transition-colors">
+              <Settings className="h-8 w-8 text-muted-foreground" />
+            </div>
             <span className="text-sm font-medium">Configurações</span>
           </button>
         </div>

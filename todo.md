@@ -1061,3 +1061,8 @@
 
 ## Melhorias Botões Pricing (31/12/2025)
 - [x] Adicionar efeitos hover premium aos botões Free e Family (ripple, shadow)
+
+## Aplicar Tema Premium ao Dashboard (31/12/2025)
+- [x] Adicionar efeitos hover premium aos botões de ação rápida
+- [x] Melhorar cards de métricas com glassmorphism e shadows
+- [x] Aplicar cores consistentes com landing page
