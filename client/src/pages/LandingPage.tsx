@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import SupportChatWidget from "@/components/SupportChatWidget";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, TrendingUp, Shield, BarChart3, Target, CreditCard, Users, Zap } from "lucide-react";
+import { Check, TrendingUp, Shield, BarChart3, Target, CreditCard, Users, Zap, Wallet, Sparkles, ArrowRight } from "lucide-react";
 import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
@@ -32,44 +32,45 @@ export default function LandingPage() {
     setLoadingPlan(plan);
     createCheckoutSession.mutate({ plan });
   };
+
   const features = [
     {
-      icon: <TrendingUp className="h-8 w-8 text-primary" />,
+      icon: TrendingUp,
       title: "Dashboard Inteligente",
       description: "Visualize todo seu patrimônio em um só lugar com gráficos interativos e análises em tempo real."
     },
     {
-      icon: <Shield className="h-8 w-8 text-primary" />,
+      icon: Shield,
       title: "Segurança Total",
       description: "Seus dados protegidos com criptografia de ponta e autenticação de dois fatores."
     },
     {
-      icon: <BarChart3 className="h-8 w-8 text-primary" />,
+      icon: BarChart3,
       title: "Relatórios Detalhados",
       description: "Análises profundas de seus gastos com exportação para PDF, Excel e CSV."
     },
     {
-      icon: <Target className="h-8 w-8 text-primary" />,
+      icon: Target,
       title: "Metas Financeiras",
       description: "Defina e acompanhe suas metas com calculadoras inteligentes e projeções."
     },
     {
-      icon: <CreditCard className="h-8 w-8 text-primary" />,
+      icon: CreditCard,
       title: "Gestão de Dívidas",
       description: "Planeje o pagamento de dívidas com estratégias snowball e avalanche."
     },
     {
-      icon: <Users className="h-8 w-8 text-primary" />,
+      icon: Users,
       title: "Colaboração Familiar",
       description: "Compartilhe orçamentos e metas com sua família de forma segura."
     },
     {
-      icon: <Zap className="h-8 w-8 text-primary" />,
+      icon: Zap,
       title: "IA Integrada",
       description: "Assistente financeiro com inteligência artificial para análises personalizadas."
     },
     {
-      icon: <BarChart3 className="h-8 w-8 text-primary" />,
+      icon: BarChart3,
       title: "Investimentos",
       description: "Acompanhe a performance de sua carteira e compare com benchmarks."
     },
@@ -176,16 +177,16 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header/Nav */}
-      <header className="border-b sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
+      {/* Premium Header/Nav */}
+      <header className="sticky top-0 z-50 glass border-b border-border/50">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-              <TrendingUp className="h-5 w-5 text-primary-foreground" />
+            <div className="h-10 w-10 rounded-lg gradient-prosperity flex items-center justify-center">
+              <Wallet className="h-6 w-6 text-white" />
             </div>
             <span className="font-bold text-xl">Organizai</span>
           </div>
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-sm font-medium hover:text-primary transition-colors">
               Recursos
             </a>
@@ -203,233 +204,335 @@ export default function LandingPage() {
             <Button variant="ghost" asChild>
               <a href={getLoginUrl()}>Entrar</a>
             </Button>
-            <Button asChild>
+            <Button asChild className="gradient-prosperity border-0 hover-lift">
               <a href={getLoginUrl()}>Começar Grátis</a>
             </Button>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="py-20 md:py-32">
-        <div className="container">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6">
-              Controle Total das Suas{" "}
-              <span className="text-primary">Finanças Pessoais</span>
+      {/* Premium Hero Section */}
+      <section className="relative overflow-hidden gradient-sky py-24 md:py-32">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }} />
+        </div>
+        
+        {/* Decorative Blobs */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-prosperity/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-premium/20 rounded-full blur-3xl" />
+        
+        <div className="container relative z-10">
+          <div className="mx-auto max-w-4xl text-center">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 fade-in">
+              <span className="w-2 h-2 rounded-full bg-prosperity animate-pulse" />
+              <span className="text-sm text-white">
+                Sua fortuna, organizada.
+              </span>
+            </div>
+            
+            {/* Heading */}
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 slide-up">
+              Gerencie suas finanças com
+              <span className="text-gradient-prosperity block mt-2">
+                inteligência artificial
+              </span>
             </h1>
-            <p className="text-lg text-muted-foreground mb-8">
-              Gerencie contas, orçamentos, metas e investimentos em uma plataforma completa com inteligência artificial. 
-              Tome decisões financeiras mais inteligentes com o Organizai.
+            
+            {/* Description */}
+            <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto slide-up" style={{ animationDelay: '0.1s' }}>
+              Controle completo de contas, orçamentos, metas e investimentos.
+              Análises inteligentes para decisões financeiras mais assertivas.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
-                <a href={getLoginUrl()}>Começar Grátis</a>
+            
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center slide-up" style={{ animationDelay: '0.2s' }}>
+              <Button size="lg" asChild className="gradient-prosperity border-0 hover-lift ripple text-lg px-8 py-6">
+                <a href={getLoginUrl()}>
+                  Começar Grátis
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <a href="#features">Ver Recursos</a>
+              <Button size="lg" variant="outline" asChild className="glass hover:bg-white/10 text-white border-white/20 hover-lift text-lg px-8 py-6">
+                <a href="#features">Ver Demonstração</a>
               </Button>
             </div>
-            <p className="text-sm text-muted-foreground mt-4">
-              ✓ Teste grátis por 14 dias ✓ Sem cartão de crédito ✓ Cancele quando quiser
+            
+            {/* Trust Badges */}
+            <p className="text-sm text-white/70 mt-8 flex items-center justify-center gap-6 flex-wrap">
+              <span className="flex items-center gap-1">
+                <Check className="h-4 w-4 text-prosperity" />
+                Teste grátis por 14 dias
+              </span>
+              <span className="flex items-center gap-1">
+                <Check className="h-4 w-4 text-prosperity" />
+                Sem cartão de crédito
+              </span>
+              <span className="flex items-center gap-1">
+                <Check className="h-4 w-4 text-prosperity" />
+                Cancele quando quiser
+              </span>
             </p>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-muted/50">
+      {/* Premium Features Section */}
+      <section id="features" className="py-24 bg-background">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Recursos Poderosos</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Tudo que você precisa para gerenciar suas finanças de forma profissional
+          <div className="text-center mb-16 fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
+              <Sparkles className="h-4 w-4" />
+              <span className="text-sm font-medium">Recursos Poderosos</span>
+            </div>
+            <h2 className="text-4xl font-bold mb-4">
+              Tudo que você precisa para
+              <span className="text-gradient-prosperity"> organizar suas finanças</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Ferramentas profissionais para gestão financeira pessoal e familiar
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <div className="mb-4">{feature.icon}</div>
-                  <CardTitle className="text-xl">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>{feature.description}</CardDescription>
-                </CardContent>
-              </Card>
+              <div 
+                key={index}
+                className="metric-card group fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="p-3 rounded-lg bg-primary/10 w-fit mb-4 group-hover:scale-110 transition-transform">
+                  <feature.icon className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground">{feature.description}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20">
+      {/* Stats Section */}
+      <section className="py-24 gradient-emerald">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Planos e Preços</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
+            <div className="fade-in">
+              <div className="text-5xl font-bold mb-2">10k+</div>
+              <div className="text-white/80">Usuários Ativos</div>
+            </div>
+            <div className="fade-in" style={{ animationDelay: '0.1s' }}>
+              <div className="text-5xl font-bold mb-2">R$ 50M+</div>
+              <div className="text-white/80">Patrimônio Gerenciado</div>
+            </div>
+            <div className="fade-in" style={{ animationDelay: '0.2s' }}>
+              <div className="text-5xl font-bold mb-2">4.9/5</div>
+              <div className="text-white/80">Avaliação Média</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Premium Pricing Section */}
+      <section id="pricing" className="py-24 bg-muted/30">
+        <div className="container">
+          <div className="text-center mb-16 fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary mb-4">
+              <CreditCard className="h-4 w-4" />
+              <span className="text-sm font-medium">Planos Flexíveis</span>
+            </div>
+            <h2 className="text-4xl font-bold mb-4">
+              Planos para todos os perfis
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Escolha o plano ideal para suas necessidades
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {plans.map((plan, index) => (
-              <Card key={index} className={plan.popular ? "border-primary shadow-lg" : ""}>
+              <div 
+                key={index}
+                className={`metric-card relative fade-in ${
+                  plan.popular ? 'ring-2 ring-primary scale-105' : ''
+                }`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 {plan.popular && (
-                  <div className="bg-primary text-primary-foreground text-center py-1 text-sm font-medium">
-                    Mais Popular
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <span className="px-4 py-1 rounded-full gradient-prosperity text-white text-sm font-semibold shadow-lg">
+                      Mais Popular
+                    </span>
                   </div>
                 )}
-                <CardHeader>
-                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                  <CardDescription>{plan.description}</CardDescription>
-                  <div className="mt-4">
+                
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                  <p className="text-sm text-muted-foreground mb-4">{plan.description}</p>
+                  <div className="flex items-baseline justify-center gap-1">
                     <span className="text-4xl font-bold">{plan.price}</span>
                     <span className="text-muted-foreground">{plan.period}</span>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3 mb-6">
-                    {plan.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button 
-                    className="w-full" 
-                    variant={plan.popular ? "default" : "outline"}
-                    onClick={() => handleCheckout(plan.name.toLowerCase() as "free" | "premium" | "family")}
-                    disabled={loadingPlan !== null}
-                  >
-                    {loadingPlan === plan.name.toLowerCase() ? "Carregando..." : plan.cta}
-                  </Button>
-                </CardContent>
-              </Card>
+                </div>
+                
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-sm">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                <Button
+                  className={`w-full hover-lift ripple ${
+                    plan.popular 
+                      ? 'gradient-prosperity border-0' 
+                      : 'bg-muted hover:bg-muted/80'
+                  }`}
+                  size="lg"
+                  onClick={() => handleCheckout(plan.name.toLowerCase() as "free" | "premium" | "family")}
+                  disabled={loadingPlan === plan.name.toLowerCase()}
+                >
+                  {loadingPlan === plan.name.toLowerCase() ? "Processando..." : plan.cta}
+                </Button>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 bg-muted/50">
+      <section id="testimonials" className="py-24 bg-background">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">O Que Dizem Nossos Clientes</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <div className="text-center mb-16 fade-in">
+            <h2 className="text-4xl font-bold mb-4">
+              O que nossos usuários dizem
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Milhares de pessoas já transformaram suas finanças com o Organizai
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {testimonials.map((testimonial, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                      {testimonial.avatar}
-                    </div>
-                    <div>
-                      <CardTitle className="text-base">{testimonial.name}</CardTitle>
-                      <CardDescription>{testimonial.role}</CardDescription>
-                    </div>
+              <div 
+                key={index}
+                className="metric-card fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="h-12 w-12 rounded-full gradient-prosperity flex items-center justify-center text-white font-bold">
+                    {testimonial.avatar}
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground italic">"{testimonial.content}"</p>
-                </CardContent>
-              </Card>
+                  <div>
+                    <div className="font-semibold">{testimonial.name}</div>
+                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                  </div>
+                </div>
+                <p className="text-muted-foreground italic">"{testimonial.content}"</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-20">
+      <section id="faq" className="py-24 bg-muted/30">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Perguntas Frequentes</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <div className="text-center mb-16 fade-in">
+            <h2 className="text-4xl font-bold mb-4">
+              Perguntas Frequentes
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Tire suas dúvidas sobre o Organizai
             </p>
           </div>
+          
           <div className="max-w-3xl mx-auto space-y-4">
             {faqs.map((faq, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <CardTitle className="text-lg">{faq.question}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{faq.answer}</p>
-                </CardContent>
-              </Card>
+              <div 
+                key={index}
+                className="metric-card fade-in"
+                style={{ animationDelay: `${index * 0.05}s` }}
+              >
+                <h3 className="font-semibold mb-2">{faq.question}</h3>
+                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container text-center">
-          <h2 className="text-3xl font-bold mb-4">Pronto para Transformar Suas Finanças?</h2>
-          <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Junte-se a milhares de usuários que já estão no controle total de suas finanças
-          </p>
-          <Button size="lg" variant="secondary" asChild>
-            <a href={getLoginUrl()}>Começar Grátis Agora</a>
-          </Button>
+      <section className="py-24 gradient-sky">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 fade-in">
+              Pronto para transformar suas finanças?
+            </h2>
+            <p className="text-xl text-white/80 mb-8 fade-in" style={{ animationDelay: '0.1s' }}>
+              Junte-se a milhares de usuários que já estão no controle do seu dinheiro
+            </p>
+            <Button size="lg" asChild className="gradient-prosperity border-0 hover-lift ripple text-lg px-8 py-6 fade-in" style={{ animationDelay: '0.2s' }}>
+              <a href={getLoginUrl()}>
+                Começar Grátis Agora
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-12">
+      <footer className="py-12 bg-background border-t">
         <div className="container">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                  <TrendingUp className="h-5 w-5 text-primary-foreground" />
+                <div className="h-8 w-8 rounded-lg gradient-prosperity flex items-center justify-center">
+                  <Wallet className="h-5 w-5 text-white" />
                 </div>
                 <span className="font-bold text-lg">Organizai</span>
               </div>
               <p className="text-sm text-muted-foreground">
-                Gestão financeira inteligente para você e sua família.
+                Sua fortuna, organizada.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Produto</h3>
+              <h4 className="font-semibold mb-4">Produto</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#features" className="hover:text-foreground">Recursos</a></li>
-                <li><a href="#pricing" className="hover:text-foreground">Preços</a></li>
-                <li><a href="#" className="hover:text-foreground">Segurança</a></li>
-                <li><a href="#" className="hover:text-foreground">Roadmap</a></li>
+                <li><a href="#features" className="hover:text-primary transition-colors">Recursos</a></li>
+                <li><a href="#pricing" className="hover:text-primary transition-colors">Preços</a></li>
+                <li><a href="#faq" className="hover:text-primary transition-colors">FAQ</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Empresa</h3>
+              <h4 className="font-semibold mb-4">Empresa</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground">Sobre Nós</a></li>
-                <li><a href="#" className="hover:text-foreground">Blog</a></li>
-                <li><a href="#" className="hover:text-foreground">Carreiras</a></li>
-                <li><a href="#" className="hover:text-foreground">Contato</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Sobre</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Contato</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Legal</h3>
+              <h4 className="font-semibold mb-4">Legal</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground">Termos de Uso</a></li>
-                <li><a href="#" className="hover:text-foreground">Política de Privacidade</a></li>
-                <li><a href="#" className="hover:text-foreground">LGPD</a></li>
-                <li><a href="#" className="hover:text-foreground">Cookies</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Privacidade</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Termos</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">LGPD</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2025 Organizai. Todos os direitos reservados.</p>
+          <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
+            © 2025 Organizai. Todos os direitos reservados.
           </div>
         </div>
       </footer>
 
-      {/* Support Chat Widget */}
       <SupportChatWidget />
     </div>
   );
