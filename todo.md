@@ -1072,3 +1072,10 @@
 - [x] Adicionar filtros de período (7D/30D/90D/1A) ao gráfico de patrimônio
 - [x] Criar seção "Insights da IA" com análises automáticas
 - [x] Testar responsividade de todos os novos componentes
+
+## Consulta IAs e Melhorias Avançadas (31/12/2025)
+- [x] Consultar GPT sobre melhores práticas de UX/UI em dashboards financeiros
+- [x] Criar documento INSIGHTS_IA_UX.md com recomendações
+- [x] Implementar botões de ação nos insights da IA
+- [x] Adicionar interatividade ao gráfico donut (click para detalhes)
+- [x] Criar modal de detalhes de categoria com transações

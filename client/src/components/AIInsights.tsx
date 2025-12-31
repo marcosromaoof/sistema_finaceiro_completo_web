@@ -1,4 +1,5 @@
-import { Lightbulb, TrendingUp, TrendingDown, AlertTriangle, Sparkles } from "lucide-react";
+import { Lightbulb, TrendingUp, TrendingDown, AlertTriangle, Sparkles, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 
 interface Insight {
   id: string;
@@ -6,6 +7,10 @@ interface Insight {
   title: string;
   description: string;
   icon: 'lightbulb' | 'trending-up' | 'trending-down' | 'alert' | 'sparkles';
+  action?: {
+    label: string;
+    href: string;
+  };
 }
 
 interface AIInsightsProps {
@@ -21,6 +26,10 @@ export function AIInsights({ insights }: AIInsightsProps) {
       title: 'Economia recorde em transporte!',
       description: 'Você economizou 23% em transporte este mês comparado ao anterior. Continue assim!',
       icon: 'trending-down',
+      action: {
+        label: 'Ver Detalhes',
+        href: '/transacoes?category=transporte',
+      },
     },
     {
       id: '2',
@@ -28,6 +37,10 @@ export function AIInsights({ insights }: AIInsightsProps) {
       title: 'Padrão detectado: gastos às sextas',
       description: 'Seus gastos com lazer aumentam 45% às sextas-feiras. Considere planejar melhor.',
       icon: 'alert',
+      action: {
+        label: 'Criar Orçamento',
+        href: '/orcamentos',
+      },
     },
     {
       id: '3',
@@ -35,6 +48,10 @@ export function AIInsights({ insights }: AIInsightsProps) {
       title: 'Meta de emergência quase completa',
       description: 'Faltam apenas R$ 1.500 para atingir sua meta de fundo de emergência. Você está 90% lá!',
       icon: 'trending-up',
+      action: {
+        label: 'Adicionar Valor',
+        href: '/metas',
+      },
     },
     {
       id: '4',
@@ -42,6 +59,10 @@ export function AIInsights({ insights }: AIInsightsProps) {
       title: 'Melhor mês do ano!',
       description: 'Este foi seu melhor mês em economia. Você guardou 18% da sua renda total.',
       icon: 'sparkles',
+      action: {
+        label: 'Ver Relatório',
+        href: '/relatorios',
+      },
     },
   ];
 
@@ -144,16 +165,27 @@ export function AIInsights({ insights }: AIInsightsProps) {
                   key={insight.id}
                   className={`p-4 rounded-xl border-2 ${styles.bg} ${styles.border} hover-lift ripple group cursor-pointer`}
                 >
-                  <div className="flex items-start gap-3">
-                    <div className={`p-2 rounded-lg ${styles.iconBg} group-hover:scale-110 transition-transform`}>
-                      <Icon className={`h-5 w-5 ${styles.icon}`} />
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-lg ${styles.iconBg} group-hover:scale-110 transition-transform`}>
+                        <Icon className={`h-5 w-5 ${styles.icon}`} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold mb-1">{insight.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {insight.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold mb-1">{insight.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {insight.description}
-                      </p>
-                    </div>
+                    
+                    {insight.action && (
+                      <Link href={insight.action.href}>
+                        <button className={`w-full px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-all ${styles.icon} ${styles.iconBg} hover:scale-105`}>
+                          {insight.action.label}
+                          <ArrowRight className="h-4 w-4" />
+                        </button>
+                      </Link>
+                    )}
                   </div>
                 </div>
               );

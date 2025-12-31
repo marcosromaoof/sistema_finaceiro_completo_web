@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import { X } from 'lucide-react';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -20,6 +22,7 @@ interface CategoryChartProps {
 }
 
 export function CategoryChart({ data }: CategoryChartProps) {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   // Mock data se não houver dados reais
   const mockData: CategoryData[] = [
     { category: 'Alimentação', amount: 1200, color: 'hsl(142 76% 36%)' }, // prosperity
@@ -50,6 +53,12 @@ export function CategoryChart({ data }: CategoryChartProps) {
     responsive: true,
     maintainAspectRatio: false,
     cutout: '70%',
+    onClick: (event, elements) => {
+      if (elements.length > 0) {
+        const index = elements[0].index;
+        setSelectedCategory(chartData[index].category);
+      }
+    },
     plugins: {
       legend: {
         display: false,
@@ -85,14 +94,18 @@ export function CategoryChart({ data }: CategoryChartProps) {
     }).format(value);
   };
 
+  const selectedData = selectedCategory
+    ? chartData.find((item) => item.category === selectedCategory)
+    : null;
+
   return (
-    <div className="glass rounded-xl overflow-hidden">
+    <div className="glass rounded-xl overflow-hidden relative">
       <div className="p-6 border-b border-border/50">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold">Despesas por Categoria</h2>
             <p className="text-sm text-muted-foreground">
-              Distribuição do mês atual
+              Distribuição do mês atual • <span className="text-primary">Clique para detalhes</span>
             </p>
           </div>
           <div className="text-right">
@@ -143,6 +156,60 @@ export function CategoryChart({ data }: CategoryChartProps) {
           </div>
         </div>
       </div>
+
+      {/* Category Details Modal */}
+      {selectedData && (
+        <div className="absolute inset-0 bg-background/95 backdrop-blur-sm z-10 p-6 flex flex-col animate-in fade-in-0 slide-in-from-bottom-4">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-2xl font-bold">{selectedData.category}</h3>
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className="p-2 rounded-lg hover:bg-muted transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="flex-1 space-y-6">
+            {/* Total */}
+            <div className="p-6 rounded-xl border-2 border-border/50 bg-muted/20">
+              <p className="text-sm text-muted-foreground mb-1">Total Gasto</p>
+              <p className="text-4xl font-bold">{formatCurrency(selectedData.amount)}</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                {((selectedData.amount / total) * 100).toFixed(1)}% do total
+              </p>
+            </div>
+
+            {/* Mock Transactions */}
+            <div>
+              <h4 className="font-semibold mb-3">Transações Recentes</h4>
+              <div className="space-y-2">
+                {[
+                  { name: 'Compra 1', date: '28 Dez', value: selectedData.amount * 0.4 },
+                  { name: 'Compra 2', date: '25 Dez', value: selectedData.amount * 0.35 },
+                  { name: 'Compra 3', date: '20 Dez', value: selectedData.amount * 0.25 },
+                ].map((transaction, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                  >
+                    <div>
+                      <p className="font-medium">{transaction.name}</p>
+                      <p className="text-sm text-muted-foreground">{transaction.date}</p>
+                    </div>
+                    <p className="font-semibold">{formatCurrency(transaction.value)}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Button */}
+            <button className="w-full px-4 py-3 rounded-lg bg-prosperity text-white font-medium hover:bg-prosperity/90 transition-colors">
+              Ver Todas as Transações
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
