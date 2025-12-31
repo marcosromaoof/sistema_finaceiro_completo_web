@@ -33,6 +33,7 @@ import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCanceled from "./pages/CheckoutCanceled";
 import Billing from "./pages/Billing";
 import BenchmarkAnalysis from "./pages/BenchmarkAnalysis";
+import AuthError from "./pages/AuthError";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -78,6 +79,7 @@ function Router() {
       <Route path="/checkout/canceled" component={CheckoutCanceled} />
       <Route path="/billing" component={Billing} />
       <Route path="/benchmark-analysis" component={BenchmarkAnalysis} />
+      <Route path="/auth-error" component={AuthError} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
