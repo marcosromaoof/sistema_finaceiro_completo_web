@@ -126,11 +126,11 @@
 - [ ] Envio de relatórios via WhatsApp
 
 ### Sistema de Cobrança Avançado
-- [ ] Integração com Stripe
-- [ ] Gestão de ciclos de cobrança
-- [ ] Webhooks de pagamento
+- [x] Integração com Stripe
+- [x] Gestão de ciclos de cobrança
+- [x] Webhooks de pagamento
 - [ ] Emissão de notas fiscais
-- [ ] Histórico de transações
+- [x] Histórico de transações
 
 ### Notificações em Massa
 - [ ] Sistema de newsletters
