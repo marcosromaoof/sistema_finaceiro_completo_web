@@ -250,3 +250,14 @@
 - [ ] Melhorar análise de dados financeiros com contexto completo
 - [ ] Adicionar sugestões baseadas em dados reais do mercado
 - [ ] Implementar cache de respostas para economia de API calls
+
+
+## Integração Tavily Search (Concluído)
+- [x] Implementar cliente Tavily API no backend
+- [x] Adicionar busca na web em tempo real
+- [x] Integrar com Chat IA
+- [x] Buscar cotações de ações
+- [x] Buscar notícias econômicas
+- [x] Buscar dados de mercado
+- [x] Criar procedures tRPC para busca
+- [x] Atualizar frontend para mostrar resultados

@@ -5,7 +5,8 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { invokeLLM } from "./_core/llm";
-import { sendGroqChat, testGroqConnection, getGroqModels, initializeGroqClient } from "./_core/groq";
+import { sendGroqChat, getGroqModels, testGroqConnection, initializeGroqClient } from "./_core/groq";
+import { searchWeb, needsWebSearch, initializeTavilyClient, testTavilyConnection } from "./_core/tavily";
 
 export const appRouter = router({
   system: systemRouter,
@@ -562,6 +563,23 @@ export const appRouter = router({
         model: z.enum(["llama-3.1-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"]).default("llama-3.1-70b-versatile"),
       }))
       .mutation(async ({ ctx, input }) => {
+        // Check if query needs web search
+        let webSearchResults = "";
+        if (needsWebSearch(input.message)) {
+          try {
+            const searchResult = await searchWeb(input.message, {
+              maxResults: 3,
+              includeAnswer: true,
+            }, input.apiKey);
+            
+            if (searchResult.answer) {
+              webSearchResults = `\n\nInformações da Web:\n${searchResult.answer}\n\nFontes:\n${searchResult.results.map(r => `- ${r.title}: ${r.url}`).join('\n')}`;
+            }
+          } catch (error) {
+            console.log("[AI Chat] Web search failed, continuing without it:", error);
+          }
+        }
+        
         // Get user's financial context
         const accounts = await db.getUserAccounts(ctx.user.id);
         const transactions = await db.getUserTransactions(ctx.user.id, 50);
@@ -610,7 +628,7 @@ ${transactions.slice(0, 10).map(t =>
 Você tem acesso aos dados financeiros do usuário e deve fornecer análises precisas, conselhos práticos e insights acionáveis.
 Sempre responda em português brasileiro de forma clara e profissional.
 Use os dados financeiros fornecidos para dar respostas personalizadas e relevantes.
-${financialContext}`;
+${financialContext}${webSearchResults}`;
         
         try {
           const response = await sendGroqChat(
@@ -660,6 +678,67 @@ ${financialContext}`;
         }
         
         const success = initializeGroqClient(input.apiKey);
+        return { success };
+      }),
+  }),
+
+  // ==================== TAVILY SEARCH ====================
+  tavilySearch: router({
+    // Search the web
+    search: protectedProcedure
+      .input(z.object({
+        query: z.string().min(1),
+        maxResults: z.number().min(1).max(10).default(5),
+        searchDepth: z.enum(["basic", "advanced"]).default("basic"),
+        includeAnswer: z.boolean().default(true),
+        apiKey: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const result = await searchWeb(
+            input.query,
+            {
+              maxResults: input.maxResults,
+              searchDepth: input.searchDepth,
+              includeAnswer: input.includeAnswer,
+            },
+            input.apiKey
+          );
+          
+          return {
+            success: true,
+            data: result,
+          };
+        } catch (error: any) {
+          console.error("[Tavily Search] Error:", error);
+          return {
+            success: false,
+            error: error.message || "Erro ao buscar na web",
+          };
+        }
+      }),
+    
+    // Test Tavily API connection
+    testConnection: protectedProcedure
+      .input(z.object({
+        apiKey: z.string().min(1),
+      }))
+      .mutation(async ({ input }) => {
+        const success = await testTavilyConnection(input.apiKey);
+        return { success };
+      }),
+    
+    // Initialize Tavily client (admin only)
+    initialize: protectedProcedure
+      .input(z.object({
+        apiKey: z.string().min(1),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        if (ctx.user.role !== "admin") {
+          throw new Error("Unauthorized");
+        }
+        
+        const success = initializeTavilyClient(input.apiKey);
         return { success };
       }),
   }),
