@@ -714,3 +714,13 @@
 - [x] Atualizar para modelo suportado (Llama 3.3 70B)
 - [x] Testar chat com novo modelo
 - [x] Validar que mensagem aparece corretamente
+
+## Substituir Badge do Modelo por "Finança A.I" (🔧 Em Andamento)
+- [ ] Alterar função getModelBadge para mostrar "Finança A.I" ao invés do nome técnico do modelo
+- [ ] Testar que badge aparece corretamente nas mensagens
+- [ ] Validar que não quebra outras funcionalidades
+
+## ✅ Badge "Finança A.I" Implementado
+- [x] Alterar função getModelBadge para mostrar "Finança A.I" ao invés do nome técnico do modelo
+- [x] Testar que badge aparece corretamente nas mensagens
+- [x] Validar que não quebra outras funcionalidades

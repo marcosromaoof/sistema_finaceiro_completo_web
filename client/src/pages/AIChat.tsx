@@ -100,20 +100,8 @@ export default function AIChat() {
 
   const getModelBadge = (model?: string) => {
     if (!model) return null;
-    
-    if (model.includes("3.3")) {
-      return <Badge variant="default" className="ml-2">Llama 3.3 70B</Badge>;
-    }
-    if (model.includes("70b")) {
-      return <Badge variant="default" className="ml-2">Llama 3.1 70B</Badge>;
-    }
-    if (model.includes("8b")) {
-      return <Badge variant="secondary" className="ml-2">Llama 3.1 8B</Badge>;
-    }
-    if (model.includes("mixtral")) {
-      return <Badge variant="outline" className="ml-2">Mixtral 8x7B</Badge>;
-    }
-    return null;
+    // Always show "Finan\u00e7a A.I" instead of technical model name
+    return <Badge variant="default" className="ml-2">Finan\u00e7a A.I</Badge>;
   };
 
   return (
