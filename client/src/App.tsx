@@ -25,6 +25,7 @@ import FamilySharing from "./pages/FamilySharing";
 import AutoTransfers from "./pages/AutoTransfers";
 import TwoFactorAuth from "./pages/TwoFactorAuth";
 import SocialLogin from "./pages/SocialLogin";
+import PushNotifications from "./pages/PushNotifications";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -61,6 +62,7 @@ function Router() {
       <Route path="/auto-transfers" component={AutoTransfers} />
       <Route path="/2fa" component={TwoFactorAuth} />
       <Route path="/social-login" component={SocialLogin} />
+      <Route path="/push-notifications" component={PushNotifications} />
       <Route path="/settings" component={Settings} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

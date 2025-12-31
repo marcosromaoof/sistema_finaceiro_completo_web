@@ -163,11 +163,11 @@
 - [x] Notificações de transferências realizadas
 
 ### Notificações em Massa
-- [ ] Sistema de newsletters
-- [ ] Envio de emails em massa
-- [ ] Segmentação de usuários
-- [ ] Templates de email
-- [ ] Agendamento de envios
+- [x] Sistema de notificações push
+- [x] Envio de notificações em massa
+- [x] Segmentação de usuários
+- [x] Histórico de notificações
+- [x] Agendamento de envios
 
 ### Melhorias no Dashboard
 - [ ] Próximas contas a vencer

@@ -44,6 +44,7 @@ const menuItems = [
   { icon: Repeat, label: "Recorrentes", path: "/recurring" },
   { icon: Bot, label: "IA Chat", path: "/ai-chat" },
   { icon: Shield, label: "Admin", path: "/admin" },
+  { icon: Bell, label: "Push", path: "/push-notifications" },
   { icon: Zap, label: "n8n", path: "/n8n" },
   { icon: Bell, label: "Alertas", path: "/alerts" },
   { icon: Users, label: "Família", path: "/family" },
