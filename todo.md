@@ -219,3 +219,31 @@
 - [ ] Melhorar tratamento de erros
 - [ ] Adicionar validações
 - [ ] Documentar funções complexas
+
+
+## Integração com IAs Gratuitas
+
+### Interface de Configuração de APIs
+- [x] Criar página de configuração de APIs com instruções
+- [x] Adicionar cards para cada API (Groq, Gemini, Tavily, Perplexity, Ollama)
+- [x] Incluir links diretos para páginas de registro
+- [x] Adicionar instruções passo a passo para obter API keys
+- [x] Implementar validação de API keys
+- [x] Adicionar status de conexão (conectado/desconectado)
+
+### Integração com Groq
+- [ ] Implementar cliente Groq API
+- [ ] Adicionar suporte a Llama 3.1 70B
+- [ ] Adicionar suporte a Mixtral 8x7B
+- [ ] Implementar fallback automático
+
+### Integração com Tavily Search
+- [ ] Implementar cliente Tavily API
+- [ ] Adicionar busca na web em tempo real
+- [ ] Integrar resultados de busca no Chat IA
+
+### Melhorias no Chat IA
+- [ ] Adicionar busca na web para perguntas que requerem dados atualizados
+- [ ] Melhorar análise de dados financeiros com contexto completo
+- [ ] Adicionar sugestões baseadas em dados reais do mercado
+- [ ] Implementar cache de respostas para economia de API calls

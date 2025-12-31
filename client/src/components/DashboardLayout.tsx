@@ -27,7 +27,7 @@ import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat, Bot, Shield, Zap, Users, ArrowRightLeft } from "lucide-react";
+import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat, Bot, Shield, Zap, Users, ArrowRightLeft, Key } from "lucide-react";
 
 // Menu items para todos os usuários
 const userMenuItems = [
@@ -55,6 +55,7 @@ const userMenuItems = [
 // Menu items apenas para administradores
 const adminMenuItems = [
   { icon: Shield, label: "Admin", path: "/admin" },
+  { icon: Key, label: "APIs de IA", path: "/api-config" },
   { icon: Bell, label: "Push", path: "/push-notifications" },
   { icon: Zap, label: "n8n", path: "/n8n" },
 ];

@@ -26,6 +26,7 @@ import AutoTransfers from "./pages/AutoTransfers";
 import TwoFactorAuth from "./pages/TwoFactorAuth";
 import SocialLogin from "./pages/SocialLogin";
 import PushNotifications from "./pages/PushNotifications";
+import APIConfiguration from "./pages/APIConfiguration";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -63,6 +64,7 @@ function Router() {
       <Route path="/2fa" component={TwoFactorAuth} />
       <Route path="/social-login" component={SocialLogin} />
       <Route path="/push-notifications" component={PushNotifications} />
+      <Route path="/api-config" component={APIConfiguration} />
       <Route path="/settings" component={Settings} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
