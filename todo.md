@@ -674,3 +674,27 @@
 - [x] Reiniciar servidor e validar correções
 - [ ] Configurar API Key real do Groq no Painel Admin
 - [ ] Testar chat com API Key configurada
+
+## Interface Visual para Configuração de API Keys no Admin (🔧 Em Andamento)
+- [ ] Criar página AdminAPIConfig.tsx
+- [ ] Implementar formulários para Groq, Gemini e Tavily
+- [ ] Adicionar validação de API Keys
+- [ ] Implementar botões de teste de conexão
+- [ ] Adicionar feedback visual (loading, success, error)
+- [ ] Integrar com procedures tRPC apiSettings
+- [ ] Adicionar rota no App.tsx
+- [ ] Adicionar item no menu do DashboardLayout
+- [ ] Testar salvamento e carregamento de API Keys
+- [ ] Validar que apenas admins podem acessar
+
+## ✅ Interface Visual de API Keys Concluída
+- [x] Criar página AdminAPIConfig.tsx
+- [x] Implementar formulários para Groq, Gemini e Tavily
+- [x] Adicionar validação de API Keys
+- [x] Implementar botões de teste de conexão
+- [x] Adicionar feedback visual (loading, success, error)
+- [x] Integrar com procedures tRPC apiSettings
+- [x] Adicionar rota no App.tsx
+- [x] Adicionar item no menu do DashboardLayout
+- [x] Testar salvamento e carregamento de API Keys
+- [x] Validar que apenas admins podem acessar

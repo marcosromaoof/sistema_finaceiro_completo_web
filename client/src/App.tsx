@@ -20,6 +20,7 @@ import Education from "./pages/Education";
 import Reports from "./pages/Reports";
 import RecurringExpenses from "./pages/RecurringExpenses";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminAPIConfig from "./pages/AdminAPIConfig";
 import AIChat from "./pages/AIChat";
 import N8nIntegration from "./pages/N8nIntegration";
 import FamilySharing from "./pages/FamilySharing";
@@ -59,6 +60,7 @@ function Router() {
       <Route path="/reports" component={Reports} />
       <Route path="/recurring" component={RecurringExpenses} />
       <Route path="/admin" component={AdminDashboard} />
+      <Route path="/admin/api-config" component={AdminAPIConfig} />
       <Route path="/ai-chat" component={AIChat} />
       <Route path="/n8n" component={N8nIntegration} />
       <Route path="/budgets" component={Budgets} />

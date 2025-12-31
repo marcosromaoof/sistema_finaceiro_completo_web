@@ -58,7 +58,7 @@ const userMenuItems = [
 // Menu items apenas para administradores
 const adminMenuItems = [
   { icon: Shield, label: "Admin", path: "/admin" },
-  { icon: Key, label: "APIs de IA", path: "/api-config" },
+  { icon: Key, label: "APIs de IA", path: "/admin/api-config" },
   { icon: Bell, label: "Push", path: "/push-notifications" },
   { icon: Zap, label: "n8n", path: "/n8n" },
 ];
