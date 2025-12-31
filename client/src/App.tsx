@@ -7,6 +7,13 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Accounts from "./pages/Accounts";
 import Transactions from "./pages/Transactions";
+import Budgets from "./pages/Budgets";
+import Goals from "./pages/Goals";
+import Debts from "./pages/Debts";
+import Investments from "./pages/Investments";
+import Retirement from "./pages/Retirement";
+import Settings from "./pages/Settings";
+import Alerts from "./pages/Alerts";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -26,13 +33,13 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/accounts" component={Accounts} />
       <Route path="/transactions" component={Transactions} />
-      <Route path="/budgets" component={() => <PlaceholderPage title="Orçamentos" />} />
-      <Route path="/goals" component={() => <PlaceholderPage title="Metas" />} />
-      <Route path="/debts" component={() => <PlaceholderPage title="Dívidas" />} />
-      <Route path="/investments" component={() => <PlaceholderPage title="Investimentos" />} />
-      <Route path="/retirement" component={() => <PlaceholderPage title="Aposentadoria" />} />
-      <Route path="/alerts" component={() => <PlaceholderPage title="Notificações" />} />
-      <Route path="/settings" component={() => <PlaceholderPage title="Configurações" />} />
+      <Route path="/budgets" component={Budgets} />
+      <Route path="/goals" component={Goals} />
+      <Route path="/debts" component={Debts} />
+      <Route path="/investments" component={Investments} />
+      <Route path="/retirement" component={Retirement} />
+      <Route path="/alerts" component={Alerts} />
+      <Route path="/settings" component={Settings} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
