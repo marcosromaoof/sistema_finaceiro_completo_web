@@ -620,3 +620,22 @@
 - [ ] Criar testes unitários para procedures
 - [ ] Testar cálculos de yield
 - [ ] Testar fluxo completo de CRUD
+
+
+## Correção de Erro de Login OAuth (✅ Concluído - Aguardando Teste Final)
+- [x] Investigar estrutura da tabela users no banco de dados
+- [x] Identificar colunas com problemas de default values
+- [x] Corrigir schema.ts para valores default corretos
+- [x] Executar migração limpa do banco de dados (tabela recriada)
+- [x] Testar fluxo de login completo com Google OAuth (sem erros SQL)
+- [x] Corrigir problema de redirecionamento após login
+- [x] Investigar por que usuário volta para landing page (redirecionamento para / ao invés de /dashboard)
+- [x] Alterar redirecionamento de "/" para "/dashboard" no oauth.ts
+- [x] Reiniciar servidor para aplicar mudanças
+- [x] Validar redirecionamento para dashboard
+- [x] Identificar problema: redirect 302 não permite cookie ser processado
+- [x] Mudar sameSite de "none" para "lax" para melhor compatibilidade
+- [x] Substituir redirect 302 por página HTML com JavaScript redirect
+- [x] Adicionar delay de 100ms para garantir processamento do cookie
+- [x] Adicionar logs detalhados para debug
+- [x] Reiniciar servidor com correções aplicadas

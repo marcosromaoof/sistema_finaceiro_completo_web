@@ -81,10 +81,32 @@ export function registerOAuthRoutes(app: Express) {
 
       // Step 5: Set cookie and redirect
       const cookieOptions = getSessionCookieOptions(req);
+      console.log(`[OAuth] Setting cookie with options:`, { ...cookieOptions, maxAge: ONE_YEAR_MS });
       res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
 
       console.log(`[OAuth] Login successful for user ${userInfo.openId}`);
-      res.redirect(302, "/");
+      console.log(`[OAuth] Cookie name: ${COOKIE_NAME}, Token length: ${sessionToken.length}`);
+      console.log(`[OAuth] Sending HTML redirect to /dashboard`);
+      
+      // Send HTML page with JavaScript redirect to ensure cookie is set before navigation
+      res.status(200).send(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Login Successful</title>
+            <meta http-equiv="refresh" content="0;url=/dashboard">
+          </head>
+          <body>
+            <script>
+              // Ensure cookie is set before redirecting
+              setTimeout(() => {
+                window.location.href = "/dashboard";
+              }, 100);
+            </script>
+            <p>Login successful! Redirecting...</p>
+          </body>
+        </html>
+      `);
     } catch (error) {
       console.error("[OAuth] Unexpected error in callback", error);
       const message = error instanceof Error ? error.message : "Unexpected authentication error";
