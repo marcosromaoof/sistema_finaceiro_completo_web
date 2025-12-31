@@ -348,3 +348,18 @@
 - [x] Adicionar respostas pré-programadas para perguntas frequentes
 - [x] Implementar histórico de conversas
 - [ ] Adicionar opção de escalar para suporte humano
+
+
+## Renomeação da Aplicação (Nova Solicitação)
+
+### Renomear de "FinMaster Pro" para "Organizai"
+- [ ] Atualizar nome na landing page (hero, header, footer)
+- [ ] Atualizar nome no dashboard e sidebar
+- [ ] Atualizar nome em todos os componentes
+- [ ] Atualizar título da página (document.title)
+- [ ] Atualizar metadados (meta tags)
+- [ ] Atualizar variável de ambiente VITE_APP_TITLE
+- [ ] Atualizar package.json
+- [ ] Atualizar README.md
+- [ ] Atualizar todo.md
+- [ ] Verificar todas as referências ao nome antigo
