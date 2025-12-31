@@ -48,6 +48,8 @@ const menuItems = [
   { icon: Bell, label: "Alertas", path: "/alerts" },
   { icon: Users, label: "Família", path: "/family" },
   { icon: ArrowRightLeft, label: "Transferências", path: "/auto-transfers" },
+  { icon: Shield, label: "2FA", path: "/2fa" },
+  { icon: Users, label: "Login Social", path: "/social-login" },
   { icon: Settings, label: "Configurações", path: "/settings" },
 ];
 

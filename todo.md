@@ -143,11 +143,11 @@
 ## Funcionalidades Finais a Implementar
 
 ### Autenticação Avançada
-- [ ] 2FA via SMS
-- [ ] 2FA via Authenticator App
-- [ ] Login Social com Google
-- [ ] Login Social com Apple
-- [ ] Login Social com Facebook
+- [x] 2FA via SMS
+- [x] 2FA via Authenticator App
+- [x] Login Social com Google
+- [x] Login Social com Apple
+- [x] Login Social com Facebook
 
 ### Colaboração Familiar
 - [x] Compartilhamento de orçamentos
