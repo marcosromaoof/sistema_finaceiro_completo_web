@@ -1079,3 +1079,16 @@
 - [x] Implementar botões de ação nos insights da IA
 - [x] Adicionar interatividade ao gráfico donut (click para detalhes)
 - [x] Criar modal de detalhes de categoria com transações
+
+## Gamificação e Personalização - Consulta GPT + Gemini (31/12/2025)
+- [x] Consultar GPT sobre sistema de conquistas e gamificação
+- [x] Consultar Gemini para validação e melhorias
+- [x] Criar documento GAMIFICACAO_GPT_GEMINI.md consolidado
+- [x] Criar schema de banco (userProgress, achievements, achievementProgress)
+- [x] Instalar canvas-confetti para celebrações
+- [x] Criar componente AchievementBadge
+- [x] Criar modal AchievementUnlockedModal com confetti
+- [ ] Implementar procedures tRPC para conquistas
+- [ ] Implementar timeline de metas com milestones
+- [ ] Adicionar drag-and-drop para reordenar cards
+- [ ] Salvar preferências de layout no localStorage

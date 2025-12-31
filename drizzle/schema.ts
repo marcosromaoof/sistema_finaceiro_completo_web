@@ -411,3 +411,61 @@ export const bans = mysqlTable("bans", {
 
 export type Ban = typeof bans.$inferSelect;
 export type InsertBan = typeof bans.$inferInsert;
+
+/**
+ * Progresso do usuário no sistema de gamificação
+ */
+export const userProgress = mysqlTable("userProgress", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().unique(),
+  totalXp: int("totalXp").default(0).notNull(),
+  currentLevel: int("currentLevel").default(1).notNull(),
+  currentStreak: int("currentStreak").default(0).notNull(),
+  longestStreak: int("longestStreak").default(0).notNull(),
+  lastActivityDate: timestamp("lastActivityDate"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("userProgress_userId_idx").on(table.userId),
+}));
+
+export type UserProgress = typeof userProgress.$inferSelect;
+export type InsertUserProgress = typeof userProgress.$inferInsert;
+
+/**
+ * Conquistas desbloqueadas pelos usuários
+ */
+export const achievements = mysqlTable("achievements", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  achievementType: varchar("achievementType", { length: 100 }).notNull(), // 'primeiros_passos', 'orcamento_controle', etc
+  level: mysqlEnum("level", ["bronze", "silver", "gold"]).notNull(),
+  xpEarned: int("xpEarned").notNull(),
+  unlockedAt: timestamp("unlockedAt").defaultNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("achievements_userId_idx").on(table.userId),
+  typeIdx: index("achievements_type_idx").on(table.achievementType),
+  userTypeIdx: index("achievements_userId_type_idx").on(table.userId, table.achievementType),
+}));
+
+export type Achievement = typeof achievements.$inferSelect;
+export type InsertAchievement = typeof achievements.$inferInsert;
+
+/**
+ * Progresso das conquistas (para mostrar quanto falta para desbloquear)
+ */
+export const achievementProgress = mysqlTable("achievementProgress", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  achievementType: varchar("achievementType", { length: 100 }).notNull(),
+  level: mysqlEnum("level", ["bronze", "silver", "gold"]).notNull(),
+  currentProgress: int("currentProgress").default(0).notNull(),
+  targetProgress: int("targetProgress").notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("achievementProgress_userId_idx").on(table.userId),
+  userTypeIdx: index("achievementProgress_userId_type_idx").on(table.userId, table.achievementType),
+}));
+
+export type AchievementProgress = typeof achievementProgress.$inferSelect;
+export type InsertAchievementProgress = typeof achievementProgress.$inferInsert;

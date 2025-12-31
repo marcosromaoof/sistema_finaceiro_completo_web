@@ -50,6 +50,13 @@
       "when": 1767208721662,
       "tag": "0006_slippery_solo",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1767223045067,
+      "tag": "0007_left_infant_terrible",
+      "breakpoints": true
     }
   ]
 }
