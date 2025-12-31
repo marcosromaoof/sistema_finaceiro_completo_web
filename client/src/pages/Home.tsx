@@ -21,6 +21,8 @@ import { ptBR } from "date-fns/locale";
 import { UpcomingBills } from "@/components/UpcomingBills";
 import { DashboardSkeleton } from "@/components/skeletons/PageSkeleton";
 import { FadeIn, StaggerChildren, StaggerItem } from "@/components/animations/FadeIn";
+import { PatrimonyChart } from "@/components/PatrimonyChart";
+import { GoalsSection } from "@/components/GoalsSection";
 
 export default function Home() {
   const { data: summary, isLoading } = trpc.dashboard.summary.useQuery();
@@ -199,6 +201,9 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Patrimony Chart */}
+        <PatrimonyChart />
+
         {/* Two Column Layout */}
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Recent Transactions - 2 columns */}
@@ -291,6 +296,9 @@ export default function Home() {
             <UpcomingBills />
           </div>
         </div>
+
+        {/* Goals Section */}
+        <GoalsSection />
 
         {/* Quick Action Buttons */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
