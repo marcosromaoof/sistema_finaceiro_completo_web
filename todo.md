@@ -1008,3 +1008,11 @@
 
 ## Correção de Layout (31/12/2025)
 - [x] Corrigir sobreposição do botão toggle quando menu está expandido
+
+## Melhorias Menu Admin (31/12/2025)
+- [ ] Remover opções admin do menu de usuários (APIs de IA, Push, n8n)
+- [ ] Criar botão Admin verde destacado
+
+## Melhorias Menu Admin (31/12/2025)
+- [x] Remover opções admin do menu de usuários (APIs de IA, Push, n8n)
+- [x] Criar botão Admin verde destacado

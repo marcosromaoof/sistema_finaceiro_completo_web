@@ -58,9 +58,6 @@ const userMenuItems = [
 // Menu items apenas para administradores
 const adminMenuItems = [
   { icon: Shield, label: "Admin", path: "/admin" },
-  { icon: Key, label: "APIs de IA", path: "/admin/api-config" },
-  { icon: Bell, label: "Push", path: "/push-notifications" },
-  { icon: Zap, label: "n8n", path: "/n8n" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -152,12 +149,15 @@ export default function DashboardLayout({
               {isAdmin && (
                 <>
                   <div className="my-2 border-t" />
-                  <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase">
-                    Administração
+                  <div className="px-3 py-2">
+                    <a
+                      href="/admin"
+                      className="flex items-center gap-3 rounded-lg bg-green-600 hover:bg-green-700 px-3 py-2 text-white font-medium transition-colors"
+                    >
+                      <Shield className="h-4 w-4" />
+                      <span>Painel Admin</span>
+                    </a>
                   </div>
-                  {adminMenuItems.map((item) => (
-                    <NavigationItem key={item.path} item={item} />
-                  ))}
                 </>
               )}
             </SidebarMenu>
