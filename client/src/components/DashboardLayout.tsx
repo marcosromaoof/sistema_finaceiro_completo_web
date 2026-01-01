@@ -27,7 +27,7 @@ import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat, Bot, Shield, Zap, Users, ArrowRightLeft, Key, HelpCircle, Activity, Trophy } from "lucide-react";
+import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat, Bot, Shield, Zap, Users, ArrowRightLeft, Key, HelpCircle, Activity, Trophy, Medal } from "lucide-react";
 
 // Menu items para todos os usuários
 const userMenuItems = [
@@ -45,6 +45,7 @@ const userMenuItems = [
   { icon: Repeat, label: "Recorrentes", path: "/recurring" },
   { icon: Activity, label: "Benchmarks", path: "/benchmark-analysis" },
   { icon: Trophy, label: "Conquistas", path: "/achievements" },
+  { icon: Medal, label: "Ranking", path: "/leaderboard" },
   { icon: Bot, label: "IA Chat", path: "/ai-chat" },
   { icon: Bell, label: "Alertas", path: "/alerts" },
   { icon: Users, label: "Família", path: "/family" },

@@ -1360,6 +1360,16 @@ ${financialContext}${webSearchResults}`;
       .query(({ input }) => {
         return gamification.getLevelInfo(input.level);
       }),
+
+    // Get leaderboard (top users by XP)
+    getLeaderboard: protectedProcedure
+      .input(z.object({ 
+        period: z.enum(["all", "monthly", "weekly"]).optional().default("all"),
+        limit: z.number().optional().default(10)
+      }))
+      .query(async ({ input }) => {
+        return await gamification.getLeaderboard(input.period, input.limit);
+      }),
   }),
 });
 export type AppRouter = typeof appRouter;

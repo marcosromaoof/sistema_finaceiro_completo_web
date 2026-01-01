@@ -1,5 +1,5 @@
 import { getDb } from "./db";
-import { userProgress, achievements, achievementProgress, transactions, goals, budgets } from "../drizzle/schema";
+import { userProgress, achievements, achievementProgress, transactions, goals, budgets, users } from "../drizzle/schema";
 import { eq, and, sql, desc, gte } from "drizzle-orm";
 
 // ==================== USER PROGRESS ====================
@@ -372,4 +372,208 @@ export async function addGoalCompletedXP(userId: number) {
 export async function addBudgetReviewXP(userId: number) {
   await addXP(userId, 50);
   await checkBudgetAchievements(userId);
+}
+
+// ==================== LEADERBOARD ====================
+
+export async function getLeaderboard(period: "all" | "monthly" | "weekly" = "all", limit: number = 10) {
+  const db = await getDb();
+  if (!db) return [];
+
+  // Calcular data de início baseado no período
+  let startDate: Date | null = null;
+  const now = new Date();
+
+  if (period === "weekly") {
+    startDate = new Date(now);
+    startDate.setDate(now.getDate() - 7);
+  } else if (period === "monthly") {
+    startDate = new Date(now);
+    startDate.setMonth(now.getMonth() - 1);
+  }
+
+  // Query base: buscar progresso de usuários
+  let query = db
+    .select({
+      userId: userProgress.userId,
+      totalXp: userProgress.totalXp,
+      currentLevel: userProgress.currentLevel,
+      currentStreak: userProgress.currentStreak,
+      userName: users.name,
+      userEmail: users.email,
+    })
+    .from(userProgress)
+    .leftJoin(users, eq(userProgress.userId, users.id))
+    .orderBy(desc(userProgress.totalXp))
+    .limit(limit);
+
+  // Se período não é "all", filtrar por data
+  if (startDate) {
+    query = query.where(gte(userProgress.updatedAt, startDate)) as any;
+  }
+
+  const leaderboard = await query;
+
+  // Adicionar ranking position
+  return leaderboard.map((entry, index) => ({
+    ...entry,
+    rank: index + 1,
+    levelInfo: getLevelInfo(entry.currentLevel),
+  }));
+}
+
+// ==================== SPECIAL & SEASONAL ACHIEVEMENTS ====================
+
+/**
+ * Conquistas especiais por milestones importantes
+ */
+export async function checkMilestoneAchievements(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not initialized');
+
+  // Primeira Transação (milestone especial)
+  const firstTransaction = await db
+    .select()
+    .from(transactions)
+    .where(eq(transactions.userId, userId))
+    .limit(1);
+
+  if (firstTransaction.length > 0) {
+    await updateAchievementProgress(userId, 'primeira_transacao', 'bronze', 1, 1);
+  }
+
+  // 100 Transações (milestone importante)
+  const transactionCount = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(transactions)
+    .where(eq(transactions.userId, userId))
+    .then((rows: any[]) => Number(rows[0]?.count || 0));
+
+  if (transactionCount >= 100) {
+    await updateAchievementProgress(userId, 'centenario', 'gold', transactionCount, 100);
+  }
+
+  // 500 Transações (milestone épico)
+  if (transactionCount >= 500) {
+    await updateAchievementProgress(userId, 'mestre_financas', 'gold', transactionCount, 500);
+  }
+
+  // Primeira Meta Alcançada
+  const completedGoals = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(goals)
+    .where(eq(goals.userId, userId))
+    .then((rows: any[]) => Number(rows[0]?.count || 0));
+
+  if (completedGoals >= 1) {
+    await updateAchievementProgress(userId, 'primeira_meta', 'bronze', completedGoals, 1);
+  }
+}
+
+/**
+ * Conquistas sazonais (Ano Novo, Black Friday, etc.)
+ */
+export async function checkSeasonalAchievements(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not initialized');
+  
+  const now = new Date();
+  const month = now.getMonth() + 1; // 1-12
+  const day = now.getDate();
+
+  // Ano Novo (Janeiro 1-7)
+  if (month === 1 && day <= 7) {
+    const transactionsThisWeek = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(transactions)
+      .where(
+        and(
+          eq(transactions.userId, userId),
+          gte(transactions.date, new Date(now.getFullYear(), 0, 1))
+        )
+      )
+      .then((rows: any[]) => Number(rows[0]?.count || 0));
+
+    if (transactionsThisWeek >= 5) {
+      await updateAchievementProgress(userId, 'ano_novo_2025', 'gold', transactionsThisWeek, 5);
+    }
+  }
+
+  // Black Friday (Novembro 20-30)
+  if (month === 11 && day >= 20 && day <= 30) {
+    const transactionsThisWeek = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(transactions)
+      .where(
+        and(
+          eq(transactions.userId, userId),
+          gte(transactions.date, new Date(now.getFullYear(), 10, 20))
+        )
+      )
+      .then((rows: any[]) => Number(rows[0]?.count || 0));
+
+    if (transactionsThisWeek >= 10) {
+      await updateAchievementProgress(userId, 'black_friday_2024', 'gold', transactionsThisWeek, 10);
+    }
+  }
+
+  // Natal (Dezembro 20-31)
+  if (month === 12 && day >= 20) {
+    const transactionsThisWeek = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(transactions)
+      .where(
+        and(
+          eq(transactions.userId, userId),
+          gte(transactions.date, new Date(now.getFullYear(), 11, 20))
+        )
+      )
+      .then((rows: any[]) => Number(rows[0]?.count || 0));
+
+    if (transactionsThisWeek >= 5) {
+      await updateAchievementProgress(userId, 'natal_2024', 'gold', transactionsThisWeek, 5);
+    }
+  }
+}
+
+/**
+ * Sistema de XP Bônus por eventos especiais
+ */
+export async function addBonusXP(userId: number, reason: string, multiplier: number = 2) {
+  const baseXp = 50;
+  const bonusXp = baseXp * multiplier;
+  
+  await addXP(userId, bonusXp);
+  
+  return {
+    xpEarned: bonusXp,
+    reason,
+    multiplier,
+  };
+}
+
+/**
+ * Verifica e aplica XP bônus sazonal
+ */
+export async function checkSeasonalBonusXP(userId: number) {
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+
+  // Dobro de XP no Ano Novo (Janeiro 1-7)
+  if (month === 1 && day <= 7) {
+    return await addBonusXP(userId, 'Bônus de Ano Novo! 🎉', 2);
+  }
+
+  // Triplo de XP na Black Friday (Novembro 25)
+  if (month === 11 && day === 25) {
+    return await addBonusXP(userId, 'Bônus de Black Friday! 🛍️', 3);
+  }
+
+  // Dobro de XP no Natal (Dezembro 25)
+  if (month === 12 && day === 25) {
+    return await addBonusXP(userId, 'Bônus de Natal! 🎄', 2);
+  }
+
+  return null;
 }

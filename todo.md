@@ -1217,3 +1217,19 @@
 - [x] Adicionar link de Conquistas no menu de navegação
 - [x] Testar performance das queries otimizadas - Check status OK
 - [x] Verificar compilação TypeScript - 0 erros
+
+
+## 🎮 Sistema Avançado de Gamificação (31/12/2025)
+- [x] Criar componente de notificação de conquista desbloqueada (AchievementUnlockedToast)
+- [x] Implementar lógica de detecção de novas conquistas (useAchievementNotifications)
+- [x] Adicionar toast animado com badge e XP (gradientes, sparkles, bounce)
+- [x] Criar página de Ranking (Leaderboard)
+- [x] Implementar query de top usuários por XP (getLeaderboard)
+- [x] Adicionar filtros de período (semanal/mensal/total)
+- [x] Adicionar rota /leaderboard no App.tsx
+- [x] Adicionar link de Ranking no menu de navegação
+- [x] Criar conquistas especiais por temporada (Ano Novo, Black Friday, Natal)
+- [x] Implementar conquistas de milestones (primeira transação, 100, 500, primeira meta)
+- [x] Adicionar sistema de XP bônus (2x-3x em eventos especiais)
+- [x] Criar funções: checkMilestoneAchievements, checkSeasonalAchievements, addBonusXP
+- [x] Testar notificações e ranking - Check status OK (0 erros TypeScript/LSP)

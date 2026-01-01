@@ -40,6 +40,7 @@ import Billing from "./pages/Billing";
 import BenchmarkAnalysis from "./pages/BenchmarkAnalysis";
 import AuthError from "./pages/AuthError";
 import Achievements from "./pages/Achievements";
+import Leaderboard from "./pages/Leaderboard";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -77,6 +78,7 @@ function Router() {
       <Route path="/debts" component={Debts} />
       <Route path="/investments" component={Investments} />
       <Route path="/achievements" component={Achievements} />
+      <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/retirement" component={Retirement} />
       <Route path="/alerts" component={Alerts} />
       <Route path="/family" component={FamilySharing} />

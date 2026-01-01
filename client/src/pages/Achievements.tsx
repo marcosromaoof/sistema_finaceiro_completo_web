@@ -16,6 +16,8 @@ import {
   Zap
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect } from "react";
+import { useAchievementNotifications } from "@/components/AchievementUnlockedToast";
 
 export default function Achievements() {
   const [selectedTab, setSelectedTab] = useState("all");
@@ -24,6 +26,16 @@ export default function Achievements() {
   const { data: progress, isLoading: progressLoading } = trpc.gamification.getProgress.useQuery();
   const { data: achievements, isLoading: achievementsLoading } = trpc.gamification.getAchievements.useQuery();
   const { data: achievementProgress } = trpc.gamification.getAchievementProgress.useQuery();
+
+  // Notificações de conquistas
+  const { checkAndNotifyNewAchievements } = useAchievementNotifications();
+
+  // Verificar novas conquistas desbloqueadas
+  useEffect(() => {
+    if (achievements) {
+      checkAndNotifyNewAchievements(achievements as any);
+    }
+  }, [achievements]);
 
   const isLoading = progressLoading || achievementsLoading;
 
