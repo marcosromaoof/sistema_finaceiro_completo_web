@@ -43,6 +43,7 @@ import Achievements from "./pages/Achievements";
 import Leaderboard from "./pages/Leaderboard";
 import PublicProfile from "./pages/PublicProfile";
 import Stats from "./pages/Stats";
+import Dividends from "./pages/Dividends";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -79,6 +80,7 @@ function Router() {
       <Route path="/goals" component={Goals} />
       <Route path="/debts" component={Debts} />
       <Route path="/investments" component={Investments} />
+      <Route path="/dividends" component={Dividends} />
       <Route path="/achievements" component={Achievements} />
       <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/profile/:userId" component={PublicProfile} />

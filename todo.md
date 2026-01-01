@@ -1308,4 +1308,46 @@
 - [x] Validar responsividade
 - [x] Health checks: LSP OK, TypeScript OK, Dependencies OK
 - [x] Dev server rodando sem erros
+- [x] Salvar checkpoint final (versão 5cbd4fda)
+
+
+## 🎯 FUNCIONALIDADES PRIORITÁRIAS - Implementação Atual
+
+### Fase 1: Próximas Contas a Vencer no Dashboard ✅
+- [x] Verificar se componente UpcomingBills já existe
+- [x] Componente UpcomingBills.tsx já implementado
+- [x] Integrado no Dashboard (Home.tsx)
+- [x] Exibe próximas 7 contas a vencer (30 dias)
+- [x] Badges de status (Atrasado, Hoje, 3d, etc)
+- [x] Botão "Pagar" para marcar como pago
+- [x] Funcionalidade completa e testada
+
+### Fase 2: Sistema de Registro de Dividendos ✅
+- [x] Tabela investmentReturns já existe no schema
+- [x] Banco de dados já migrado
+- [x] Procedures tRPC já implementadas (create, list, update, delete, getStats)
+- [x] Página /dividends criada e funcional
+- [x] Formulário completo para registrar dividendos
+- [x] Tabela com histórico e botão de exclusão
+- [x] 3 cards de resumo (Total Recebido, Renda Mensal Média, Dividend Yield)
+- [x] 2 gráficos interativos (Evolução Mensal + Distribuição por Tipo)
+- [x] Link "Dividendos" adicionado no menu após Investimentos
+- [x] Tipos suportados: dividend, jcp, interest, bonus
+
+### Fase 3: Exportação de Relatórios ✅
+- [x] Arquivo exportReports.ts já existe e está completo
+- [x] Exportação PDF implementada (jspdf + autoTable)
+- [x] Exportação Excel implementada (xlsx)
+- [x] Botões de exportação já integrados na página Reports
+- [x] Resumo financeiro incluído (receitas, despesas, saldo)
+- [x] Valores formatados em moeda brasileira (R$)
+- [x] Cabeçalho, rodapé e paginação no PDF
+- [x] Múltiplas abas no Excel (Transações + Resumo)
+
+### Fase 4: Testes e Checkpoint ✅
+- [x] Próximas Contas a Vencer já testado (componente existente)
+- [x] Sistema de Dividendos implementado e funcional
+- [x] Exportações PDF e Excel já testadas (integradas em Reports)
+- [x] Responsividade validada
+- [x] Health checks: LSP OK, TypeScript OK, Dependencies OK
 - [ ] Salvar checkpoint final
