@@ -340,9 +340,76 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ---
 
-## 🗺️ Roadmap
+## 🎆 Últimas Atualizações (Dezembro 2025)
 
-### Próximas Funcionalidades
+### Redesign Dark/Green Moderno ✅
+- ✅ Tema dark navy profundo com acentos verde vibrante
+- ✅ Paleta de cores OKLCH para melhor contraste e acessibilidade
+- ✅ Todas as funcionalidades mantidas intactas
+- ✅ Responsividade e acessibilidade (WCAG AA)
+
+### Notificações de Dividendos 💰
+- ✅ Alertas automáticos ao owner quando dividendo é registrado
+- ✅ Toast aprimorado no frontend com emoji 💰
+- ✅ Integração com sistema notifyOwner
+- ✅ Formato: "Novo Dividendo Registrado - Usuário X registrou R$ Y"
+- ✅ Falha silenciosa - não bloqueia criação do dividendo
+
+### Análise de Carteira de Investimentos 📊
+- ✅ Página /portfolio-analysis completa e funcional
+- ✅ Gráfico de pizza: Diversificação por tipo de ativo
+- ✅ Gráfico de barras: Performance top 10 investimentos
+- ✅ Sistema de pontuação de diversificação (Excelente/Boa/Moderada/Baixa)
+- ✅ Botão "Gerar Recomendações IA" com análises inteligentes
+- ✅ 4 cards de métricas principais (Total Investido, Valor Atual, Retorno, Diversificação)
+- ✅ Empty state com CTA para adicionar investimentos
+
+### Metas de Renda Passiva 🎯
+- ✅ Página /passive-income-goals completa e funcional
+- ✅ CRUD de metas com formulário completo
+- ✅ Progresso visual e comparação com dividendos reais do mês
+- ✅ Calculadora de independência financeira com projeções
+- ✅ Projeções de tempo para atingir metas
+- ✅ 4 cards de resumo (Metas Ativas, Meta Total, Recebido, Projeção)
+- ✅ Lista de metas com badges de status (Ativa/Inativa/Atrasada)
+
+### Sistema de Gamificação Aprimorado 🎮
+- ✅ Botões "Ver Perfil" no Leaderboard e Conquistas
+- ✅ Sistema de badges visuais premium (10 tipos, 3 níveis)
+- ✅ Página de Estatísticas (/stats) com 3 gráficos interativos
+- ✅ Card de Insights com análises automáticas
+- ✅ Navegação fluida entre perfis públicos
+
+---
+
+## 🔮 Próximas Implementações (Em Desenvolvimento)
+
+### 1. Dashboard de Insights Financeiros com IA 🧠
+- Análises preditivas de gastos futuros baseadas em histórico
+- Identificação automática de padrões de consumo
+- Sugestões de otimização de orçamento personalizadas
+- Detecção de anomalias em transações em tempo real
+- Recomendações personalizadas baseadas em comportamento
+
+### 2. Sistema de Alertas Inteligentes 🔔
+- Detecção de gastos incomuns em tempo real
+- Alertas de oportunidades de economia automáticos
+- Notificações de momentos ideais para aportes em investimentos
+- Avisos de vencimento de contas com antecedência inteligente
+- Sugestões proativas de ações financeiras
+
+### 3. Comparação com Benchmarks de Mercado 📈
+- Comparação de investimentos com CDI em tempo real
+- Performance vs Ibovespa com gráficos históricos
+- Comparação com S&P500 para investimentos internacionais
+- Gráficos de rentabilidade relativa
+- Análise de rentabilidade ajustada ao risco (Sharpe Ratio)
+
+---
+
+## 🗺️ Roadmap Futuro
+
+### Funcionalidades Planejadas
 
 - [ ] Aplicativo mobile (React Native)
 - [ ] Importação automática de extratos bancários (Open Banking)
