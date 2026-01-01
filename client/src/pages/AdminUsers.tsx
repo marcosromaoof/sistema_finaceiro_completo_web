@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { useDebounce } from "@/hooks/useDebounce";
 import { 
   Search, 
   Filter, 
@@ -69,12 +70,15 @@ export default function AdminUsers() {
     },
   });
 
+  // Debounce da busca para evitar filtros excessivos
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
   // Filtrar usuários
   const filteredUsers = allUsers?.filter((user: any) => {
     const matchesSearch = 
-      user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.id.toString().includes(searchQuery);
+      user.name?.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+      user.email?.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+      user.id.toString().includes(debouncedSearchQuery);
     
     const matchesRole = roleFilter === "all" || user.role === roleFilter;
 

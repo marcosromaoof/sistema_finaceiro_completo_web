@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { useDebounce } from "@/hooks/useDebounce";
 import { 
   Search, 
   Filter, 
@@ -68,11 +69,14 @@ export default function AdminTransactions() {
     },
   });
 
+  // Debounce da busca para evitar filtros excessivos
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
   // Filtrar transações
   const filteredTransactions = allTransactions?.filter((transaction: any) => {
     const matchesSearch = 
-      transaction.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      transaction.id.toString().includes(searchQuery);
+      transaction.description?.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+      transaction.id.toString().includes(debouncedSearchQuery);
     
     const matchesType = typeFilter === "all" || transaction.type === typeFilter;
 
