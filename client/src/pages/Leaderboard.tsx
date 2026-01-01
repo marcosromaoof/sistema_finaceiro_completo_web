@@ -14,7 +14,8 @@ import {
   TrendingUp,
   Zap,
   Calendar,
-  Users
+  Users,
+  User
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -191,6 +192,15 @@ export default function Leaderboard() {
                           </span>
                         </div>
                       )}
+
+                      {/* Ver Perfil Button */}
+                      <a
+                        href={`/profile/${entry.userId}`}
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary hover-lift ripple transition-all"
+                      >
+                        <User className="w-4 h-4" />
+                        <span className="text-sm font-medium">Ver Perfil</span>
+                      </a>
                     </div>
                   ))
                 ) : (

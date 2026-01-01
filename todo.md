@@ -1267,3 +1267,45 @@
   - Servidor rodando: 0 erros TypeScript/LSP
   - Health checks: OK
   - Screenshot capturado com sucesso
+
+## 🚀 PRÓXIMAS MELHORIAS - Navegação e UX Gamificação
+
+### Fase 1: Botões Ver Perfil (1-2 horas) ✅
+- [x] Adicionar botão "Ver Perfil" em cada card do Leaderboard
+  - Ícone User com texto "Ver Perfil"
+  - Link para /profile/:userId
+  - Hover effects consistentes (hover-lift)
+- [x] Adicionar link para perfil do usuário na página Conquistas
+  - Botão no card de progresso "Ver Meu Perfil"
+  - Redireciona para /profile/:userId do usuário logado
+- [x] Testar navegação entre perfis
+
+### Fase 2: Sistema de Badges Visuais (3-4 horas) ✅
+- [x] Criar componente AchievementBadge com designs personalizados
+  - Bronze: gradiente amber com emoji 🥉
+  - Silver: gradiente gray com emoji 🥈
+  - Gold: gradiente yellow com emoji 🥇
+- [x] Badges customizados já implementados com emojis contextuais
+- [x] Sistema de badges completo com estados locked/unlocked
+- [x] Aplicado em AchievementUnlockedModal
+- [x] Efeitos visuais (glow, hover, animações) implementados
+
+### Fase 3: Página de Estatísticas Avançadas (5-6 horas) ✅
+- [x] Criar página /stats com rota no App.tsx
+- [x] Implementar gráfico de evolução de XP (linha temporal com LineChart)
+- [x] Implementar gráfico de distribuição de conquistas por categoria (PieChart)
+- [x] Implementar comparação com média da plataforma (BarChart)
+- [x] Adicionar 4 cards de estatísticas detalhadas (XP, Nível, Conquistas, Streak)
+- [x] Integrado com recharts (LineChart, PieChart, BarChart)
+- [x] Link "Estatísticas" adicionado no menu após Ranking
+- [x] Usa procedures tRPC existentes (getProgress, getAchievements, getLeaderboard)
+- [x] Card de Insights com 3 tipos de análises automáticas
+
+### Fase 4: Testes e Checkpoint ✅
+- [x] Testar navegação entre perfis
+- [x] Testar badges visuais em todas as páginas
+- [x] Testar página de estatísticas
+- [x] Validar responsividade
+- [x] Health checks: LSP OK, TypeScript OK, Dependencies OK
+- [x] Dev server rodando sem erros
+- [ ] Salvar checkpoint final

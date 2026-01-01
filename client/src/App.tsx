@@ -42,6 +42,7 @@ import AuthError from "./pages/AuthError";
 import Achievements from "./pages/Achievements";
 import Leaderboard from "./pages/Leaderboard";
 import PublicProfile from "./pages/PublicProfile";
+import Stats from "./pages/Stats";
 
 // Placeholder pages - will be implemented in subsequent phases
 const PlaceholderPage = ({ title }: { title: string }) => {
@@ -81,6 +82,7 @@ function Router() {
       <Route path="/achievements" component={Achievements} />
       <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/profile/:userId" component={PublicProfile} />
+      <Route path="/stats" component={Stats} />
       <Route path="/retirement" component={Retirement} />
       <Route path="/alerts" component={Alerts} />
       <Route path="/family" component={FamilySharing} />

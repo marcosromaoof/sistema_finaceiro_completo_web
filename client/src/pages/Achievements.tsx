@@ -13,7 +13,8 @@ import {
   Award,
   Lock,
   Check,
-  Zap
+  Zap,
+  User
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect } from "react";
@@ -82,7 +83,14 @@ export default function Achievements() {
                   {currentXP.toLocaleString()} / {xpForNextLevel.toLocaleString()} XP
                 </CardDescription>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
+                <a
+                  href={`/profile/${progress?.userId || ''}`}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary hover-lift ripple transition-all"
+                >
+                  <User className="w-4 h-4" />
+                  <span className="text-sm font-medium">Ver Meu Perfil</span>
+                </a>
                 <div className="p-3 rounded-full bg-primary/20">
                   <Trophy className="w-8 h-8 text-primary" />
                 </div>
