@@ -1,7 +1,7 @@
 import { eq, and, desc, gte, lte, sql, asc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { 
-  InsertUser, users, 
+  User, InsertUser, users, 
   accounts, Account, InsertAccount,
   categories, Category, InsertCategory,
   transactions, Transaction, InsertTransaction,
@@ -37,7 +37,7 @@ export async function getDb() {
 
 // ==================== USER OPERATIONS ====================
 
-export async function upsertUser(user: InsertUser): Promise<void> {
+export async function upsertUser(user: InsertUser): Promise<User> {
   if (!user.openId) {
     throw new Error("User openId is required for upsert");
   }
@@ -45,7 +45,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
   const db = await getDb();
   if (!db) {
     console.warn("[Database] Cannot upsert user: database not available");
-    return;
+    throw new Error("Database not available");
   }
 
   try {
@@ -90,6 +90,13 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     await db.insert(users).values(values).onDuplicateKeyUpdate({
       set: updateSet,
     });
+    
+    // Buscar e retornar o usuário criado/atualizado
+    const result = await db.select().from(users).where(eq(users.openId, user.openId)).limit(1);
+    if (result.length === 0) {
+      throw new Error(`User with openId ${user.openId} not found after upsert`);
+    }
+    return result[0];
   } catch (error) {
     console.error("[Database] Failed to upsert user:", error);
     throw error;

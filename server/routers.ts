@@ -7,6 +7,7 @@ import * as db from "./db";
 import * as gamification from "./db-gamification";
 import { updateUser } from "./db-user-update";
 import { invokeLLM } from "./_core/llm";
+import { sanitizeText, sanitizeNumber } from "./_core/sanitize";
 import { sendGroqChat, getGroqModels, testGroqConnection, initializeGroqClient } from "./_core/groq";
 import { searchWeb, needsWebSearch, initializeTavilyClient, testTavilyConnection } from "./_core/tavily";
 
@@ -48,9 +49,17 @@ export const appRouter = router({
         color: z.string().default("#3b82f6"),
       }))
       .mutation(async ({ ctx, input }) => {
+        // Sanitizar inputs
+        const sanitized = {
+          ...input,
+          name: sanitizeText(input.name),
+          institution: input.institution ? sanitizeText(input.institution) : undefined,
+          accountNumber: input.accountNumber ? sanitizeText(input.accountNumber) : undefined,
+        };
+        
         return await db.createAccount({
           userId: ctx.user.id,
-          ...input,
+          ...sanitized,
         });
       }),
     
@@ -66,7 +75,15 @@ export const appRouter = router({
       }))
       .mutation(async ({ ctx, input }) => {
         const { id, ...data } = input;
-        return await db.updateAccount(id, ctx.user.id, data);
+        
+        // Sanitizar inputs
+        const sanitized = {
+          ...data,
+          name: data.name ? sanitizeText(data.name) : undefined,
+          institution: data.institution ? sanitizeText(data.institution) : undefined,
+        };
+        
+        return await db.updateAccount(id, ctx.user.id, sanitized);
       }),
     
     delete: protectedProcedure
@@ -91,10 +108,17 @@ export const appRouter = router({
         parentId: z.number().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
+        // Sanitizar inputs
+        const sanitized = {
+          ...input,
+          name: sanitizeText(input.name),
+          icon: input.icon ? sanitizeText(input.icon) : undefined,
+        };
+        
         return await db.createCategory({
           userId: ctx.user.id,
           isSystem: false,
-          ...input,
+          ...sanitized,
         });
       }),
     
@@ -173,9 +197,17 @@ export const appRouter = router({
         transferAccountId: z.number().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
+        // Sanitizar inputs
+        const sanitized = {
+          ...input,
+          description: input.description ? sanitizeText(input.description) : undefined,
+          tags: input.tags ? sanitizeText(input.tags) : undefined,
+          notes: input.notes ? sanitizeText(input.notes) : undefined,
+        };
+        
         return await db.createTransaction({
           userId: ctx.user.id,
-          ...input,
+          ...sanitized,
         });
       }),
     
@@ -191,7 +223,15 @@ export const appRouter = router({
       }))
       .mutation(async ({ ctx, input }) => {
         const { id, ...data } = input;
-        return await db.updateTransaction(id, ctx.user.id, data);
+        
+        // Sanitizar inputs
+        const sanitized = {
+          ...data,
+          description: data.description ? sanitizeText(data.description) : undefined,
+          notes: data.notes ? sanitizeText(data.notes) : undefined,
+        };
+        
+        return await db.updateTransaction(id, ctx.user.id, sanitized);
       }),
     
     delete: protectedProcedure
@@ -315,11 +355,19 @@ export const appRouter = router({
         icon: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
+        // Sanitizar inputs
+        const sanitized = {
+          ...input,
+          name: sanitizeText(input.name),
+          description: input.description ? sanitizeText(input.description) : undefined,
+          icon: input.icon ? sanitizeText(input.icon) : undefined,
+        };
+        
         return await db.createGoal({
           userId: ctx.user.id,
           currentAmount: "0.00",
           isCompleted: false,
-          ...input,
+          ...sanitized,
         });
       }),
     
@@ -335,7 +383,15 @@ export const appRouter = router({
       }))
       .mutation(async ({ ctx, input }) => {
         const { id, ...data } = input;
-        return await db.updateGoal(id, ctx.user.id, data);
+        
+        // Sanitizar inputs
+        const sanitized = {
+          ...data,
+          name: data.name ? sanitizeText(data.name) : undefined,
+          description: data.description ? sanitizeText(data.description) : undefined,
+        };
+        
+        return await db.updateGoal(id, ctx.user.id, sanitized);
       }),
     
     delete: protectedProcedure
@@ -351,11 +407,17 @@ export const appRouter = router({
         notes: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
+        // Sanitizar inputs
+        const sanitized = {
+          ...input,
+          notes: input.notes ? sanitizeText(input.notes) : undefined,
+        };
+        
         return await db.addGoalContribution({
-          goalId: input.goalId,
-          amount: input.amount,
+          goalId: sanitized.goalId,
+          amount: sanitized.amount,
           date: new Date(),
-          notes: input.notes,
+          notes: sanitized.notes,
         });
       }),
     
@@ -595,6 +657,9 @@ export const appRouter = router({
         model: z.enum(["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"]).default("llama-3.3-70b-versatile"),
       }))
       .mutation(async ({ ctx, input }) => {
+        // Sanitizar input do usuário
+        const sanitizedMessage = sanitizeText(input.message);
+        
         // Get API keys from database (admin configured)
         const groqSetting = await db.getApiSetting("groq_api_key");
         const tavilySetting = await db.getApiSetting("tavily_api_key");
@@ -607,9 +672,9 @@ export const appRouter = router({
         }
         // Check if query needs web search
         let webSearchResults = "";
-        if (needsWebSearch(input.message)) {
+        if (needsWebSearch(sanitizedMessage)) {
           try {
-            const searchResult = await searchWeb(input.message, {
+            const searchResult = await searchWeb(sanitizedMessage, {
               maxResults: 3,
               includeAnswer: true,
             }, tavilyApiKey);
@@ -676,7 +741,7 @@ ${financialContext}${webSearchResults}`;
           const response = await sendGroqChat(
             [
               { role: "system", content: systemPrompt },
-              { role: "user", content: input.message },
+              { role: "user", content: sanitizedMessage },
             ],
             { model: input.model },
             groqApiKey

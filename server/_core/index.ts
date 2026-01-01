@@ -8,6 +8,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { handleStripeWebhook } from "./stripeWebhook";
+import { defaultRateLimiter, authRateLimiter } from "./rateLimit";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -38,7 +39,11 @@ async function startServer() {
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  // OAuth callback under /api/oauth/callback
+  
+  // Rate limiting protection
+  app.use(defaultRateLimiter);
+  // OAuth callback under /api/oauth/callback (with strict rate limiting)
+  app.use("/api/oauth", authRateLimiter);
   registerOAuthRoutes(app);
   // tRPC API
   app.use(

@@ -3,6 +3,7 @@ import type { Express, Request, Response } from "express";
 import * as db from "../db";
 import { getSessionCookieOptions } from "./cookies";
 import { sdk } from "./sdk";
+import { createDefaultCategories } from "../db-default-categories";
 
 function getQueryParam(req: Request, key: string): string | undefined {
   const value = req.query[key];
@@ -50,8 +51,9 @@ export function registerOAuthRoutes(app: Express) {
       }
 
       // Step 3: Upsert user in database
+      let user;
       try {
-        await db.upsertUser({
+        user = await db.upsertUser({
           openId: userInfo.openId,
           name: userInfo.name || null,
           email: userInfo.email ?? null,
@@ -63,6 +65,17 @@ export function registerOAuthRoutes(app: Express) {
         const message = error instanceof Error ? error.message : "Failed to create user account";
         res.redirect(302, `/auth-error?type=session_creation&message=${encodeURIComponent(message)}`);
         return;
+      }
+      
+      // Step 3.5: Create default categories for new users
+      try {
+        const categoriesCreated = await createDefaultCategories(user.id);
+        if (categoriesCreated > 0) {
+          console.log(`[OAuth] Created ${categoriesCreated} default categories for user ${user.id}`);
+        }
+      } catch (error) {
+        // Não bloqueia o login se falhar
+        console.error(`[OAuth] Failed to create default categories for user ${user.id}:`, error);
       }
 
       // Step 4: Create session token

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { notifyOwner } from "./notification";
 import { adminProcedure, publicProcedure, router } from "./trpc";
+import { getRateLimitStats } from "./rateLimit";
 
 export const systemRouter = router({
   health: publicProcedure
@@ -26,4 +27,8 @@ export const systemRouter = router({
         success: delivered,
       } as const;
     }),
+  
+  metrics: adminProcedure.query(() => {
+    return getRateLimitStats();
+  }),
 });
