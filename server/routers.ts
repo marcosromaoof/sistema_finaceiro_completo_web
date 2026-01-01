@@ -1174,11 +1174,30 @@ ${financialContext}${webSearchResults}`;
       }))
       .mutation(async ({ ctx, input }) => {
         const { createDividend } = await import("./db-dividends");
-        return await createDividend({
+        const { notifyOwner } = await import("./_core/notification");
+        
+        const result = await createDividend({
           ...input,
           amount: input.amount.toString(), // Converter para string (decimal no banco)
           userId: ctx.user.id,
         });
+        
+        // Notificar owner sobre novo dividendo
+        const typeLabels = {
+          dividend: "Dividendo",
+          jcp: "JCP",
+          interest: "Juros",
+          bonus: "Bonificação"
+        };
+        
+        await notifyOwner({
+          title: `💰 Novo ${typeLabels[input.type]} Registrado`,
+          content: `Usuário ${ctx.user.name || ctx.user.email} registrou ${typeLabels[input.type]} de R$ ${input.amount.toFixed(2)} em ${new Date(input.paymentDate).toLocaleDateString("pt-BR")}.`,
+        }).catch(() => {
+          // Falha silenciosa - não bloquear criação do dividendo
+        });
+        
+        return result;
       }),
 
     list: protectedProcedure
@@ -1376,6 +1395,109 @@ ${financialContext}${webSearchResults}`;
       .input(z.object({ userId: z.number() }))
       .query(async ({ input }) => {
         return await gamification.getPublicProfile(input.userId);
+      }),
+  }),
+
+  // ==================== PASSIVE INCOME GOALS ====================
+  passiveIncomeGoals: router({
+    // Create passive income goal
+    create: protectedProcedure
+      .input(z.object({
+        name: z.string(),
+        monthlyTarget: z.number().positive(),
+        targetDate: z.date().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { createPassiveIncomeGoal } = await import("./db-passive-income-goals");
+        return await createPassiveIncomeGoal({
+          ...input,
+          monthlyTarget: input.monthlyTarget.toString(),
+          userId: ctx.user.id,
+        });
+      }),
+
+    // List passive income goals
+    list: protectedProcedure
+      .input(z.object({
+        activeOnly: z.boolean().optional().default(false),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { listPassiveIncomeGoals } = await import("./db-passive-income-goals");
+        return await listPassiveIncomeGoals(ctx.user.id, input.activeOnly);
+      }),
+
+    // Get passive income goal by ID
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const { getPassiveIncomeGoalById } = await import("./db-passive-income-goals");
+        return await getPassiveIncomeGoalById(input.id, ctx.user.id);
+      }),
+
+    // Update passive income goal
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().optional(),
+        monthlyTarget: z.number().positive().optional(),
+        targetDate: z.date().optional(),
+        isActive: z.boolean().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { updatePassiveIncomeGoal } = await import("./db-passive-income-goals");
+        const { id, ...data } = input;
+        
+        // Convert monthlyTarget to string if present
+        const updateData: any = { ...data };
+        if (data.monthlyTarget !== undefined) {
+          updateData.monthlyTarget = data.monthlyTarget.toString();
+        }
+        
+        return await updatePassiveIncomeGoal(id, ctx.user.id, updateData);
+      }),
+
+    // Delete passive income goal
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const { deletePassiveIncomeGoal } = await import("./db-passive-income-goals");
+        return await deletePassiveIncomeGoal(input.id, ctx.user.id);
+      }),
+
+    // Get progress towards goal (compare with actual dividends)
+    getProgress: protectedProcedure
+      .input(z.object({ goalId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const { getPassiveIncomeGoalById } = await import("./db-passive-income-goals");
+        const { listDividends } = await import("./db-dividends");
+        
+        const goal = await getPassiveIncomeGoalById(input.goalId, ctx.user.id);
+        if (!goal) throw new Error("Meta não encontrada");
+        
+        // Get current month dividends
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+        
+        const monthDividends = await listDividends(ctx.user.id, {
+          startDate: startOfMonth,
+          endDate: endOfMonth,
+        });
+        
+        const currentMonthTotal = monthDividends.reduce((sum, d) => sum + parseFloat(d.amount), 0);
+        
+        const monthlyTarget = parseFloat(goal.monthlyTarget);
+        const progress = monthlyTarget > 0 ? (currentMonthTotal / monthlyTarget) * 100 : 0;
+        
+        return {
+          goal,
+          currentMonthTotal,
+          monthlyTarget,
+          progress: Math.min(progress, 100),
+          remaining: Math.max(monthlyTarget - currentMonthTotal, 0),
+        };
       }),
   }),
 });

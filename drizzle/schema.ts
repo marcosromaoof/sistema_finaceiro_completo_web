@@ -469,3 +469,23 @@ export const achievementProgress = mysqlTable("achievementProgress", {
 
 export type AchievementProgress = typeof achievementProgress.$inferSelect;
 export type InsertAchievementProgress = typeof achievementProgress.$inferInsert;
+
+/**
+ * Metas de renda passiva (dividendos mensais)
+ */
+export const passiveIncomeGoals = mysqlTable("passiveIncomeGoals", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  monthlyTarget: decimal("monthlyTarget", { precision: 15, scale: 2 }).notNull(),
+  targetDate: timestamp("targetDate"),
+  isActive: boolean("isActive").default(true).notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("passiveIncomeGoals_userId_idx").on(table.userId),
+}));
+
+export type PassiveIncomeGoal = typeof passiveIncomeGoals.$inferSelect;
+export type InsertPassiveIncomeGoal = typeof passiveIncomeGoals.$inferInsert;

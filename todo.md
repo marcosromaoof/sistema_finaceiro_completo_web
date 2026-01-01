@@ -1350,4 +1350,113 @@
 - [x] Exportações PDF e Excel já testadas (integradas em Reports)
 - [x] Responsividade validada
 - [x] Health checks: LSP OK, TypeScript OK, Dependencies OK
+- [x] Salvar checkpoint final (versão 1954ec5b)
+
+
+## 🎨 REDESIGN + NOVAS FUNCIONALIDADES
+
+### Fase 1: Redesign do Tema Dark/Green ✅
+- [x] Imagem de referência analisada (Screenshot_105.png)
+- [x] Paleta de cores atualizada no index.css
+  - Fundo: oklch(0.08 0.02 240) - Very deep dark navy
+  - Cards: oklch(0.13 0.02 240) - Dark com bordas sutis
+  - Acentos: oklch(0.65 0.20 145) - Verde vibrante
+  - Texto: oklch(0.96 0.005 240) - Branco/cinza claro
+- [x] Componentes Card mantidos com novo esquema
+- [x] Badges e botões com cores vibrantes
+- [x] Contraste adequado garantido (WCAG AA)
+- [x] Todas as funcionalidades mantidas intactas
+- [x] Health checks: LSP OK, TypeScript OK
+
+### Fase 2: Notificações de Dividendos ✅
+- [x] Trigger automático criado no procedure dividends.create
+- [x] Integrado com sistema notifyOwner existente
+- [x] Toast de sucesso aprimorado no frontend (💰)
+- [x] Envio de notificação para owner implementado
+- [x] Formato: "Novo Dividendo Registrado - Usuário X registrou R$ Y"
+- [x] Falha silenciosa - não bloqueia criação do dividendo
+
+### Fase 3: Análise de Carteira de Investimentos ✅
+- [x] Página /portfolio-analysis criada e funcional
+- [x] Gráfico de pizza: Diversificação por tipo de ativo
+- [x] Gráfico de barras: Performance top 10 investimentos
+- [x] Cálculos automáticos (total investido, valor atual, retorno %)
+- [x] Sistema de pontuação de diversificação (Excelente/Boa/Moderada/Baixa)
+- [x] Botão "Gerar Recomendações IA" com análises inteligentes
+- [x] 4 cards de métricas principais
+- [x] Link "Análise de Carteira" no menu após Dividendos
+- [x] Empty state com CTA para adicionar investimentos
+
+### Fase 4: Metas de Renda Passiva
+- [ ] Criar tabela passiveIncomeGoals no schema
+- [ ] Executar migração (pnpm db:push)
+- [ ] Criar procedures tRPC (create, list, update, delete, getProgress)
+- [ ] Criar página /passive-income-goals
+- [ ] Formulário para definir meta mensal de dividendos
+- [ ] Gráfico de progresso (meta vs recebido)
+- [ ] Calculadora de independência financeira
+- [ ] Projeções baseadas em histórico
+- [ ] Adicionar link no menu
+- [ ] Testar cálculos e projeções
+
+### Fase 5: Testes e Checkpoint
+- [ ] Testar tema dark/green em todas as páginas
+- [ ] Testar notificações de dividendos
+- [ ] Testar análise de carteira
+- [ ] Testar metas de renda passiva
+- [ ] Validar responsividade
+- [ ] Executar health checks
 - [ ] Salvar checkpoint final
+
+
+## 🎨 REDESIGN + NOVAS FUNCIONALIDADES (Dezembro 2025)
+
+### Fase 1: Redesign do Tema Dark/Green ✅
+- [x] Imagem de referência analisada (Screenshot_105.png)
+- [x] Paleta de cores atualizada no index.css
+  - Fundo: oklch(0.08 0.02 240) - Very deep dark navy
+  - Cards: oklch(0.13 0.02 240) - Dark com bordas sutis
+  - Acentos: oklch(0.65 0.20 145) - Verde vibrante
+  - Texto: oklch(0.96 0.005 240) - Branco/cinza claro
+- [x] Componentes Card mantidos com novo esquema
+- [x] Badges e botões com cores vibrantes
+- [x] Contraste adequado garantido (WCAG AA)
+- [x] Todas as funcionalidades mantidas intactas
+- [x] Health checks: LSP OK, TypeScript OK
+
+### Fase 2: Notificações de Dividendos ✅
+- [x] Trigger automático criado no procedure dividends.create
+- [x] Integrado com sistema notifyOwner existente
+- [x] Toast de sucesso aprimorado no frontend (💰)
+- [x] Envio de notificação para owner implementado
+- [x] Formato: "Novo Dividendo Registrado - Usuário X registrou R$ Y"
+- [x] Falha silenciosa - não bloqueia criação do dividendo
+
+### Fase 3: Análise de Carteira de Investimentos ✅
+- [x] Página /portfolio-analysis criada e funcional
+- [x] Gráfico de pizza: Diversificação por tipo de ativo
+- [x] Gráfico de barras: Performance top 10 investimentos
+- [x] Cálculos automáticos (total investido, valor atual, retorno %)
+- [x] Sistema de pontuação de diversificação (Excelente/Boa/Moderada/Baixa)
+- [x] Botão "Gerar Recomendações IA" com análises inteligentes
+- [x] 4 cards de métricas principais
+- [x] Link "Análise de Carteira" no menu após Dividendos
+- [x] Empty state com CTA para adicionar investimentos
+
+### Fase 4: Sistema de Metas de Renda Passiva ✅
+- [x] Tabela passiveIncomeGoals criada no schema
+- [x] Migração executada (pnpm db:push)
+- [x] Helpers do banco criados (db-passive-income-goals.ts)
+- [x] 6 procedures tRPC implementadas (create, list, getById, update, delete, getProgress)
+- [x] Página /passive-income-goals criada e funcional
+- [x] Formulário completo para criar/editar metas
+- [x] Lista de metas com progresso visual e badges de status
+- [x] 4 cards de resumo (Metas Ativas, Meta Total, Recebido, Projeção)
+- [x] Calculadora de independência financeira com projeções
+- [x] Comparação automática com dividendos reais do mês
+- [x] Link "Metas de Renda Passiva" adicionado no menu após Análise de Carteira
+
+### Fase 5: Testes e Checkpoint
+- [x] Health checks: LSP OK, TypeScript OK, Dependencies OK
+- [x] Dev server rodando sem erros
+- [ ] Salvar checkpoint final com todas as implementações

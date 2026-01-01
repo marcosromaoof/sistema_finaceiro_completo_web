@@ -27,7 +27,7 @@ import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat, Bot, Shield, Zap, Users, ArrowRightLeft, Key, HelpCircle, Activity, Trophy, Medal, LineChart, DollarSign } from "lucide-react";
+import { Wallet, Receipt, PieChart, Target, CreditCard, TrendingUp, Calendar, Bell, Settings, BookOpen, Upload, BarChart3, Repeat, Bot, Shield, Zap, Users, ArrowRightLeft, Key, HelpCircle, Activity, Trophy, Medal, LineChart, DollarSign, Layers } from "lucide-react";
 
 // Menu items para todos os usuários
 const userMenuItems = [
@@ -40,6 +40,8 @@ const userMenuItems = [
   { icon: CreditCard, label: "Dívidas", path: "/debts" },
   { icon: TrendingUp, label: "Investimentos", path: "/investments" },
   { icon: DollarSign, label: "Dividendos", path: "/dividends" },
+  { icon: Layers, label: "Análise de Carteira", path: "/portfolio-analysis" },
+  { icon: Target, label: "Metas de Renda Passiva", path: "/passive-income-goals" },
   { icon: Calendar, label: "Aposentadoria", path: "/retirement" },
   { icon: BookOpen, label: "Educação", path: "/education" },
   { icon: BarChart3, label: "Relatórios", path: "/reports" },

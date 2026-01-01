@@ -57,6 +57,13 @@
       "when": 1767223045067,
       "tag": "0007_left_infant_terrible",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1767232244257,
+      "tag": "0008_fuzzy_paper_doll",
+      "breakpoints": true
     }
   ]
 }

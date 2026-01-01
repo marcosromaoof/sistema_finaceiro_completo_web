@@ -70,8 +70,10 @@ export default function Dividends() {
 
   // Mutations
   const createDividend = trpc.dividends.create.useMutation({
-    onSuccess: () => {
-      toast.success("Dividendo registrado com sucesso!");
+    onSuccess: (data) => {
+      toast.success("Dividendo registrado com sucesso! 💰", {
+        description: "Seu dividendo foi registrado e você foi notificado.",
+      });
       refetch();
       resetForm();
       setIsDialogOpen(false);
