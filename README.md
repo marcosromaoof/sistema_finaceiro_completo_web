@@ -1,6 +1,6 @@
 # 💰 Organizai - Plataforma Completa de Gestão Financeira
 
-![Organizai](./screenshots/01-landing-page.webp)
+![Organizai Dashboard](./docs/screenshots/01-dashboard.png)
 
 **Organizai** é uma plataforma SaaS completa para gestão financeira pessoal e familiar, com inteligência artificial integrada, automações avançadas e painel administrativo robusto.
 
@@ -79,25 +79,12 @@ Gerencie contas, orçamentos, metas, investimentos e dívidas em uma única plat
 
 ---
 
-## 📸 Screenshots
+### 📸 Screenshots
 
-### Landing Page
-![Landing Page](./screenshots/01-landing-page.webp)
+### Dashboard Principal (Novo Design Dark/Green)
+![Dashboard](./docs/screenshots/01-dashboard.png)
 
-### Recursos e Preços
-![Recursos e Preços](./screenshots/02-recursos-precos.webp)
-
-### Dashboard Principal
-![Dashboard](./screenshots/03-dashboard.webp)
-
-### Chat com IA
-![Chat IA](./screenshots/04-chat-ia.webp)
-
-### Painel Administrativo
-![Painel Admin](./screenshots/05-painel-admin.webp)
-
-### Integrações
-![Integrações](./screenshots/06-admin-integracoes.webp)
+> **Nota**: Mais screenshots das funcionalidades serão adicionados em breve (Dividendos, Análise de Carteira, Metas de Renda Passiva, etc.)
 
 ---
 
