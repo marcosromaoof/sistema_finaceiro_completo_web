@@ -1139,3 +1139,52 @@
 - [ ] Integrar rate limiting no servidor Express
 - [ ] Integrar criação de categorias no callback OAuth
 - [ ] Validar correções em ambiente de desenvolvimento
+
+
+## 🎯 PLANO DE AÇÃO PRIORIZADO - 10 DIAS (Criado em 31/12/2025)
+
+### 🔴 FASE 1: Segurança Crítica (2 dias) - P0 CRÍTICO
+- [ ] Dia 1 Manhã: Integrar rate limiting no servidor Express (2h)
+- [ ] Dia 1 Manhã: Criar endpoint de métricas admin (1h)
+- [ ] Dia 1 Manhã: Testar rate limiting completo (1h)
+- [ ] Dia 1 Tarde: Sanitizar procedures de transações (2h)
+- [ ] Dia 1 Tarde: Sanitizar procedures de categorias, metas e contas (1.5h)
+- [ ] Dia 1 Tarde: Sanitizar chat IA (0.5h)
+- [ ] Dia 2: Integrar criação de categorias no OAuth (3h)
+- [ ] Dia 2: Criar procedure para migração de usuários existentes (2h)
+- [ ] Dia 2: Testes de segurança completos (3h)
+
+### 📱 FASE 2: UX Mobile Essencial (3 dias) - P1 ALTO
+- [ ] Dia 3: Criar componentes skeleton (2h)
+- [ ] Dia 3: Integrar skeletons nas páginas (3h)
+- [ ] Dia 3: Testar skeletons (1h)
+- [ ] Dia 3: Implementar lazy loading de imagens (2h)
+- [ ] Dia 4: Tornar tabela de transações responsiva (3h)
+- [ ] Dia 4: Tornar outras tabelas responsivas (4h)
+- [ ] Dia 4: Testar responsividade completa (1h)
+- [ ] Dia 5: Implementar hook useDebounce (1h)
+- [ ] Dia 5: Aplicar debounce em buscas (2h)
+- [ ] Dia 5: Tornar gráficos responsivos (3h)
+- [ ] Dia 5: Testar UX mobile completa (2h)
+
+### ⚡ FASE 3: Performance Core (2 dias) - P1 ALTO
+- [ ] Dia 6: Otimizar getTransactions com joins (2h)
+- [ ] Dia 6: Otimizar outras queries N+1 (4h)
+- [ ] Dia 6: Criar índices no banco de dados (2h)
+- [ ] Dia 7: Adicionar 50+ bancos brasileiros (4h)
+- [ ] Dia 7: Otimizar bundle size com code splitting (4h)
+
+### 🎯 FASE 4: Features Prioritárias (3 dias) - P2 MÉDIO
+- [ ] Dia 8: Criar página de conquistas completa (6h)
+- [ ] Dia 8: Melhorar componente AchievementCard (2h)
+- [ ] Dia 9: Criar testes unitários adicionais (6h)
+- [ ] Dia 10: Criar testes de integração (6h)
+- [ ] Dia 10: Executar testes de performance Lighthouse (4h)
+
+### ✅ CHECKLIST FINAL DE LANÇAMENTO BETA
+- [ ] Segurança: Rate limiting + Sanitização XSS + Testes
+- [ ] Performance: Lighthouse >80 + Bundle <1MB + API <500ms
+- [ ] UX/UI: 100% responsivo + Skeletons + Debounce
+- [ ] Funcionalidades: Categorias auto + Conquistas + 50+ bancos
+- [ ] Testes: 50+ unitários + Integração + Mobile
+- [ ] Monitoramento: Métricas básicas + Logs
