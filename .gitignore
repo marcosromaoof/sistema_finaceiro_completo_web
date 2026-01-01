@@ -105,3 +105,21 @@ temp/
 *.db
 *.sqlite
 *.sqlite3
+
+# AI Generated Reports and Analysis (should not be in Git)
+**/reports/
+**/analysis/
+**/checkpoints/
+**/*_report.md
+**/*_analysis.md
+**/*_plano_acao.md
+**/*gemini*.md
+**/*gpt*.md
+**/*claude*.md
+**/*perplexity*.md
+**/relatorio_*.md
+**/analise_*.md
+**/plano_*.md
+
+# Workspace files (outside project)
+/home/ubuntu/organizai-workspace/
