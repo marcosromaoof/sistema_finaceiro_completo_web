@@ -44,6 +44,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Skeleton } from "@/components/ui/skeleton";
+import { TransactionTableSkeleton } from "@/components/skeletons";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -475,20 +476,7 @@ export default function Transactions() {
         <Card>
           <CardContent className="p-6">
             {isLoading ? (
-              <div className="space-y-3">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="flex items-center justify-between p-3">
-                    <div className="flex items-center space-x-3">
-                      <Skeleton className="w-10 h-10 rounded-lg" />
-                      <div>
-                        <Skeleton className="h-4 w-32 mb-2" />
-                        <Skeleton className="h-3 w-24" />
-                      </div>
-                    </div>
-                    <Skeleton className="h-6 w-24" />
-                  </div>
-                ))}
-              </div>
+              <TransactionTableSkeleton rows={8} />
             ) : filteredTransactions.length === 0 ? (
               <div className="text-center py-12">
                 <Receipt className="w-12 h-12 text-muted-foreground mx-auto mb-4" />

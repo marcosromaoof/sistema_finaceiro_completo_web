@@ -1155,11 +1155,12 @@
 - [x] Dia 2: Testes de segurança completos (3h) - 38 testes passando
 
 ### 📱 FASE 2: UX Mobile Essencial (3 dias) - P1 ALTO
-- [ ] Dia 3: Criar componentes skeleton (2h)
-- [ ] Dia 3: Integrar skeletons nas páginas (3h)
-- [ ] Dia 3: Testar skeletons (1h)
-- [ ] Dia 3: Implementar lazy loading de imagens (2h)
-- [ ] Dia 4: Tornar tabela de transações responsiva (3h)
+- [x] Dia 3: Criar componentes skeleton (2h) - 5 componentes criados
+- [x] Dia 3: Integrar skeletons nas páginas (3h) - Integrado em 4 páginas
+- [x] Dia 3: Testar skeletons (1h)
+- [x] Dia 3: Implementar lazy loading de imagens (2h) - Hook + componente LazyImage
+- [x] Dia 3: Criar hook useDebounce (1h) - Otimização de inputs
+- [x] Dia 4: Tornar tabela de transações responsiva (3h) - Componente ResponsiveTransactionTable
 - [ ] Dia 4: Tornar outras tabelas responsivas (4h)
 - [ ] Dia 4: Testar responsividade completa (1h)
 - [ ] Dia 5: Implementar hook useDebounce (1h)
