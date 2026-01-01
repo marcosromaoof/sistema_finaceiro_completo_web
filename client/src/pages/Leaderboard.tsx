@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useConfetti } from "@/hooks/useConfetti";
+import { useSound } from "@/hooks/useSound";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -18,12 +20,33 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Leaderboard() {
   const [selectedPeriod, setSelectedPeriod] = useState<"all" | "monthly" | "weekly">("all");
+  const { fireTop1Confetti } = useConfetti();
+  const { playTop1Sound } = useSound();
+  const [hasPlayedTop1Effect, setHasPlayedTop1Effect] = useState(false);
 
   // Query
   const { data: leaderboard, isLoading } = trpc.gamification.getLeaderboard.useQuery({
     period: selectedPeriod,
     limit: 10,
   });
+
+  // Tocar efeito de top 1 quando carregar o ranking
+  useEffect(() => {
+    if (leaderboard && leaderboard.length > 0 && !hasPlayedTop1Effect) {
+      // Delay para dar tempo do usuário ver a página
+      const timer = setTimeout(() => {
+        fireTop1Confetti();
+        playTop1Sound();
+        setHasPlayedTop1Effect(true);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [leaderboard, hasPlayedTop1Effect, fireTop1Confetti, playTop1Sound]);
+
+  // Reset efeito quando mudar período
+  useEffect(() => {
+    setHasPlayedTop1Effect(false);
+  }, [selectedPeriod]);
 
   const getRankIcon = (rank: number) => {
     if (rank === 1) return <Crown className="w-5 h-5 text-yellow-500" />;

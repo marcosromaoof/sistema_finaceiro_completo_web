@@ -577,3 +577,90 @@ export async function checkSeasonalBonusXP(userId: number) {
 
   return null;
 }
+
+// ==================== PUBLIC PROFILE ====================
+
+export async function getPublicProfile(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not initialized');
+
+  // Buscar informações do usuário
+  const [user] = await db
+    .select({
+      id: users.id,
+      name: users.name,
+      email: users.email,
+      createdAt: users.createdAt,
+    })
+    .from(users)
+    .where(eq(users.id, userId));
+
+  if (!user) {
+    throw new Error('Usuário não encontrado');
+  }
+
+  // Buscar progresso
+  const progress = await getUserProgress(userId);
+
+  // Buscar conquistas em progresso
+  const achievementsInProgress = await db
+    .select({
+      id: achievementProgress.id,
+      achievementType: achievementProgress.achievementType,
+      level: achievementProgress.level,
+      currentProgress: achievementProgress.currentProgress,
+      targetProgress: achievementProgress.targetProgress,
+      updatedAt: achievementProgress.updatedAt,
+    })
+    .from(achievementProgress)
+    .where(eq(achievementProgress.userId, userId))
+    .orderBy(desc(achievementProgress.updatedAt));
+
+  // Calcular conquistas completadas (currentProgress >= targetProgress)
+  const completedAchievements = achievementsInProgress.filter(
+    (a: any) => a.currentProgress >= a.targetProgress
+  );
+
+  // Buscar estatísticas gerais
+  const [transactionStats] = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(transactions)
+    .where(eq(transactions.userId, userId))
+    .then((rows: any[]) => rows.map(r => ({ count: Number(r.count || 0) })));
+
+  const [goalStats] = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(goals)
+    .where(eq(goals.userId, userId))
+    .then((rows: any[]) => rows.map(r => ({ count: Number(r.count || 0) })));
+
+  // Calcular posição no ranking global
+  const allUsers = await getLeaderboard("all", 1000);
+  const rankPosition = allUsers.findIndex((u: any) => u.userId === userId) + 1;
+
+  return {
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt,
+    },
+    progress: {
+      totalXp: progress.totalXp,
+      currentLevel: progress.currentLevel,
+      currentStreak: progress.currentStreak,
+      longestStreak: progress.longestStreak,
+      lastActivityDate: progress.lastActivityDate,
+    },
+    achievements: {
+      total: completedAchievements.length,
+      list: completedAchievements,
+    },
+    stats: {
+      transactions: transactionStats?.count || 0,
+      goals: goalStats?.count || 0,
+      rankPosition: rankPosition > 0 ? rankPosition : null,
+    },
+    levelInfo: getLevelInfo(progress.currentLevel),
+  };
+}

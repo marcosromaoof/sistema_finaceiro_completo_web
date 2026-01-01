@@ -117,10 +117,17 @@ function getClientIP(req: Request): string | null {
  * Rate limiters pré-configurados
  */
 
-// Rate limiter padrão: 100 requisições por minuto
+// Rate limiter padrão: 300 requisições por minuto (aumentado para landing page)
 export const defaultRateLimiter = createRateLimiter({
   windowMs: 60 * 1000, // 1 minuto
-  maxRequests: 100,
+  maxRequests: 300,
+  message: 'Muitas requisições. Tente novamente em 1 minuto.'
+});
+
+// Rate limiter para tRPC: 500 requisições por minuto
+export const trpcRateLimiter = createRateLimiter({
+  windowMs: 60 * 1000, // 1 minuto
+  maxRequests: 500,
   message: 'Muitas requisições. Tente novamente em 1 minuto.'
 });
 

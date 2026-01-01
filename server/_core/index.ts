@@ -8,7 +8,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { handleStripeWebhook } from "./stripeWebhook";
-import { defaultRateLimiter, authRateLimiter } from "./rateLimit";
+import { defaultRateLimiter, authRateLimiter, trpcRateLimiter } from "./rateLimit";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -40,14 +40,29 @@ async function startServer() {
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   
-  // Rate limiting protection
-  app.use(defaultRateLimiter);
+  // Rate limiting protection (excluir rotas públicas)
+  app.use((req, res, next) => {
+    // Excluir assets estáticos do rate limiting
+    if (req.path.startsWith('/assets/') || 
+        req.path.startsWith('/@') || 
+        req.path.endsWith('.js') || 
+        req.path.endsWith('.css') ||
+        req.path.endsWith('.png') ||
+        req.path.endsWith('.jpg') ||
+        req.path.endsWith('.svg')) {
+      return next();
+    }
+    return defaultRateLimiter(req, res, next);
+  });
+  
   // OAuth callback under /api/oauth/callback (with strict rate limiting)
   app.use("/api/oauth", authRateLimiter);
   registerOAuthRoutes(app);
-  // tRPC API
+  
+  // tRPC API (with higher rate limit)
   app.use(
     "/api/trpc",
+    trpcRateLimiter,
     createExpressMiddleware({
       router: appRouter,
       createContext,

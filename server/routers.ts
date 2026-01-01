@@ -1370,6 +1370,13 @@ ${financialContext}${webSearchResults}`;
       .query(async ({ input }) => {
         return await gamification.getLeaderboard(input.period, input.limit);
       }),
+
+    // Get public profile (achievements, progress, stats)
+    getPublicProfile: protectedProcedure
+      .input(z.object({ userId: z.number() }))
+      .query(async ({ input }) => {
+        return await gamification.getPublicProfile(input.userId);
+      }),
   }),
 });
 export type AppRouter = typeof appRouter;

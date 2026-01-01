@@ -1233,3 +1233,37 @@
 - [x] Adicionar sistema de XP bônus (2x-3x em eventos especiais)
 - [x] Criar funções: checkMilestoneAchievements, checkSeasonalAchievements, addBonusXP
 - [x] Testar notificações e ranking - Check status OK (0 erros TypeScript/LSP)
+
+
+## 🐛 Correção de Bugs & Melhorias Finais (01/01/2026)
+- [x] Corrigir erro de rate limiting na landing page
+- [x] Identificar endpoint que está sendo bloqueado (tRPC + landing page)
+- [x] Ajustar configuração de rate limiting:
+  - Aumentado limite global: 100 → 300 req/min
+  - Criado trpcRateLimiter: 500 req/min
+  - Excluídos assets estáticos (.js, .css, .png, etc.)
+  - Aplicado rate limiter específico no /api/trpc
+- [x] Adicionar efeitos sonoros ao desbloquear conquistas
+  - Hook useSound com Web Audio API
+  - Som de conquista (C5 → E5 → G5)
+  - Som de top 1 (fanfarra triunfante)
+  - Som de level up (arpejo rápido)
+  - Integrado no AchievementUnlockedToast
+- [x] Implementar animação confetti no top 1 do ranking
+  - Biblioteca canvas-confetti instalada
+  - Hook useConfetti com 4 tipos de animação
+  - fireTop1Confetti (dourado, 3s)
+  - fireAchievementConfetti (lateral)
+  - fireLevelUpConfetti (chuva)
+  - Integrado na página Leaderboard (toca automaticamente)
+- [x] Criar página de perfil público (/profile/:userId)
+  - Procedure getPublicProfile no backend
+  - Função getPublicProfile no db-gamification.ts
+  - Página PublicProfile.tsx completa
+  - Exibe: avatar, nível, XP, conquistas, stats, streak
+  - Rota /profile/:userId adicionada no App.tsx
+- [x] Testar todas as correções e melhorias
+  - Landing page carregando sem erros de rate limiting
+  - Servidor rodando: 0 erros TypeScript/LSP
+  - Health checks: OK
+  - Screenshot capturado com sucesso

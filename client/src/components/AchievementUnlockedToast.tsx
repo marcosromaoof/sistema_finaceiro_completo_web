@@ -1,5 +1,6 @@
 import { Trophy, Zap, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { useSound } from "@/hooks/useSound";
 
 interface Achievement {
   id: number;
@@ -12,7 +13,12 @@ interface Achievement {
 /**
  * Exibe uma notificação animada quando uma conquista é desbloqueada
  */
-export function showAchievementUnlockedToast(achievement: Achievement) {
+export function showAchievementUnlockedToast(achievement: Achievement, playSound?: () => void) {
+  // Tocar som se fornecido
+  if (playSound) {
+    playSound();
+  }
+  
   toast.custom(
     (t) => (
       <div
@@ -68,6 +74,7 @@ export function showAchievementUnlockedToast(achievement: Achievement) {
  * Hook para detectar e notificar conquistas desbloqueadas
  */
 export function useAchievementNotifications() {
+  const { playAchievementSound } = useSound();
   // Armazena IDs de conquistas já notificadas na sessão
   const notifiedAchievements = new Set<number>();
 
@@ -84,7 +91,7 @@ export function useAchievementNotifications() {
           !notifiedAchievements.has(achievement.id)
         ) {
           notifiedAchievements.add(achievement.id);
-          showAchievementUnlockedToast(achievement);
+          showAchievementUnlockedToast(achievement, playAchievementSound);
         }
       }
     });
