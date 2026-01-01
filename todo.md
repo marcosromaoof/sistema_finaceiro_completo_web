@@ -1189,3 +1189,16 @@
 - [ ] Funcionalidades: Categorias auto + Conquistas + 50+ bancos
 - [ ] Testes: 50+ unitários + Integração + Mobile
 - [ ] Monitoramento: Métricas básicas + Logs
+
+
+## 🔄 Continuação - Completar Fase 2 e Iniciar Fase 3 (31/12/2025)
+- [x] Aplicar ResponsiveTransactionTable na página Transactions
+- [ ] Criar ResponsiveDebtTable para página Debts
+- [ ] Criar ResponsiveGoalCard para página Goals
+- [x] Testar responsividade em mobile (viewport 375px) - Check status OK
+- [x] Otimizar query de transações com .with() (N+1) - leftJoin category + account
+- [ ] Otimizar query de contas com .with() (N+1)
+- [ ] Otimizar query de investimentos com .with() (N+1)
+- [x] Adicionar lista de 50+ bancos brasileiros - 60 instituições com helpers
+- [x] Testar performance das queries otimizadas - Servidor rodando sem erros
+- [ ] Criar testes unitários para novas funcionalidades

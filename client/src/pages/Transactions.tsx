@@ -45,6 +45,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TransactionTableSkeleton } from "@/components/skeletons";
+import { ResponsiveTransactionTable } from "@/components/ResponsiveTransactionTable";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -492,85 +493,11 @@ export default function Transactions() {
                 </Button>
               </div>
             ) : (
-              <div className="space-y-2">
-                {filteredTransactions.map((transaction) => (
-                  <div
-                    key={transaction.id}
-                    className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div
-                        className={`p-2 rounded-lg ${
-                          transaction.type === "income"
-                            ? "bg-accent/10"
-                            : "bg-destructive/10"
-                        }`}
-                      >
-                        {transaction.type === "income" ? (
-                          <ArrowUpRight className="w-5 h-5 text-accent" />
-                        ) : (
-                          <ArrowDownRight className="w-5 h-5 text-destructive" />
-                        )}
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <p className="font-medium text-foreground">
-                            {transaction.description || "Sem descrição"}
-                          </p>
-                          {transaction.isPending && (
-                            <Badge variant="outline" className="text-xs">
-                              Pendente
-                            </Badge>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <span>{getAccountName(transaction.accountId)}</span>
-                          <span>•</span>
-                          <span>{getCategoryName(transaction.categoryId)}</span>
-                          <span>•</span>
-                          <span>
-                            {format(new Date(transaction.date), "dd MMM yyyy", {
-                              locale: ptBR,
-                            })}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <p
-                        className={`text-lg font-semibold ${
-                          transaction.type === "income"
-                            ? "text-accent"
-                            : "text-destructive"
-                        }`}
-                      >
-                        {transaction.type === "income" ? "+" : "-"}
-                        {formatCurrency(transaction.amount)}
-                      </p>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <MoreVertical className="w-4 h-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => handleEdit(transaction)}>
-                            <Pencil className="w-4 h-4 mr-2" />
-                            Editar
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => setDeletingTransactionId(transaction.id)}
-                            className="text-destructive"
-                          >
-                            <Trash2 className="w-4 h-4 mr-2" />
-                            Excluir
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <ResponsiveTransactionTable
+                transactions={filteredTransactions as any}
+                onEdit={handleEdit}
+                onDelete={(id) => setDeletingTransactionId(id)}
+              />
             )}
           </CardContent>
         </Card>

@@ -206,7 +206,45 @@ export async function getUserTransactions(userId: number, limit?: number) {
   const db = await getDb();
   if (!db) return [];
   
-  let query = db.select().from(transactions).where(eq(transactions.userId, userId)).orderBy(desc(transactions.date));
+  // Otimizado: carregar category e account em uma única query (evita N+1)
+  let query = db.select({
+    id: transactions.id,
+    userId: transactions.userId,
+    accountId: transactions.accountId,
+    categoryId: transactions.categoryId,
+    type: transactions.type,
+    amount: transactions.amount,
+    description: transactions.description,
+    date: transactions.date,
+    isPending: transactions.isPending,
+    isRecurring: transactions.isRecurring,
+    recurringFrequency: transactions.recurringFrequency,
+    tags: transactions.tags,
+    notes: transactions.notes,
+    transferAccountId: transactions.transferAccountId,
+    attachmentUrl: transactions.attachmentUrl,
+    aiCategorized: transactions.aiCategorized,
+    createdAt: transactions.createdAt,
+    updatedAt: transactions.updatedAt,
+    // Incluir category
+    category: {
+      id: categories.id,
+      name: categories.name,
+      color: categories.color,
+      icon: categories.icon,
+    },
+    // Incluir account
+    account: {
+      id: accounts.id,
+      name: accounts.name,
+      type: accounts.type,
+    },
+  })
+  .from(transactions)
+  .leftJoin(categories, eq(transactions.categoryId, categories.id))
+  .leftJoin(accounts, eq(transactions.accountId, accounts.id))
+  .where(eq(transactions.userId, userId))
+  .orderBy(desc(transactions.date));
   
   if (limit) {
     query = query.limit(limit) as any;

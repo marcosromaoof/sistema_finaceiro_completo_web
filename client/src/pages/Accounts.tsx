@@ -35,6 +35,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AccountListSkeleton } from "@/components/skeletons";
+import { getBankOptions } from "@/../../shared/brazilian-banks";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -289,9 +290,24 @@ export default function Accounts() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Instituição (opcional)</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Ex: Banco do Brasil" {...field} />
-                          </FormControl>
+                          <Select onValueChange={(value) => {
+                            const bank = getBankOptions().find(b => b.value === value);
+                            field.onChange(bank?.label.split(' (')[0] || value);
+                          }} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Selecione o banco" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent className="max-h-[300px]">
+                              <SelectItem value="custom">Outro banco...</SelectItem>
+                              {getBankOptions().map((bank) => (
+                                <SelectItem key={bank.value} value={bank.value}>
+                                  {bank.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}

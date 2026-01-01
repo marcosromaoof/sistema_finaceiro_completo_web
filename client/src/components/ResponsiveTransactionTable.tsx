@@ -20,7 +20,7 @@ interface Transaction {
   isPending: boolean;
   category?: {
     name: string;
-    color: string;
+    color: string | null;
   } | null;
   account?: {
     name: string;
@@ -111,7 +111,7 @@ export function ResponsiveTransactionTable({
                   {transaction.category && (
                     <Badge
                       variant="outline"
-                      style={{ borderColor: transaction.category.color }}
+                      style={{ borderColor: transaction.category.color || undefined }}
                       className="text-xs"
                     >
                       {transaction.category.name}
@@ -216,7 +216,7 @@ export function ResponsiveTransactionTable({
                   {transaction.category && (
                     <Badge
                       variant="outline"
-                      style={{ borderColor: transaction.category.color }}
+                      style={{ borderColor: transaction.category.color || undefined }}
                       className="text-xs"
                     >
                       {transaction.category.name}
